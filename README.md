@@ -29,7 +29,7 @@ flowchart LR
     U --> |interagit| UI
     UI -->|appelle| S
     S -->|utilise| M
-    M -->|stocke| D
+    S -->|stocke| D
 
     S -->|renvois| UI
     UI -->|transmets| U
