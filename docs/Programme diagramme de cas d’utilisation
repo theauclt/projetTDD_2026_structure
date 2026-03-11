@@ -1,0 +1,24 @@
+flowchart LR
+    %% Acteur
+    Admin([Organisateur])
+
+    %% Sujet (Le système)
+    subgraph Application de Gestion de Compétitions
+        direction TB
+        UC1([Charger / Sauvegarder un jeu de données])
+        UC2([Créer et gérer les participants : athlètes et équipes])
+        UC3([Créer une Compétition et ses Épreuves])
+        UC4([Saisir les performances d'une rencontre \n temps, points, ou distance])
+        UC5([Mettre à jour automatiquement le palmarès / les statistiques])
+        UC6([Consulter les classements et les caractéristiques])
+    end
+
+    %% Interactions Acteur -> Cas d'utilisation
+    Admin --- UC1
+    Admin --- UC2
+    Admin --- UC3
+    Admin --- UC4
+    Admin --- UC6
+
+    %% Relations d'inclusion (l'ajout d'un résultat force la mise à jour des stats)
+    UC4 -. "<<include>>" .-> UC5
