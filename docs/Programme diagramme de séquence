@@ -1,0 +1,46 @@
+sequenceDiagram
+    %% Définition des acteurs et objets (instances)
+    actor Admin as Organisateur
+    participant App as app: GestionnaireApplication
+    participant R as r: Rencontre
+    participant Perf as perf: Performance
+    participant P as p: Participant
+    participant S as stats: Statistiques
+
+    %% Début de l'interaction
+    Admin->>App: 1. saisir_resultat(id_participant, score)
+    activate App
+    
+    App->>R: 2. ajouter_performance(p, score)
+    activate R
+    
+    %% Création de l'objet Performance
+    R->>Perf: 3. instanciation (new Performance)
+    activate Perf
+    Perf-->>R: objet créé
+    deactivate Perf
+    
+    R-->>App: 4. performance_ajoutee
+    deactivate R
+    
+    %% Validation et mise à jour des stats
+    Admin->>App: 5. valider_rencontre()
+    App->>R: 6. valider_resultat()
+    activate R
+    
+    R->>P: 7. mettre_a_jour_stats(perf)
+    activate P
+    
+    P->>S: 8. mettre_a_jour(perf)
+    activate S
+    S-->>P: 9. stats_ajournees
+    deactivate S
+    
+    P-->>R: 10. ok
+    deactivate P
+    
+    R-->>App: 11. rencontre_terminee
+    deactivate R
+    
+    App-->>Admin: 12. "Résultats enregistrés et stats à jour !"
+    deactivate App
