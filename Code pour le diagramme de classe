@@ -1,0 +1,65 @@
+classDiagram
+    class Pays {
+        +int id_pays
+        +string nom
+        +string code_iso
+        +string drapeau_url
+    }
+
+    class Athlete {
+        +int id_athlete
+        +string nom
+        +string prenom
+        +date date_naissance
+        +string genre
+    }
+
+    class Equipe {
+        +int id_equipe
+        +string nom_equipe
+    }
+
+    class Sport {
+        +int id_sport
+        +string nom
+        +string categorie
+    }
+
+    class Epreuve {
+        +int id_epreuve
+        +string nom_epreuve
+        +datetime date_heure
+        +string genre_epreuve
+    }
+
+    class Site {
+        +int id_site
+        +string nom_site
+        +string ville
+    }
+
+    class Rencontre {
+        +int id_rencontre
+        +string phase
+    }
+
+    class Performance {
+        +float valeur_score
+        +string unite_mesure
+        +int rang
+        +string medaille
+    }
+
+    Pays "1" -- "0..*" Athlete : nationalité
+    Pays "1" -- "0..*" Equipe : représente
+    Sport "1" -- "0..*" Epreuve : contient
+    Site "1" -- "0..*" Epreuve : accueille
+    
+    Epreuve "1" -- "0..*" Rencontre : se divise en
+    
+    Athlete "0..*" -- "0..*" Equipe : appartient à
+    
+    %% Gestion des résultats
+    Rencontre "1" -- "0..*" Performance : génère
+    Athlete "0..1" -- "0..*" Performance : réalise (Individuel)
+    Equipe "0..1" -- "0..*" Performance : réalise (Collectif)
