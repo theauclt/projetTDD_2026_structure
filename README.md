@@ -14,3 +14,23 @@ Votre fichier README.md doit contenir les informations suivantes :
     - Création d'un environnement virtuel   
     - Lancement de votre application
     - Commandes correspondantes aux tests  
+
+## Schéma de relations entre les modules
+
+```mermaid
+flowchart LR
+
+    U[Utilisateur]
+    UI[Interface]
+    S[Services]
+    M[Models]
+    D[(Data)]
+
+    U --> |interagit| UI
+    UI -->|appelle| S
+    S -->|utilise| M
+    M -->|stocke| D
+
+    S -->|renvois| UI
+    UI -->|transmets| U
+``` 
