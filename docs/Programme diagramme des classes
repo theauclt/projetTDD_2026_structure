@@ -1,0 +1,109 @@
+classDiagram
+    class Sport {
+        +int id_sport
+        +string nom
+        +string categorie
+    }
+    
+    class Site {
+        +int id_site
+        +string nom_site
+        +string ville_ou_pays
+    }
+    
+    class Pays {
+        +int id_pays
+        +string nom
+        +string code_iso
+        +string drapeau_url
+    }
+    
+    class Competition {
+        +int id_competition
+        +string nom
+        +int annee
+        +string ville
+    }
+    
+    class Epreuve {
+        +int id_epreuve
+        +string nom_epreuve
+        +datetime date_heure
+        +string genre_epreuve
+        +creer_rencontre(phase: string)
+        +obtenir_classement()
+    }
+    
+    class Rencontre {
+        +int id_rencontre
+        +string phase
+        +ajouter_performance(part: Participant, perf: Performance)
+        +valider_resultat()
+    }
+    
+    class Participant {
+        <<abstract>>
+        +int id_participant
+        +string nom
+    }
+    
+    class Statistiques {
+        +int nb_participations
+        +int nb_victoires
+        +int nb_medailles
+        +mettre_a_jour(perf: Performance)
+    }
+    
+    class Athlete {
+        +string prenom
+        +date date_naissance
+        +string genre
+    }
+    
+    class Equipe {
+        +ajouter_membre(athlete: Athlete)
+    }
+    
+    class Performance {
+        <<abstract>>
+        +int rang
+        +string medaille
+    }
+    
+    class PerformanceChrono {
+        +float temps_secondes
+    }
+    
+    class PerformancePoints {
+        +int score_points
+    }
+    
+    class PerformanceDistance {
+        +float distance_metres
+    }
+
+    %% Relations
+    Sport "1" --> "0..*" Epreuve : definit
+    Site "1" --> "0..*" Epreuve : accueille
+    Competition "1" --> "1..*" Epreuve : contient
+    Epreuve "1" --> "0..*" Rencontre : se divise en
+    Rencontre "1" --> "0..*" Performance : génère
+    
+    Pays "1" --> "0..*" Athlete : nationalité
+    Pays "1" --> "0..*" Equipe : représente
+    Equipe "0..*" o-- "0..*" Athlete : appartient à
+    
+    %% Lien pour les caractéristiques / statistiques
+    Participant "1" --> "1" Statistiques : possède
+    
+    %% Héritage Participant
+    Participant <|-- Athlete 
+    Participant <|-- Equipe 
+    
+    %% Héritage Performance
+    Performance <|-- PerformanceChrono
+    Performance <|-- PerformancePoints
+    Performance <|-- PerformanceDistance
+    
+    %% Lien Performance - Participant
+    Participant "1" --> "0..*" Performance : réalise
