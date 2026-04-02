@@ -42,7 +42,7 @@ flowchart LR
 #### Les test unitaires 
 
 Les tests unitaires permettent de vérifier une partie du code (en général une fonction ou une méthode). Les objectifs du test unitaires :  
-- Tester une fonction de manière indépendantes  
+- Tester une fonction de manière indépendante  
 - Vérifier les différents cas (normal, gestion des erreurs)  
 
 #### Les tests d'intégration  
