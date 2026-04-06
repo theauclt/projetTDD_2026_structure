@@ -16,3 +16,4 @@ venv/
 .idea/
 *.sublime-project
 *.sublime-workspace
+.Rproj.user

@@ -1,26 +1,37 @@
 ---
-title: "Projet_TDD"
-format: html
-editor: visual
+lang: fr
+format:
+  pdf:
+    toc: false
+    lof: false
+    lot: false
+    toc-depth: 3
+    number-sections: true
+    include-in-header: header.tex
+    linkcolor: black
 ---
 
-## Quarto
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+\maketitle
+\thispagestyle{empty}
+\newpage
 
-## Running Code
+\setcounter{page}{1}
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+\renewcommand{\contentsname}{Sommaire}
+
+\tableofcontents
+
+
+\newpage
+# Introduction {.unnumbered}
+
+\newpage
+# Cahiers des charges
+
+
 
 ```{r}
-1 + 1
+
 ```
 
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
