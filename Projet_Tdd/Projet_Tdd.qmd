@@ -38,6 +38,23 @@ format:
 \newpage 
 ## Diagramme de cas d'utilisation 
 
+\newpage 
+# Répartition des rôles
+
+\newpage
+# Gestion des données
+
+\newpage
+# Structure du code
+
+\newpage
+# Programmation orientée objet
+
+\newpage 
+# Résultats
+
+\newpage 
+# Conclusion {.unnumbered}
 
 ```{r}
 
