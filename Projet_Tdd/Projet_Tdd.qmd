@@ -29,6 +29,14 @@ format:
 \newpage
 # Cahiers des charges
 
+\newpage 
+## Diagramme d'état et fonctionnement de l'application
+
+\newpage 
+## Diagramme de classe
+
+\newpage 
+## Diagramme de cas d'utilisation 
 
 
 ```{r}
