@@ -33,3 +33,7 @@ class Player:
             f"height={self.height}, birth_date='{self.birth_date}', "
             f"birth_place='{self.birth_place}', nickname='{self.nickname}')"
         )
+    
+    def is_tall(self, threshold=190):
+        """Détermine si le joueur est considéré comme grand (utile pour le Volley ou le Basket)."""
+        return self.height >= threshold
