@@ -1,65 +1,73 @@
-classDiagram
-    class Pays {
-        +int id_pays
-        +string nom
-        +string code_iso
-        +string drapeau_url
-    }
+c@startuml
+' Paramètres d'affichage pour la lisibilité
+skinparam linetype ortho
+left to right direction
 
-    class Athlete {
-        +int id_athlete
-        +string nom
-        +string prenom
-        +date date_naissance
-        +string genre
-    }
+abstract class Personne {
+    + id : String
+    + nom : String
+    + prenom : String
+    + dateNaissance : Date
+    + paysOrigine : String
+    + calculer_age() : int
+}
 
-    class Equipe {
-        +int id_equipe
-        +string nom_equipe
-    }
+class Sport {
+    + nom : String
+    + type : String
+}
 
-    class Sport {
-        +int id_sport
-        +string nom
-        +string categorie
-    }
+class Equipe {
+    + id : String
+    + nomLong : String
+    + nomCourt : String
+    + ville : String
+    + pays : String
+    + duree_match()
+}
 
-    class Epreuve {
-        +int id_epreuve
-        +string nom_epreuve
-        +datetime date_heure
-        +string genre_epreuve
-    }
+class Match {
+    + id : String
+    + date : Date
+    + saison : String
+    + score : String
+    + stade_lieu : String
+    + Vainqueur_match()
+}
 
-    class Site {
-        +int id_site
-        +string nom_site
-        +string ville
-    }
+class Joueur {
+    + taille : float
+    + poids : float
+    + position : String
+    + mainDominante : String
+    + calculer_statistiques()
+}
 
-    class Rencontre {
-        +int id_rencontre
-        +string phase
-    }
+class Entraineur {
+    + role : String
+    + anneesExperience : int
+}
 
-    class Performance {
-        +float valeur_score
-        +string unite_mesure
-        +int rang
-        +string medaille
-    }
+class Statistiques_match {
+    + points_buts : int
+    + fautes_penalites : int
+    + temps_de_jeu : float
+}
 
-    Pays "1" -- "0..*" Athlete : nationalité
-    Pays "1" -- "0..*" Equipe : représente
-    Sport "1" -- "0..*" Epreuve : contient
-    Site "1" -- "0..*" Epreuve : accueille
-    
-    Epreuve "1" -- "0..*" Rencontre : se divise en
-    
-    Athlete "0..*" -- "0..*" Equipe : appartient à
-    
-    %% Gestion des résultats
-    Rencontre "1" -- "0..*" Performance : génère
-    Athlete "0..1" -- "0..*" Performance : réalise (Individuel)
-    Equipe "0..1" -- "0..*" Performance : réalise (Collectif)
+' --- Relations de Hiérarchie ---
+Personne <|-- Joueur
+Personne <|-- Entraineur
+
+' --- Relations de Structure ---
+Sport "1" -- "*" Match
+Sport "1" -- "*" Equipe
+
+' --- Relations d'Organisation ---
+Equipe "1" *-- "*" Joueur
+Equipe "1" *-- "0..*" Entraineur
+Match "*" -- "2" Equipe
+
+' --- Relations de Statistiques ---
+Match "1" *-- "*" Statistiques_match
+Joueur "1" -- "*" Statistiques_match
+@enduml
