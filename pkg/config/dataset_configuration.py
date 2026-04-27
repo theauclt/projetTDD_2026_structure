@@ -41,7 +41,7 @@ team_football_config = DatasetConfiguration(
 # 3. TENNIS (ATP & WTA)
 tennis_atp_match_config = DatasetConfiguration(
     dataset_path="data/atp_matches_2024.csv", dataset_sep=",",
-    adapter=GenericMatchAdapter(col_date="tourney_date", col_team1="winner_id", col_team2="loser_id", col_score1="w_1stWon", col_score2="l_1stWon")
+    adapter=GenericMatchAdapter(col_date="tourney_date", col_team1="vainqueur_id", col_team2="loser_id", col_score1="w_1stWon", col_score2="l_1stWon")
 )
 tennis_atp_player_config = DatasetConfiguration(
     dataset_path="data/atp_players_2024.csv", dataset_sep=",",
@@ -49,7 +49,7 @@ tennis_atp_player_config = DatasetConfiguration(
 )
 tennis_wta_match_config = DatasetConfiguration(
     dataset_path="data/wta_matches_2024.csv", dataset_sep=",",
-    adapter=GenericMatchAdapter(col_date="tourney_date", col_team1="winner_id", col_team2="loser_id", col_score1="w_1stWon", col_score2="l_1stWon")
+    adapter=GenericMatchAdapter(col_date="tourney_date", col_team1="vainqueur_id", col_team2="loser_id", col_score1="w_1stWon", col_score2="l_1stWon")
 )
 tennis_wta_player_config = DatasetConfiguration(
     dataset_path="data/wta_players_2024.csv", dataset_sep=",",

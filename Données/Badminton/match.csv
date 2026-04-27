@@ -1,4 +1,4 @@
-tournament,city,country,date,tournament_type,round,player_1,player_2,winner,game_1_score,game_2_score,game_3_score
+tournament,city,country,date,tournament_type,round,player_1,player_2,vainqueur,game_1_score,game_2_score,game_3_score
 PERODUA Malaysia Masters 2020,Kuala Lumpur,Malaysia,2020-01-07,HSBC BWF World Tour Super 500,Qualification quarter final,Lyanny Alessandra Mainaky,Xuefei Qi,Xuefei Qi,10-21,15-21,
 PERODUA Malaysia Masters 2020,Kuala Lumpur,Malaysia,2020-01-07,HSBC BWF World Tour Super 500,Qualification quarter final,Yu Po Pai,Ruselli Hartawan,Ruselli Hartawan,21-13,14-21,17-21
 PERODUA Malaysia Masters 2020,Kuala Lumpur,Malaysia,2020-01-07,HSBC BWF World Tour Super 500,Qualification quarter final,Lianne Tan,Natalia Perminova,Lianne Tan,21-14,9-21,21-12

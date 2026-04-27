@@ -1,4 +1,4 @@
-tourney_id,tourney_name,surface,draw_size,tourney_level,tourney_date,match_num,winner_id,loser_id,score,best_of,round,minutes,w_ace,w_df,w_svpt,w_1stIn,w_1stWon,w_2ndWon,w_SvGms,w_bpSaved,w_bpFaced,l_ace,l_df,l_svpt,l_1stIn,l_1stWon,l_2ndWon,l_SvGms,l_bpSaved,l_bpFaced
+tourney_id,tourney_name,surface,draw_size,tourney_level,tourney_date,match_num,vainqueur_id,loser_id,score,best_of,round,minutes,w_ace,w_df,w_svpt,w_1stIn,w_1stWon,w_2ndWon,w_SvGms,w_bpSaved,w_bpFaced,l_ace,l_df,l_svpt,l_1stIn,l_1stWon,l_2ndWon,l_SvGms,l_bpSaved,l_bpFaced
 2024-0339,Brisbane,Hard,32,A,20240101,300,105777,208029,7-6(5) 6-4,3,F,136.0,8.0,2.0,74.0,52.0,40.0,13.0,11.0,3.0,3.0,9.0,3.0,95.0,58.0,44.0,16.0,11.0,8.0,9.0
 2024-0339,Brisbane,Hard,32,A,20240101,299,208029,126128,6-4 7-6(0),3,SF,97.0,7.0,4.0,72.0,48.0,39.0,11.0,11.0,1.0,2.0,5.0,5.0,66.0,35.0,31.0,10.0,11.0,5.0,7.0
 2024-0339,Brisbane,Hard,32,A,20240101,298,105777,111442,6-3 7-5,3,SF,109.0,10.0,3.0,67.0,45.0,39.0,10.0,11.0,6.0,6.0,5.0,1.0,62.0,39.0,24.0,14.0,10.0,5.0,7.0
