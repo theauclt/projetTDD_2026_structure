@@ -99,13 +99,13 @@ class StatsService:
             standings[t2]['pf'] += match.get_points_for(t2)
             standings[t2]['pa'] += match.get_points_against(t2)
 
-            winner = match.get_winner()
-            if winner == t1:
+            vainqueur = match.get_vainqueur()
+            if vainqueur == t1:
                 standings[t1]['wins'] += 1
                 standings[t1]['points'] += points_for_win
                 standings[t2]['losses'] += 1
                 standings[t2]['points'] += points_for_loss
-            elif winner == t2:
+            elif vainqueur == t2:
                 standings[t2]['wins'] += 1
                 standings[t2]['points'] += points_for_win
                 standings[t1]['losses'] += 1

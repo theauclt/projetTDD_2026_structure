@@ -1,69 +1,70 @@
 class Match:
     def __init__(self, id, date, team1, team2, score1, score2, stats=None):
+        
         self.id = id
         self.date = date
-        self.team1 = team1
-        self.team2 = team2
+        self.equipe1 = team1
+        self.equipe2 = team2
         self.score1 = score1
         self.score2 = score2
         # Le sac à dos pour toutes les autres variables !
         self.stats = stats if stats is not None else {}
         
-    def winner(self):
+    def vaiqueur(self):
         if self.score1 > self.score2:
-            return self.team1
+            return self.equipe1
         elif self.score2 > self.score1:
-            return self.team2
+            return self.equipe2
         return None
 
-    def loser(self):
+    def perdant(self):
         """Détermine le perdant."""
         if self.score1 < self.score2:
-            return self.team1
+            return self.equipe1
         elif self.score2 < self.score1:
-            return self.team2
+            return self.equipe2
         return None
 
-    def get_total_points(self):
+    def obtenir_total_points(self):
         """
         Calcule le volume total de points du match.
         Utile pour les statistiques globales de la compétition (ex: "tournoi le plus offensif").
         """
         return self.score1 + self.score2
 
-    def get_points_for(self, team_name):
+    def obtenir_points_pour(self, nom_equipe):
         """Retourne les points marqués par une équipe spécifique lors de ce match."""
-        if team_name == self.team1:
+        if nom_equipe == self.equipe1:
             return self.score1
-        elif team_name == self.team2:
+        elif nom_equipe == self.equipe2:
             return self.score2
         return 0
 
-    def get_points_against(self, team_name):
+    def obtenir_points_contre(self, nom_equipe):
         """Retourne les points encaissés par une équipe spécifique lors de ce match."""
-        if team_name == self.team1:
+        if nom_equipe == self.equipe1:
             return self.score2
-        elif team_name == self.team2:
+        elif nom_equipe == self.equipe2:
             return self.score1
         return 0
 
-    def involves_team(self, team_name):
+    def implique_equipe(self, nom_equipe):
         """
         Filtre booléen pour savoir si une équipe a participé à ce match.
         Essentiel pour récupérer l'historique d'une équipe.
         """
-        return self.team1 == team_name or self.team2 == team_name
+        return self.equipe1 == nom_equipe or self.equipe2 == nom_equipe
 
-    def get_point_difference(self):
+    def obtenir_difference_points(self):
         """Retourne l'écart de points (ou de buts/kills) entre les deux équipes."""
         return abs(self.score1 - self.score2)
 
     def __str__(self):
-        return f"{self.date} | {self.team1} {self.score1} - {self.score2} {self.team2}"
+        return f"{self.date} | {self.equipe1} {self.score1} - {self.score2} {self.equipe2}"
 
     def __repr__(self):
         return (
             f"Match(date='{self.date}', "
-            f"team1='{self.team1}', team2='{self.team2}', "
-            f"score1={self.score1}, score2={self.score2}')"
+            f"equipe1='{self.equipe1}', equipe2='{self.equipe2}', "
+            f"score1={self.score1}, score2={self.score2})"
         )
