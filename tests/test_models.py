@@ -1,27 +1,27 @@
 from src.repository.data_repository import DataRepository
-from src.dataset_configuration import volleyball_player_men_configuration
+from src.dataset_configuration import volleyball_joueur_men_configuration
 
-def test_load_players():
+def test_load_joueurs():
     print("--- Test du chargement des joueurs ---")
     
     # 1. On initialise le Repository avec la config des joueurs
     repo = DataRepository(
-        file=volleyball_player_men_configuration.dataset_path,
-        adapter=volleyball_player_men_configuration.adapter,
-        sep=volleyball_player_men_configuration.dataset_sep
+        file=volleyball_joueur_men_configuration.dataset_path,
+        adapter=volleyball_joueur_men_configuration.adapter,
+        sep=volleyball_joueur_men_configuration.dataset_sep
     )
 
     # 2. On charge les données
-    players = repo.load()
+    joueurs = repo.load()
 
     # 3. On affiche le résultat
-    print(f"Nombre de joueurs chargés : {len(players)}")
+    print(f"Nombre de joueurs chargés : {len(joueurs)}")
     
-    if players:
+    if joueurs:
         print("Aperçu des 3 premiers joueurs :")
-        for player in players[:3]:
-            print(f" - {player}")
-            print(f"   Détails : Lieu de naissance: {player.birth_place}, Taille: {player.height}cm")
+        for joueur in joueurs[:3]:
+            print(f" - {joueur}")
+            print(f"   Détails : Lieu de naissance: {joueur.birth_place}, Taille: {joueur.height}cm")
 
 if __name__ == "__main__":
-    test_load_players()
+    test_load_joueurs()

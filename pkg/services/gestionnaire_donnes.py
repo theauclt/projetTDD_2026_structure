@@ -28,6 +28,6 @@ class GestionnaireDonnees:
         """Retourne un résumé textuel d'une équipe."""
         equipe = self.equipes.get(nom_equipe)
         if equipe:
-            nom_coach = equipe.entraineur.nom if equipe.entraineur else 'Aucun'
-            return f"{equipe.nom} - Entraîneur: {nom_coach}"
+            nom_entraineur = equipe.entraineur.nom if equipe.entraineur else 'Aucun'
+            return f"{equipe.nom} - Entraîneur: {nom_entraineur}"
         return "Équipe inconnue"

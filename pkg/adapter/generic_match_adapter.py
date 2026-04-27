@@ -7,17 +7,17 @@ class GenericMatchAdapter(BaseAdapter):
     en lui indiquant simplement le nom des colonnes à utiliser.
     """
 
-    def __init__(self, col_date, col_team1, col_team2, col_score1, col_score2):
+    def __init__(self, col_date, col_equipe1, col_equipe2, col_score1, col_score2):
         """
         Initialise l'adaptateur avec les noms des colonnes du CSV.
         """
         super().__init__()
         self.col_date = col_date
-        self.col_team1 = col_team1
-        self.col_team2 = col_team2
+        self.col_equipe1 = col_equipe1
+        self.col_equipe2 = col_equipe2
         self.col_score1 = col_score1
         self.col_score2 = col_score2
-        self.main_cols = [col_date, col_team1, col_team2, col_score1, col_score2]
+        self.main_cols = [col_date, col_equipe1, col_equipe2, col_score1, col_score2]
     
     def adapt(self, row) -> Match:
         """
@@ -28,8 +28,8 @@ class GenericMatchAdapter(BaseAdapter):
         return Match(
             id=None,
             date=row[self.col_date],
-            team1=row[self.col_team1],
-            team2=row[self.col_team2],
+            equipe1=row[self.col_equipe1],
+            equipe2=row[self.col_equipe2],
             score1=int(row[self.col_score1]),
             score2=int(row[self.col_score2]),
             stats=extra_stats
@@ -41,8 +41,8 @@ class GenericMatchAdapter(BaseAdapter):
         """
         return {
             self.col_date: match.date,
-            self.col_team1: match.team1,
-            self.col_team2: match.team2,
+            self.col_equipe1: match.equipe1,
+            self.col_equipe2: match.equipe2,
             self.col_score1: match.score1,
             self.col_score2: match.score2
         }

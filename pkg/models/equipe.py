@@ -14,7 +14,8 @@ class Equipe:
         Région ou continent de l'équipe. Par défaut None.
     """
     
-    def __init__(self, nom, abreviation=None, lieu=None, region=None):
+    def __init__(self, id, nom, abreviation=None, lieu=None, region=None):
+        self.id = id
         self.nom = nom
         self.abreviation = abreviation or nom
         self.lieu = lieu

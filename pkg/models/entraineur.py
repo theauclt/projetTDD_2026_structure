@@ -13,7 +13,7 @@ class Entraineur:
     date_naissance : str, optional
         Date de naissance de l'entraîneur. Par défaut None.
     role : str, optional
-        Rôle précis dans le staff (ex: 'Head Coach', 'Assistant Coach'). Par défaut None.
+        Rôle précis dans le staff (ex: 'Head Entraineur', 'Assistant Entraineur'). Par défaut None.
     nom_equipe : str, optional
         Nom de l'équipe qu'il entraîne actuellement (pour faire le lien avec l'objet Equipe). Par défaut None.
     """

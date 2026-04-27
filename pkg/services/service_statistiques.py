@@ -1,6 +1,4 @@
 from collections import defaultdict
-from pkg.models.match import Match
-
 
 class ServiceStatistiques:
     """
