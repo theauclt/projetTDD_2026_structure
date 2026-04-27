@@ -9,7 +9,6 @@ class MatchsService:
         self.repository = repository
         self.matches = repository.load()
 
-    # 🔹 CREATE
     def create_match(self, date, team1, team2, score1, score2, sport):
         match = Match(
             date=date,

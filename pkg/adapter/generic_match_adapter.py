@@ -1,4 +1,4 @@
-from pkg.adapters.base_adapter import BaseAdapter
+from pkg.adapter.base_adapter import BaseAdapter
 from pkg.models.match import Match
 
 class GenericMatchAdapter(BaseAdapter):
@@ -17,18 +17,22 @@ class GenericMatchAdapter(BaseAdapter):
         self.col_team2 = col_team2
         self.col_score1 = col_score1
         self.col_score2 = col_score2
-
+        self.main_cols = [col_date, col_team1, col_team2, col_score1, col_score2]
+    
     def adapt(self, row) -> Match:
         """
         Transforme une ligne de données brutes en un objet Match propre.
         """
+        extra_stats = {key: value for key, value in row.items() if key not in self.main_cols}
+        
         return Match(
             id=None,
             date=row[self.col_date],
             team1=row[self.col_team1],
             team2=row[self.col_team2],
             score1=int(row[self.col_score1]),
-            score2=int(row[self.col_score2])
+            score2=int(row[self.col_score2]),
+            stats=extra_stats
         )
 
     def to_row(self, match: Match):

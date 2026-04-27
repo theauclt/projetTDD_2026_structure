@@ -28,7 +28,7 @@ class StatsService:
     def add_match(self, match: Match):
         """
         Ajoute un nouveau match et met à jour les caractéristiques des équipes/joueurs
-        en temps réel. C'est l'exigence principale du cahier des charges !
+        en temps réel.
         """
         self.matches.append(match)
 

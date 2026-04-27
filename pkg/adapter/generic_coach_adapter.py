@@ -1,4 +1,4 @@
-from pkg.adapters.base_adapter import BaseAdapter
+from pkg.adapter.base_adapter import BaseAdapter
 from pkg.models.coach import Coach
 
 class GenericCoachAdapter(BaseAdapter):

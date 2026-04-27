@@ -1,12 +1,14 @@
 class Team:
-    """Modèle représentant une équipe ou un club."""
-    def __init__(self, name, abbreviation=None, location=None, region=None):
+    """Modèle représentant une équipe participant à la compétition."""
+    # NOUVEAU : Ajout du paramètre id
+    def __init__(self, id, name, abbreviation=None, location=None, region=None):
+        self.id = id
         self.name = name
         self.abbreviation = abbreviation or name
         self.location = location
         self.region = region
-        self.players = []  # Liste d'objets Player
-        self.coach = None  # Objet Coach
+        self.players = []  
+        self.coach = None
 
     def add_player(self, player):
         """Ajoute un joueur à l'effectif de l'équipe."""

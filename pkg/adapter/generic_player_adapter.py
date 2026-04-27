@@ -1,5 +1,5 @@
 import pandas as pd
-from pkg.adapters.base_adapter import BaseAdapter
+from pkg.adapter.base_adapter import BaseAdapter
 from pkg.models.player import Player
 
 class GenericPlayerAdapter(BaseAdapter):

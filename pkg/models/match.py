@@ -1,12 +1,14 @@
 class Match:
-
-    def __init__(self, id, date, team1, team2, score1, score2):
+    def __init__(self, id, date, team1, team2, score1, score2, stats=None):
+        self.id = id
         self.date = date
         self.team1 = team1
         self.team2 = team2
         self.score1 = score1
         self.score2 = score2
-
+        # Le sac à dos pour toutes les autres variables !
+        self.stats = stats if stats is not None else {}
+        
     def winner(self):
         if self.score1 > self.score2:
             return self.team1
