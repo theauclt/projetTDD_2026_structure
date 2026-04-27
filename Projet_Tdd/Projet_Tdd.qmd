@@ -27,34 +27,51 @@ format:
 # Introduction {.unnumbered}
 
 \newpage
-# Cahiers des charges
+# Présentation du projet
 
 \newpage 
-## Diagramme d'état et fonctionnement de l'application
+## Contexte
 
 \newpage 
-## Diagramme de classe
+## Besoins fonctionnels
 
 \newpage 
-## Diagramme de cas d'utilisation 
+## Présentation des données 
 
 \newpage 
-# Répartition des rôles
+# Conception de l’application
+
+## Modélisation
+
+## Architecture générale 
+
+## Choix technologiques
 
 \newpage
-# Gestion des données
+# Réalisation
+
+## Organisation du travail
+
+## Développement
+
+## Difficultés rencontrées
 
 \newpage
-# Structure du code
+# Tests et validation
 
-\newpage
-# Programmation orientée objet
+## Stratégie de test
 
-\newpage 
-# Résultats
+## Quelques résultats
+
+## Limites de l’application
 
 \newpage 
 # Conclusion {.unnumbered}
+
+\newpage 
+
+# Annexes {.unnumbered}
+
 
 ```{r}
 
