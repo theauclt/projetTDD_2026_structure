@@ -29,10 +29,10 @@ format:
 \newpage
 # Présentation du projet
 
-\newpage 
+
 ## Contexte
 
-\newpage 
+
 ## Besoins fonctionnels
 
 \newpage 
@@ -78,6 +78,9 @@ Avant de débuter l’analyse de nos différents jeux de données sportives, nou
 ## Modélisation
 
 ## Architecture générale 
+
+Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant
+une responsabilité bien définie :
 
 ## Choix technologiques
 

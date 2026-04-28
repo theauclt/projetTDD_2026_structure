@@ -47,8 +47,6 @@ def afficher_statistiques_basket():
             print(f"{i:<3} | {nom:<22} | {victoires:<4} | {moy['pts_pour']:<5} | {moy['pts_contre']:<5} | {moy['rebonds']:<4} | {moy['passes']:<4} | {moy['interceptions']:<4} | {moy['contres']:<4} | {moy['pct_2pts']:<5} | {moy['pct_3pts']:<5} | {moy['pct_lf']:<5}")
 
 
-
-
 def explorer_annuaire_basket():
     """Menu interactif pour naviguer des équipes vers les joueurs spécifiques."""
     
