@@ -29,10 +29,10 @@ format:
 \newpage
 # Présentation du projet
 
-\newpage 
+
 ## Contexte
 
-\newpage 
+
 ## Besoins fonctionnels
 
 \newpage 
