@@ -17,7 +17,7 @@ class Entraineur:
     nom_equipe : str, optional
         Nom de l'équipe qu'il entraîne actuellement (pour faire le lien avec l'objet Equipe). Par défaut None.
     """
-    
+  
     def __init__(self, nom, prenom=None, pays=None, date_naissance=None, role=None, nom_equipe=None):
         self.nom = nom
         self.prenom = prenom

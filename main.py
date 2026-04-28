@@ -42,7 +42,7 @@ def afficher_detail_match_nba(index_match=0):
     """Affiche les détails (sac à dos) d'un match spécifique."""
     noms_equipes = charger_noms_equipes()
     repo_matchs = DataRepository(
-        file=basket_match_config.dataset_path, 
+        file=basket_match_config.dataset_path,
         adapter=basket_match_config.adapter,
         sep=basket_match_config.dataset_sep)
     liste_matchs = repo_matchs.load()
@@ -59,7 +59,7 @@ def afficher_detail_match_nba(index_match=0):
 
 if __name__ == "__main__":
     print("Logiciel d'Analyse Multisports 2026")
-    choix = input("Tapez '1' pour le classement NBA, '2' pour les détails : ")
+    choix = input("Tapez '1' pour le classement NBA, '2' pour le tennis : ")
     
     if choix == '1':
         afficher_classement_basket()
