@@ -114,3 +114,97 @@ class ServiceStatistiques:
 
         # Tri : Points > Différence > Points marqués
         return sorted(classement.items(), key=lambda x: (x[1]['points'], x[1]['diff'], x[1]['pm']), reverse=True)
+
+
+class ServiceStatistiquesBasket(ServiceStatistiques):
+    """Service spécialisé pour traiter les statistiques complexes de la NBA."""
+    
+    def __init__(self):
+        super().__init__() # Initialise les victoires/défaites du service parent
+        
+        # On crée un dictionnaire pour stocker les totaux de la saison
+        self.stats_nba = defaultdict(lambda: {
+            'matchs_joues': 0, 'points_marques': 0, 'points_encaisses': 0,
+            'rebonds': 0, 'passes': 0, 'interceptions': 0, 'contres': 0,
+            'fg2m': 0, 'fg2a': 0, # 2 points (réussis / tentés)
+            'fg3m': 0, 'fg3a': 0, # 3 points
+            'ftm': 0, 'fta': 0    # Lancers francs
+        })
+
+    def charger_matchs(self, matchs):
+        # 1. On lance le calcul de base (victoires) du parent
+        super().charger_matchs(matchs)
+        
+        # 2. On plonge dans le sac à dos pour les stats NBA
+        for match in matchs:
+            # === STATS POUR L'ÉQUIPE À DOMICILE (Equipe 1) ===
+            d_home = self.stats_nba[match.equipe1]
+            d_home['matchs_joues'] += 1
+            d_home['points_marques'] += match.score1
+            d_home['points_encaisses'] += match.score2
+            
+            # On utilise float() pour éviter les bugs si le CSV a des vides
+            d_home['rebonds'] += float(match.stats.get('reb_home', 0))
+            d_home['passes'] += float(match.stats.get('ast_home', 0))
+            d_home['interceptions'] += float(match.stats.get('stl_home', 0))
+            d_home['contres'] += float(match.stats.get('blk_home', 0))
+            
+            # Calcul des tirs (FGM = Field Goals Made = Total des tirs)
+            fgm_h = float(match.stats.get('fgm_home', 0))
+            fga_h = float(match.stats.get('fga_home', 0))
+            fg3m_h = float(match.stats.get('fg3m_home', 0))
+            fg3a_h = float(match.stats.get('fg3a_home', 0))
+            
+            d_home['fg3m'] += fg3m_h
+            d_home['fg3a'] += fg3a_h
+            d_home['fg2m'] += (fgm_h - fg3m_h) # 2pts = Total - 3pts
+            d_home['fg2a'] += (fga_h - fg3a_h)
+            d_home['ftm'] += float(match.stats.get('ftm_home', 0))
+            d_home['fta'] += float(match.stats.get('fta_home', 0))
+
+            # === STATS POUR L'ÉQUIPE À L'EXTÉRIEUR (Equipe 2) ===
+            d_away = self.stats_nba[match.equipe2]
+            d_away['matchs_joues'] += 1
+            d_away['points_marques'] += match.score2
+            d_away['points_encaisses'] += match.score1
+            
+            d_away['rebonds'] += float(match.stats.get('reb_away', 0))
+            d_away['passes'] += float(match.stats.get('ast_away', 0))
+            d_away['interceptions'] += float(match.stats.get('stl_away', 0))
+            d_away['contres'] += float(match.stats.get('blk_away', 0))
+            
+            fgm_a = float(match.stats.get('fgm_away', 0))
+            fga_a = float(match.stats.get('fga_away', 0))
+            fg3m_a = float(match.stats.get('fg3m_away', 0))
+            fg3a_a = float(match.stats.get('fg3a_away', 0))
+            
+            d_away['fg3m'] += fg3m_a
+            d_away['fg3a'] += fg3a_a
+            d_away['fg2m'] += (fgm_a - fg3m_a)
+            d_away['fg2a'] += (fga_a - fg3a_a)
+            d_away['ftm'] += float(match.stats.get('ftm_away', 0))
+            d_away['fta'] += float(match.stats.get('fta_away', 0))
+
+    def obtenir_moyennes(self, equipe_id):
+        """Calcule et retourne les moyennes par match pour une équipe."""
+        s = self.stats_nba.get(equipe_id)
+        if not s or s['matchs_joues'] == 0:
+            return None
+            
+        m = s['matchs_joues']
+        
+        # Fonction interne pour calculer les pourcentages proprement
+        def pct(reussis, tentes):
+            return round((reussis / tentes) * 100, 1) if tentes > 0 else 0.0
+
+        return {
+            'pts_pour': round(s['points_marques'] / m, 1),
+            'pts_contre': round(s['points_encaisses'] / m, 1),
+            'rebonds': round(s['rebonds'] / m, 1),
+            'passes': round(s['passes'] / m, 1),
+            'interceptions': round(s['interceptions'] / m, 1),
+            'contres': round(s['contres'] / m, 1),
+            'pct_2pts': pct(s['fg2m'], s['fg2a']),
+            'pct_3pts': pct(s['fg3m'], s['fg3a']),
+            'pct_lf': pct(s['ftm'], s['fta'])
+        }

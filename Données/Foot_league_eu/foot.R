@@ -1,5 +1,0 @@
-country <- read.csv("~/Projet_TDD/Foot/country.csv")
-match <- read.csv("~/Projet_TDD/Foot/match.csv")
-player <- read.csv("~/Projet_TDD/Foot/player.csv")
-team <- read.csv("~/Projet_TDD/Foot/team.csv")
-league <- read.csv("~/Projet_TDD/Foot/league.csv")
