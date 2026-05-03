@@ -1,4 +1,6 @@
 from collections import defaultdict
+import math
+
 
 class ServiceStatistiques:
     """
@@ -207,4 +209,70 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
             'pct_2pts': pct(s['fg2m'], s['fg2a']),
             'pct_3pts': pct(s['fg3m'], s['fg3a']),
             'pct_lf': pct(s['ftm'], s['fta'])
+        }
+
+
+class ServiceStatistiquesTennis(ServiceStatistiques):
+    """Service spécialisé pour calculer les statistiques des joueurs de Tennis."""
+    
+    def __init__(self):
+        super().__init__()
+        # Notre carnet de notes pour chaque joueur
+        self.stats_joueurs = defaultdict(lambda: {
+            'matchs_joues': 0,
+            'victoires': 0,
+            'defaites': 0,
+            'total_aces': 0,
+            'total_df': 0,
+            'total_minutes': 0
+        })
+
+    def charger_matchs(self, matchs):
+        """Parcourt les matchs et attribue les stats au gagnant et au perdant."""
+        super().charger_matchs(matchs)
+
+        def nettoyer_valeur(val):
+            """Convertit la valeur en nombre, et transforme les 'nan' ou erreurs en 0."""
+            try:
+                f = float(val)
+                if math.isnan(f):
+                    return 0.0
+                return f
+            except (ValueError, TypeError):
+                return 0.0
+        
+        for match in matchs:
+            # === STATS DU VAINQUEUR (equipe1) ===
+            v = self.stats_joueurs[match.equipe1]
+            v['matchs_joues'] += 1
+            v['victoires'] += 1
+            
+            # On utilise notre fonction pour sécuriser l'addition
+            v['total_aces'] += nettoyer_valeur(match.stats.get('w_ace', 0))
+            v['total_df'] += nettoyer_valeur(match.stats.get('w_df', 0))
+            v['total_minutes'] += nettoyer_valeur(match.stats.get('minutes', 0))
+
+            # === STATS DU PERDANT (equipe2) ===
+            p = self.stats_joueurs[match.equipe2]
+            p['matchs_joues'] += 1
+            p['defaites'] += 1
+            
+            # Pareil pour le perdant
+            p['total_aces'] += nettoyer_valeur(match.stats.get('l_ace', 0))
+            p['total_df'] += nettoyer_valeur(match.stats.get('l_df', 0))
+            p['total_minutes'] += nettoyer_valeur(match.stats.get('minutes', 0))
+
+    def obtenir_moyennes_joueur(self, joueur_id):
+        """Calcule et retourne les moyennes par match pour un joueur donné."""
+        s = self.stats_joueurs.get(joueur_id)
+        if not s or s['matchs_joues'] == 0:
+            return None
+            
+        m = s['matchs_joues']
+        return {
+            'victoires': s['victoires'],
+            'defaites': s['defaites'],
+            'aces_par_match': round(s['total_aces'] / m, 1),
+            'df_par_match': round(s['total_df'] / m, 1),
+            'minutes_moyennes': round(s['total_minutes'] / m, 0)
         }

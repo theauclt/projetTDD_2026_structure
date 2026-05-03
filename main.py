@@ -1,8 +1,17 @@
 from pkg.repository.data_repository import DataRepository
-from pkg.config.dataset_configuration import basket_match_config, basket_equipe_config, basket_joueur_config
-from pkg.services.service_statistiques import ServiceStatistiques
+from pkg.config.dataset_configuration import (
+    basket_match_config, 
+    basket_equipe_config, 
+    basket_joueur_config,
+    tennis_atp_match_config,
+    tennis_atp_joueur_config,
+    tennis_wta_match_config,  
+    tennis_wta_joueur_config
+)
+from pkg.services.service_statistiques import ServiceStatistiquesTennis
 from pkg.services.service_statistiques import ServiceStatistiquesBasket
 from pkg.services.service_annuaire_joueur import ServiceAnnuaireJoueurs
+
 
 def charger_dictionnaire_noms(config_donnees):
     repo = DataRepository(
@@ -16,6 +25,7 @@ def charger_dictionnaire_noms(config_donnees):
 # ==========================================
 # 2. SCÉNARIOS D'ANALYSE
 # ==========================================
+
 def afficher_statistiques_basket():
     print("\n" + "="*90)
     print("🏀 CLASSEMENT ET STATISTIQUES AVANCÉES NBA 2022/2023")
@@ -144,6 +154,77 @@ def explorer_annuaire_basket():
         except (ValueError, IndexError):
             print("⚠️ Numéro d'équipe invalide. Veuillez réessayer.")
 
+
+def explorer_annuaire_tennis(config_joueurs, config_matchs, nom_circuit):
+    """Menu interactif pour explorer les statistiques des joueurs de Tennis."""
+    
+    print(f"\n⏳ Chargement de la base de données {nom_circuit}...")
+    
+    # 1. Chargement des joueurs (L'Annuaire)
+    repo_joueurs = DataRepository(
+        file=config_joueurs.dataset_path,
+        adapter=config_joueurs.adapter,
+        sep=config_joueurs.dataset_sep)
+    annuaire = ServiceAnnuaireJoueurs()
+    annuaire.charger_joueurs(repo_joueurs.load())
+    
+    # 2. Chargement des matchs (Le Service de Stats)
+    repo_matchs = DataRepository(
+        file=config_matchs.dataset_path,
+        adapter=config_matchs.adapter,
+        sep=config_matchs.dataset_sep)
+    service_stats = ServiceStatistiquesTennis()
+    service_stats.charger_matchs(repo_matchs.load())
+
+    # --- MENU DE RECHERCHE ---
+    while True:
+        print("\n" + "="*50)
+        print(f"🎾 EXPLORATEUR DE JOUEURS - {nom_circuit}")
+        print("="*50)
+        
+        # Pour simplifier, on affiche le top 20 des joueurs chargés pour que l'utilisateur puisse choisir
+        liste_joueurs = list(annuaire.annuaire.values())[:20] 
+        
+        for idx, joueur in enumerate(liste_joueurs, start=1):
+            print(f"{idx:2}. {joueur.nom_complet}")
+            
+        print("-" * 50)
+        print(f"{len(liste_joueurs) + 1}. 🔙 Retour au menu principal")
+        
+        choix = input("\n👉 Choisissez un joueur (numéro) pour voir ses stats : ")
+        
+        if choix == str(len(liste_joueurs) + 1):
+            break
+            
+        try:
+            idx_choisi = int(choix) - 1
+            joueur = liste_joueurs[idx_choisi]
+            stats = service_stats.obtenir_moyennes_joueur(joueur.id)
+            
+            print("\n" + "★"*45)
+            print(f" 👤 PROFIL ET STATS : {joueur.nom_complet.upper()}")
+            print("★"*45)
+            print(f"  Taille       : {joueur.taille} cm")
+            print(f"  Main forte   : {getattr(joueur, 'main_forte', 'N/A')}")
+            print(f"  Pays         : {getattr(joueur, 'pays_ioc', 'N/A')}")
+            print("-" * 45)
+            
+            if stats:
+                print(f"  Victoires    : {stats['victoires']}")
+                print(f"  Défaites     : {stats['defaites']}")
+                print(f"  Aces / match : {stats['aces_par_match']}")
+                print(f"  DF / match   : {stats['df_par_match']}")
+                print(f"  Temps moyen  : {stats['minutes_moyennes']} minutes")
+            else:
+                print("  ⚠️ Aucune donnée de match trouvée pour ce joueur.")
+            print("★"*45)
+            
+            input("\nAppuyez sur Entrée pour continuer...")
+            
+        except (ValueError, IndexError):
+            print("⚠️ Choix invalide.")
+    
+
 def lancer_application():
     while True:
         print("\n" + "*"*50)
@@ -162,9 +243,9 @@ def lancer_application():
         elif choix == '2':
             explorer_annuaire_basket() # <-- Appel de notre nouvelle fonction
         elif choix == '3':
-            afficher_statistiques_tennis(tennis_atp_match_config, tennis_atp_joueur_config, "ATP")
+            explorer_annuaire_tennis(tennis_atp_joueur_config, tennis_atp_match_config, "ATP")
         elif choix == '4':
-            afficher_statistiques_tennis(tennis_wta_match_config, tennis_wta_joueur_config, "WTA")
+            explorer_annuaire_tennis(tennis_wta_joueur_config, tennis_wta_match_config, "WTA")
         elif choix == '5':
             print("\nFermeture du logiciel. À bientôt ! 👋\n")
             break

@@ -1,5 +1,5 @@
 from pkg.adapter.generic_equipe_adapter import GenericEquipeAdapter
-from pkg.adapter.generic_match_adapter import GenericMatchAdapter
+from pkg.adapter.generic_match_adapter import GenericMatchAdapter, TennisMatchAdapter
 from pkg.adapter.generic_joueur_adapter import TennisJoueurAdapter, BasketJoueurAdapter
 
 
@@ -12,29 +12,28 @@ class DatasetConfiguration:
 
 # 1. TENNIS (ATP & WTA)
 tennis_atp_match_config = DatasetConfiguration(
-    dataset_path="data/atp_matches_2024.csv", 
+    dataset_path="Données/Tennis/atp_matches_2024.csv", # (Assure-toi que le chemin est bon)
     dataset_sep=",",
-    adapter=GenericMatchAdapter(
-        col_date="tourney_date", 
-        col_equipe1="winner_id", 
-        col_equipe2="loser_id", 
-        col_score1="w_1stWon", 
-        col_score2="l_1stWon")
+    adapter=TennisMatchAdapter(
+        col_id="match_num",
+        col_date="tourney_date",
+        col_vainqueur="vainqueur_id", # Parfait, ça correspond à ton CSV !
+        col_perdant="loser_id"
+    )
 )
-
 tennis_wta_match_config = DatasetConfiguration(
-    dataset_path="data/wta_matches_2024.csv", 
+    dataset_path="Données/Tennis/wta_matches_2024.csv", 
     dataset_sep=",",
-    adapter=GenericMatchAdapter(
-        col_date="tourney_date", 
-        col_equipe1="winner_id", 
-        col_equipe2="loser_id", 
-        col_score1="w_1stWon", 
-        col_score2="l_1stWon")
+    adapter=TennisMatchAdapter(
+        col_id="match_num",
+        col_date="tourney_date",
+        col_vainqueur="vainqueur_id", # Parfait, ça correspond à ton CSV !
+        col_perdant="loser_id"
+    )
 )
 
 tennis_wta_joueur_config = DatasetConfiguration(
-    dataset_path="data/wta_players_2024.csv", 
+    dataset_path="Données/Tennis/wta_players_2024.csv", 
     dataset_sep=",",
     adapter=TennisJoueurAdapter(
         col_id="player_id", 
@@ -47,7 +46,7 @@ tennis_wta_joueur_config = DatasetConfiguration(
 )
 
 tennis_atp_joueur_config = DatasetConfiguration(
-    dataset_path="data/atp_players_2024.csv", 
+    dataset_path="Données/Tennis/atp_players_2024.csv", 
     dataset_sep=",",
     adapter=TennisJoueurAdapter(
         col_id="player_id", 
