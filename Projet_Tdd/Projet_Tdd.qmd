@@ -38,8 +38,12 @@ format:
 \newpage 
 ## Présentation des données 
 
-Nous avons choisi d'utiliser seulement certains jeu de données parmis ceux proposés afin de modéliser notre application.
-Nous avons travaillé à partir des fichiers suivants :
+Nous avons choisi d’utiliser seulement certains jeux de données parmi ceux proposés afin de modéliser notre application. Notre sélection a été pensée pour diversifier au maximum notre approche : nous avons ainsi veillé à inclure à la fois un sport collectif et un sport individuel, tout en intégrant des données issues du sport féminin. Dans cette optique, nous avons travaillé à partir des fichiers suivants :
+
+* **Basket-ball** :
+    * `game.csv` : Données sur les matchs NBA.
+    * `player.csv` : Informations sur les joueurs NBA.
+    * `team.csv` : Informations sur les équipes NBA.
 
 * **Tennis** :
     * `atp_matches_2024.csv` : Résultats détaillés des matchs du circuit ATP.
@@ -47,28 +51,6 @@ Nous avons travaillé à partir des fichiers suivants :
     * `wta_matches_2024.csv` : Résultats détaillés des matchs du circuit WTA.
     * `wta_players_2024.csv` : Informations sur les joueuses du circuit WTA.
 
-* **Badminton** :
-    * `match.csv` : Données sur les matchs.
-    * `player.csv` : Informations sur les joueurs.
-
-* **Basket-ball** :
-    * `game.csv` : Données sur les matchs NBA.
-    * `player.csv` : Informations sur les joueurs NBA.
-    * `team.csv` : Informations sur les équipes NBA.
-
-* **Football Champions League** :
-    * `match.csv` : 
-    * `player.csv` : 
-    * `team.csv` : 
-
-* **Volley-ball** :
-    * `coach_men.csv`: Informations sur les coachs des équipes masculines
-    * `coach_women.csv`: Informations sur les coachs des équipes féminines
-    * `country.csv`
-    * `match_men.csv`
-    * `match_women.csv`
-    * `player_men.csv`
-    * `player_women.csv`
 
 Avant de débuter l’analyse de nos différents jeux de données sportives, nous avons réalisé une phase d’exploration approfondie afin d'en garantir la fiabilité. Cette étape a consisté à identifier d'éventuels doublons et à recenser les valeurs manquantes qui auraient pu provoquer des erreurs lors de certaines demandes. Ces vérifications préliminaires nous permettent de confirmer que les bases de données sont exploitables.
 
@@ -77,10 +59,16 @@ Avant de débuter l’analyse de nos différents jeux de données sportives, nou
 
 ## Modélisation
 
+- diagramme de classe
+- diagramme de cas d'utilisation
+- (diagramme d'activité)
+
 ## Architecture générale 
 
 Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant
 une responsabilité bien définie :
+
+(faire l'architecture du code : cf page 4 rapport Lina)
 
 ## Choix technologiques
 
@@ -89,9 +77,25 @@ une responsabilité bien définie :
 
 ## Organisation du travail
 
+L’organisation de ce projet a débuté par une phase de réflexion collective afin de structurer les axes majeurs de développement de l'application. Cette première étape de modélisation nous a permis d'accorder nos visions techniques avant que l'arrivée concrète des jeux de données ne nous permette d'affiner la structure des classes et la logique des méthodes de traitement. 
+
+Une fois ce cadre méthodologique établi, nous avons réparti le développement technique de la façon suivante : Théau s’est occupé de la gestion du flux de données, développant les scripts d’insertion et les adaptateurs nécessaires à l’intégration, tandis que Milyan s’est concentré sur l’architecture logicielle en codant l’ensemble des classes structurantes du système. En parallèle, Gwenaël a pris en charge le contrôle qualité à travers la vérification de la propreté des données, tout en concevant l’interface utilisateur afin de permettre une accessibilité simple aux données. 
+
+(faire le paragraphe sur les tests)
+
+Afin de fluidifier notre collaboration et d'assurer la cohérence de notre développement, nous avons utilisé Git. Cet outil a été indispensable pour travailler simultanément sur le même code source, gérer les fusions de nos travaux respectifs et conserver un historique rigoureux de chaque étape du projet. 
+
+Nous avons ensuite rédigé le rapport tous les trois, en choisissant d'utiliser l'outil Quarto.
+
+
 ## Développement
 
 ## Difficultés rencontrées
+
+L’une des principales difficultés de ce projet a résidé dans son démarrage : en l'absence de sujet imposé et n'ayant pas encore les jeux de données à notre disposition, il a été particulièrement complexe de lancer une dynamique de travail concrète. Cette phase d'incertitude a rendu difficile la définition du concept même de notre future application, car il est délicat de structurer une architecture logicielle ou d'imaginer des fonctionnalités pertinentes sans connaître la nature exacte, le volume et les contraintes des données à traiter. 
+
+
+(faire difficultés sur le code)
 
 \newpage
 # Tests et validation
@@ -101,6 +105,8 @@ une responsabilité bien définie :
 ## Quelques résultats
 
 ## Limites de l’application
+
+Le choix de nous concentrer exclusivement sur deux sports rend l'application particulièrement spécifique. L'interface utilisateur ayant été finement adaptée aux caractéristiques propres de ces disciplines, cette spécialisation crée une contrainte majeure en termes d'évolutivité : l'ajout d'un nouveau sport s'avère complexe. En effet, chaque nouvelle catégorie nécessiterait une adaptation de l'interface pour répondre à ses spécificités, ce qui limite pour sa capacité à s'ouvrir à d'autres domaines sportifs sans un travail de développement supplémentaire conséquent.
 
 \newpage 
 # Conclusion {.unnumbered}
