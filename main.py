@@ -56,7 +56,8 @@ def afficher_statistiques_basket():
         if moy:
             print(f"{i:<3} | {nom:<22} | {victoires:<4} | {moy['pts_pour']:<5} | {moy['pts_contre']:<5} | {moy['rebonds']:<4} | {moy['passes']:<4} | {moy['interceptions']:<4} | {moy['contres']:<4} | {moy['pct_2pts']:<5} | {moy['pct_3pts']:<5} | {moy['pct_lf']:<5}")
 
-
+    input("\nAppuyez sur Entrée pour revenir à l'effectif...")
+    
 def explorer_annuaire_basket():
     """Menu interactif pour naviguer des équipes vers les joueurs spécifiques."""
     
@@ -225,33 +226,69 @@ def explorer_annuaire_tennis(config_joueurs, config_matchs, nom_circuit):
             print("⚠️ Choix invalide.")
     
 
-def lancer_application():
+def menu_tennis():
     while True:
         print("\n" + "*"*50)
-        print(" 🏆 TABLEAU DE BORD MULTISPORTS 2026")
+        print(" 🏆 TABLEAU DE BORD TENNIS ATP/WTA 🏆")
         print("*"*50)
-        print("1. 🏀 NBA : Classement et Statistiques")
-        print("2. 🏀 NBA : Explorer les Effectifs (Joueurs)") # <-- La nouvelle option !
-        print("3. 🎾 TENNIS ATP (Classement Hommes)")
-        print("4. 🎾 TENNIS WTA (Classement Femmes)")
-        print("5. ❌ Quitter")
+        print("1. 🎾 ATP : Statistiques des Joueurs")
+        print("2. 🎾 WTA : Statistiques des Joueuses")
+        print("3. 🔙 Retour au menu principal")
         
-        choix = input("\n👉 Entrez votre choix (1-5) : ")
+        choix = input("\n👉 Entrez votre choix (1-3) : ")
         
         if choix == '1':
-            afficher_statistiques_basket()
-        elif choix == '2':
-            explorer_annuaire_basket() # <-- Appel de notre nouvelle fonction
-        elif choix == '3':
             explorer_annuaire_tennis(tennis_atp_joueur_config, tennis_atp_match_config, "ATP")
-        elif choix == '4':
+        elif choix == '2':
             explorer_annuaire_tennis(tennis_wta_joueur_config, tennis_wta_match_config, "WTA")
-        elif choix == '5':
-            print("\nFermeture du logiciel. À bientôt ! 👋\n")
+        elif choix == '3':
             break
         else:
             print("\n⚠️ Choix invalide, veuillez réessayer.")
 
+def menu_basket():
+    while True:
+        print("\n" + "*"*50)
+        print(" 🏆 TABLEAU DE BORD NBA 🏆")
+        print("*"*50)
+        print("1. 🏀 NBA : Classement et Statistiques par équipes")
+        print("2. 🏀 NBA : Explorer les Effectifs")
+        print("3. 🔙 Retour au menu principal")
+        
+        choix = input("\n👉 Entrez votre choix (1-3) : ")
+        
+        if choix == '1':
+            afficher_statistiques_basket()
+        elif choix == '2':
+            explorer_annuaire_basket()
+        elif choix == '3':
+            break
+        else:
+            print("\n⚠️ Choix invalide, veuillez réessayer.")
+
+
+def lancer_application():
+
+    while True:
+        print("\n" + "*"*50)
+        print(" 🏆 TABLEAU DE BORD MULTISPORTS 2026")
+        print("*"*50)
+        print("CHOIX DU SPORT :")
+        print("1. 🏀 NBA 🏀")
+        print("2. 🎾 TENNIS 🎾")
+        print("3. ❌ Quitter")
+        
+        choix = input("\n👉 Entrez votre choix (1-3) : ")
+        
+        if choix == '1':
+            menu_basket()
+        elif choix == '2':
+            menu_tennis()
+        elif choix == '3':
+            print("\nFermeture du logiciel. À bientôt ! 👋\n")
+            break
+        else:
+            print("\n⚠️ Choix invalide, veuillez réessayer.")
 
 if __name__ == "__main__":
     lancer_application()

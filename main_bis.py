@@ -2,25 +2,6 @@ from pkg.repository.data_repository import DataRepository
 from pkg.config.dataset_configuration import basket_match_config, basket_equipe_config
 from pkg.services.service_statistiques import ServiceStatistiques
 
-def afficher_stats_equipes_basket():
-    print("\n--- STATISTIQUES DES ÉQUIPES (NBA) ---")
-    # Chargement des noms pour la jointure
-    repo_eq = DataRepository(basket_equipe_config.dataset_path, basket_equipe_config.adapter, basket_equipe_config.dataset_sep)
-    equipe_map = {str(e.id): e.nom for e in repo_eq.load()}
-
-    # Calcul des stats via les matchs
-    repo_m = DataRepository(basket_match_config.dataset_path, basket_match_config.adapter, basket_match_config.dataset_sep)
-    service = ServiceStatistiques()
-    service.charger_matchs(repo_m.load())
-
-    for i, (id_eq, stats) in enumerate(service.obtenir_classement_global()[:10], 1):
-        nom = equipe_map.get(str(id_eq), f"ID:{id_eq}")
-        print(f"{i:2}. {nom:<25} | Victoires: {stats['victoires']}")
-
-def afficher_stats_joueurs_basket():
-    print("\n--- STATISTIQUES DES JOUEURS (NBA) ---")
-    print("Fonctionnalité en cours de développement... (Utilisez GenericJoueurAdapter ici)")
-
 # --- NIVEAU 2 : CHOIX DE L'ENTITÉ ---
 def menu_basket():
     print("\n[BASKET] Que voulez-vous analyser ?")
