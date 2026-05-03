@@ -1,29 +1,40 @@
 from pkg.adapter.base_adapter import BaseAdapter
 from pkg.models.match import Match
 
+from pkg.adapter.base_adapter import BaseAdapter
+from pkg.models.match import Match
+
 class GenericMatchAdapter(BaseAdapter):
     """
-    Adaptateur universel capable de lire n'importe quel CSV de matchs
-    en lui indiquant simplement le nom des colonnes à utiliser.
+    Adaptateur universel capable de lire n'importe quel CSV de matchs.
+    Gère désormais une colonne optionnelle pour le type de match (Playoffs/Saison).
     """
 
-    def __init__(self, col_date, col_equipe1, col_equipe2, col_score1, col_score2):
-        """
-        Initialise l'adaptateur avec les noms des colonnes du CSV.
-        """
+    # On ajoute col_type_match=None pour qu'il soit facultatif
+    def __init__(self, col_date, col_equipe1, col_equipe2, col_score1, col_score2, col_type_match=None):
         super().__init__()
         self.col_date = col_date
         self.col_equipe1 = col_equipe1
         self.col_equipe2 = col_equipe2
         self.col_score1 = col_score1
         self.col_score2 = col_score2
+        self.col_type_match = col_type_match
+        
+        # On garde la trace des colonnes principales
         self.main_cols = [col_date, col_equipe1, col_equipe2, col_score1, col_score2]
+        if col_type_match:
+            self.main_cols.append(col_type_match)
     
     def adapt(self, row) -> Match:
-        """
-        Transforme une ligne de données brutes en un objet Match propre.
-        """
+        # On récupère toutes les autres colonnes automatiquement
         extra_stats = {key: value for key, value in row.items() if key not in self.main_cols}
+        
+        # Si on a défini une colonne pour le type de match, on la force dans les stats
+        # Sinon, par défaut on dit que c'est un match de saison régulière
+        if self.col_type_match and self.col_type_match in row:
+            extra_stats['type_match'] = str(row[self.col_type_match])
+        else:
+            extra_stats['type_match'] = "Regular Season"
         
         return Match(
             id=None,
@@ -36,16 +47,17 @@ class GenericMatchAdapter(BaseAdapter):
         )
 
     def to_row(self, match: Match):
-        """
-        Opération inverse : transforme un objet Match en dictionnaire pour sauvegarde.
-        """
-        return {
+        row = {
             self.col_date: match.date,
             self.col_equipe1: match.equipe1,
             self.col_equipe2: match.equipe2,
             self.col_score1: match.score1,
             self.col_score2: match.score2
         }
+        if self.col_type_match and 'type_match' in match.stats:
+            row[self.col_type_match] = match.stats['type_match']
+            
+        return row
 
 
 class TennisMatchAdapter(BaseAdapter):

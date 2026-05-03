@@ -119,39 +119,45 @@ class ServiceStatistiques:
 
 
 class ServiceStatistiquesBasket(ServiceStatistiques):
-    """Service spécialisé pour traiter les statistiques complexes de la NBA."""
+    """Service spécialisé pour traiter les statistiques complexes de la NBA par phase."""
     
     def __init__(self):
-        super().__init__() # Initialise les victoires/défaites du service parent
+        super().__init__() 
         
-        # On crée un dictionnaire pour stocker les totaux de la saison
-        self.stats_nba = defaultdict(lambda: {
-            'matchs_joues': 0, 'points_marques': 0, 'points_encaisses': 0,
+        # 1. NOUVEAU : Un dictionnaire à deux niveaux (Phase -> Equipe -> Stats)
+        self.stats_par_phase = defaultdict(lambda: defaultdict(lambda: {
+            'matchs_joues': 0, 'victoires': 0, 'defaites': 0, # <-- Ajout des victoires ici pour le classement
+            'points_marques': 0, 'points_encaisses': 0,
             'rebonds': 0, 'passes': 0, 'interceptions': 0, 'contres': 0,
             'fg2m': 0, 'fg2a': 0, # 2 points (réussis / tentés)
             'fg3m': 0, 'fg3a': 0, # 3 points
             'ftm': 0, 'fta': 0    # Lancers francs
-        })
+        }))
 
     def charger_matchs(self, matchs):
-        # 1. On lance le calcul de base (victoires) du parent
         super().charger_matchs(matchs)
         
-        # 2. On plonge dans le sac à dos pour les stats NBA
         for match in matchs:
+            # 2. NOUVEAU : On récupère la phase depuis le "sac à dos"
+            phase = match.stats.get('type_match', 'Regular Season')
+
             # === STATS POUR L'ÉQUIPE À DOMICILE (Equipe 1) ===
-            d_home = self.stats_nba[match.equipe1]
+            d_home = self.stats_par_phase[phase][match.equipe1] # On ouvre le bon tiroir
             d_home['matchs_joues'] += 1
             d_home['points_marques'] += match.score1
             d_home['points_encaisses'] += match.score2
             
-            # On utilise float() pour éviter les bugs si le CSV a des vides
+            # Calcul des victoires/défaites pour le classement de cette phase
+            if match.score1 > match.score2:
+                d_home['victoires'] += 1
+            else:
+                d_home['defaites'] += 1
+            
             d_home['rebonds'] += float(match.stats.get('reb_home', 0))
             d_home['passes'] += float(match.stats.get('ast_home', 0))
             d_home['interceptions'] += float(match.stats.get('stl_home', 0))
             d_home['contres'] += float(match.stats.get('blk_home', 0))
             
-            # Calcul des tirs (FGM = Field Goals Made = Total des tirs)
             fgm_h = float(match.stats.get('fgm_home', 0))
             fga_h = float(match.stats.get('fga_home', 0))
             fg3m_h = float(match.stats.get('fg3m_home', 0))
@@ -159,16 +165,22 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
             
             d_home['fg3m'] += fg3m_h
             d_home['fg3a'] += fg3a_h
-            d_home['fg2m'] += (fgm_h - fg3m_h) # 2pts = Total - 3pts
+            d_home['fg2m'] += (fgm_h - fg3m_h)
             d_home['fg2a'] += (fga_h - fg3a_h)
             d_home['ftm'] += float(match.stats.get('ftm_home', 0))
             d_home['fta'] += float(match.stats.get('fta_home', 0))
 
             # === STATS POUR L'ÉQUIPE À L'EXTÉRIEUR (Equipe 2) ===
-            d_away = self.stats_nba[match.equipe2]
+            d_away = self.stats_par_phase[phase][match.equipe2] # On ouvre le bon tiroir
             d_away['matchs_joues'] += 1
             d_away['points_marques'] += match.score2
             d_away['points_encaisses'] += match.score1
+            
+            # Calcul des victoires/défaites pour l'extérieur
+            if match.score2 > match.score1:
+                d_away['victoires'] += 1
+            else:
+                d_away['defaites'] += 1
             
             d_away['rebonds'] += float(match.stats.get('reb_away', 0))
             d_away['passes'] += float(match.stats.get('ast_away', 0))
@@ -187,15 +199,24 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
             d_away['ftm'] += float(match.stats.get('ftm_away', 0))
             d_away['fta'] += float(match.stats.get('fta_away', 0))
 
-    def obtenir_moyennes(self, equipe_id):
-        """Calcule et retourne les moyennes par match pour une équipe."""
-        s = self.stats_nba.get(equipe_id)
+    # 3. NOUVEAU : On redéfinit obtenir_classement_global pour inclure le paramètre "phase"
+    def obtenir_classement_global(self, phase="Regular Season"):
+        """Retourne le classement trié par victoires pour une phase spécifique."""
+        stats_phase = self.stats_par_phase.get(phase, {})
+        # On trie selon la clé 'victoires' en ordre décroissant (reverse=True)
+        return sorted(stats_phase.items(), key=lambda x: x[1]['victoires'], reverse=True)
+
+    # 4. MODIFIÉ : On ajoute le paramètre "phase"
+    def obtenir_moyennes(self, equipe_id, phase="Regular Season"):
+        """Calcule et retourne les moyennes par match pour une équipe selon la phase."""
+        stats_phase = self.stats_par_phase.get(phase, {})
+        s = stats_phase.get(equipe_id)
+        
         if not s or s['matchs_joues'] == 0:
             return None
             
         m = s['matchs_joues']
         
-        # Fonction interne pour calculer les pourcentages proprement
         def pct(reussis, tentes):
             return round((reussis / tentes) * 100, 1) if tentes > 0 else 0.0
 

@@ -68,7 +68,8 @@ basket_match_config = DatasetConfiguration(
         col_equipe1="team_id_home",
         col_equipe2="team_id_away", 
         col_score1="pts_home", 
-        col_score2="pts_away")
+        col_score2="pts_away",
+        col_type_match="season_type")
 )
 
 basket_equipe_config = DatasetConfiguration(

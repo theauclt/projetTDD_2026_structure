@@ -25,7 +25,7 @@ def charger_dictionnaire_noms(config_donnees):
 # ==========================================
 # 2. SCÉNARIOS D'ANALYSE
 # ==========================================
-
+"""
 def afficher_statistiques_basket():
     print("\n" + "="*90)
     print("🏀 CLASSEMENT ET STATISTIQUES AVANCÉES NBA 2022/2023")
@@ -57,7 +57,97 @@ def afficher_statistiques_basket():
             print(f"{i:<3} | {nom:<22} | {victoires:<4} | {moy['pts_pour']:<5} | {moy['pts_contre']:<5} | {moy['rebonds']:<4} | {moy['passes']:<4} | {moy['interceptions']:<4} | {moy['contres']:<4} | {moy['pct_2pts']:<5} | {moy['pct_3pts']:<5} | {moy['pct_lf']:<5}")
 
     input("\nAppuyez sur Entrée pour revenir à l'effectif...")
+"""
+
+def determiner_conference_nba(nom_equipe):
+    """Détermine si une équipe est à l'Est ou à l'Ouest en fonction de son nom."""
+    mots_cles_est = [
+        "Boston", "Celtics", "Brooklyn", "Nets", "New York", "Knicks", 
+        "Philadelphia", "76ers", "Toronto", "Raptors", "Chicago", "Bulls", 
+        "Cleveland", "Cavaliers", "Detroit", "Pistons", "Indiana", "Pacers", 
+        "Milwaukee", "Bucks", "Atlanta", "Hawks", "Charlotte", "Hornets", 
+        "Miami", "Heat", "Orlando", "Magic", "Washington", "Wizards"
+    ]
     
+    # Si on trouve un de ces mots dans le nom de l'équipe, c'est l'Est
+    for mot in mots_cles_est:
+        if mot.lower() in nom_equipe.lower():
+            return "Est"
+            
+    # Sinon, c'est forcément l'Ouest
+    return "Ouest"
+
+def afficher_statistiques_basket():
+    print("\n" + "="*90)
+    print("🏀 CLASSEMENT ET STATISTIQUES AVANCÉES NBA 2022/2023")
+    print("="*90)
+    
+    # --- CHOIX DE LA PHASE ---
+    print("Quelle phase souhaitez-vous analyser ?")
+    print("1. Saison Régulière")
+    print("2. Playoffs")
+    choix_phase = input("\n👉 Votre choix (1-2) : ")
+    
+    nom_phase = "Playoffs" if choix_phase == '2' else "Regular Season"
+    
+    # --- NOUVEAU : CHOIX DE LA CONFÉRENCE ---
+    print("\nQuelle conférence souhaitez-vous afficher ?")
+    print("1. 🔵 Conférence Est")
+    print("2. 🔴 Conférence Ouest")
+    print("3. 🌍 Les deux (Classement Global)")
+    choix_conf = input("\n👉 Votre choix (1-3) : ")
+    
+    noms_equipes = charger_dictionnaire_noms(basket_equipe_config)
+    
+    repo_matchs = DataRepository(
+        file=basket_match_config.dataset_path,
+        adapter=basket_match_config.adapter,
+        sep=basket_match_config.dataset_sep
+    )
+    
+    service = ServiceStatistiquesBasket()
+    service.charger_matchs(repo_matchs.load())
+    
+    # On récupère le classement de TOUTES les équipes pour la phase choisie
+    classement_complet = service.obtenir_classement_global(phase=nom_phase)
+    
+    # --- FILTRAGE PAR CONFÉRENCE ---
+    classement_filtre = []
+    nom_affichage_conf = "GLOBALE"
+    
+    for equipe_id, stats_base in classement_complet:
+        nom_eq = noms_equipes.get(str(equipe_id), f"ID:{equipe_id}")
+        conference_eq = determiner_conference_nba(nom_eq) # On utilise notre détecteur
+        
+        # On range l'équipe dans la liste finale seulement si elle correspond au choix
+        if choix_conf == '1' and conference_eq == "Est":
+            classement_filtre.append((equipe_id, stats_base, nom_eq))
+            nom_affichage_conf = "CONFÉRENCE EST"
+        elif choix_conf == '2' and conference_eq == "Ouest":
+            classement_filtre.append((equipe_id, stats_base, nom_eq))
+            nom_affichage_conf = "CONFÉRENCE OUEST"
+        elif choix_conf == '3' or choix_conf not in ['1', '2']: # Par défaut : on garde tout
+            classement_filtre.append((equipe_id, stats_base, nom_eq))
+            nom_affichage_conf = "GLOBALE"
+
+    # --- AFFICHAGE DU TABLEAU ---
+    print(f"\n--- RÉSULTATS POUR : {nom_phase.upper()} | {nom_affichage_conf} ---")
+    print(f"{'#':<3} | {'Équipe':<22} | {'Vic':<4} | {'Pts':<5} | {'Enc':<5} | {'Reb':<4} | {'Ast':<4} | {'Stl':<4} | {'Blk':<4} | {'2P%':<5} | {'3P%':<5} | {'LF%':<5}")
+    print("-" * 105)
+    
+    if not classement_filtre:
+        print(f"⚠️ Aucune donnée trouvée pour cette sélection.")
+    
+    # On affiche notre liste filtrée, l'énumération refera un beau top 1 à 15 (ou 30) !
+    for i, (equipe_id, stats_base, nom) in enumerate(classement_filtre, start=1):
+        victoires = stats_base['victoires']
+        moy = service.obtenir_moyennes(equipe_id, phase=nom_phase)
+        
+        if moy:
+            print(f"{i:<3} | {nom:<22} | {victoires:<4} | {moy.get('pts_pour','N/A'):<5} | {moy.get('pts_contre','N/A'):<5} | {moy.get('rebonds','N/A'):<4} | {moy.get('passes','N/A'):<4} | {moy.get('interceptions','N/A'):<4} | {moy.get('contres','N/A'):<4} | {moy.get('pct_2pts','N/A'):<5} | {moy.get('pct_3pts','N/A'):<5} | {moy.get('pct_lf','N/A'):<5}")
+
+    input("\nAppuyez sur Entrée pour revenir au menu...")
+
 def explorer_annuaire_basket():
     """Menu interactif pour naviguer des équipes vers les joueurs spécifiques."""
     
@@ -74,24 +164,39 @@ def explorer_annuaire_basket():
     )
     annuaire = ServiceAnnuaireJoueurs()
     annuaire.charger_joueurs(repo_joueurs.load())
-
-    # --- NIVEAU 1 : CHOIX DE L'ÉQUIPE ---
     while True:
         print("\n" + "="*40)
         print("🏢 ANNUAIRE DES ÉQUIPES NBA")
         print("="*40)
         
-        # On transforme le dictionnaire en liste pour pouvoir utiliser des numéros
-        liste_ids_equipes = list(noms_equipes.keys())
+        # 1. On sépare les IDs en deux groupes
+        equipes_est = []
+        equipes_ouest = []
         
+        for eq_id, nom in noms_equipes.items():
+            if determiner_conference_nba(nom) == "Est":
+                equipes_est.append(eq_id)
+            else:
+                equipes_ouest.append(eq_id)
+                
+        # 2. On rassemble la liste dans un ordre précis (Est d'abord, puis Ouest)
+        liste_ids_equipes = equipes_est + equipes_ouest
+        
+        # 3. Affichage personnalisé
         for idx, equipe_id in enumerate(liste_ids_equipes, start=1):
+            # On ajoute des titres de section dynamiques
+            if idx == 1:
+                print("\n🔵 --- CONFÉRENCE EST ---")
+            elif idx == len(equipes_est) + 1:
+                print("\n🔴 --- CONFÉRENCE OUEST ---")
+                
             print(f"{idx:2}. {noms_equipes[equipe_id]}")
         
-        print("-" * 40)
+        print("\n" + "-" * 40)
         print(f"{len(liste_ids_equipes) + 1}. 🔙 Retour au menu principal")
         
         choix_eq = input("\n👉 Choisissez une équipe (numéro) : ")
-        
+    
         # Si l'utilisateur choisit le dernier numéro (Retour)
         if choix_eq == str(len(liste_ids_equipes) + 1):
             break
@@ -184,7 +289,7 @@ def explorer_annuaire_tennis(config_joueurs, config_matchs, nom_circuit):
         print("="*50)
         
         # Pour simplifier, on affiche le top 20 des joueurs chargés pour que l'utilisateur puisse choisir
-        liste_joueurs = list(annuaire.annuaire.values())[:20] 
+        liste_joueurs = list(annuaire.annuaire.values()) 
         
         for idx, joueur in enumerate(liste_joueurs, start=1):
             print(f"{idx:2}. {joueur.nom_complet}")
