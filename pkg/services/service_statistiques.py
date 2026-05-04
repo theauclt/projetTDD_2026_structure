@@ -234,58 +234,71 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
 
 
 class ServiceStatistiquesTennis(ServiceStatistiques):
-    """Service spécialisé pour calculer les statistiques des joueurs de Tennis."""
     
     def __init__(self):
         super().__init__()
-        # Notre carnet de notes pour chaque joueur
+        # On ajoute les nouvelles statistiques dans le dictionnaire de base
         self.stats_joueurs = defaultdict(lambda: {
-            'matchs_joues': 0,
-            'victoires': 0,
-            'defaites': 0,
-            'total_aces': 0,
-            'total_df': 0,
-            'total_minutes': 0
+            'matchs_joues': 0, 'victoires': 0, 'defaites': 0,
+            'total_aces': 0, 'total_df': 0, 'total_minutes': 0,
+            'bp_sauvees': 0, 'bp_concedees': 0, # Défense (sur son service)
+            'bp_converties': 0, 'bp_obtenues': 0, # Attaque (sur le service adverse)
+            'palmares': [] # Liste des tournois gagnés
         })
 
-    def charger_matchs(self, matchs):
-        """Parcourt les matchs et attribue les stats au gagnant et au perdant."""
-        super().charger_matchs(matchs)
+    def nettoyer_valeur(self, valeur):
+        try:
+            return float(valeur) if valeur and str(valeur).lower() != 'nan' else 0.0
+        except ValueError:
+            return 0.0
 
-        def nettoyer_valeur(val):
-            """Convertit la valeur en nombre, et transforme les 'nan' ou erreurs en 0."""
-            try:
-                f = float(val)
-                if math.isnan(f):
-                    return 0.0
-                return f
-            except (ValueError, TypeError):
-                return 0.0
-        
+    def charger_matchs(self, matchs):
         for match in matchs:
-            # === STATS DU VAINQUEUR (equipe1) ===
-            v = self.stats_joueurs[match.equipe1]
+            id_vainqueur = str(match.equipe1).replace('.0', '')
+            id_perdant = str(match.equipe2).replace('.0', '')
+
+            v = self.stats_joueurs[id_vainqueur] # Vainqueur
+            p = self.stats_joueurs[id_perdant] # Perdant
+            
+            # --- PALMARÈS (Si c'est une Finale 'F', le vainqueur gagne le tournoi) ---
+            if str(match.stats.get('round')) == 'F':
+                nom_tournoi = str(match.stats.get('tourney_name', 'Tournoi'))
+                v['palmares'].append(nom_tournoi)
+
+            # --- STATS DU VAINQUEUR ---
             v['matchs_joues'] += 1
             v['victoires'] += 1
+            v['total_aces'] += self.nettoyer_valeur(match.stats.get('w_ace', 0))
+            v['total_df'] += self.nettoyer_valeur(match.stats.get('w_df', 0))
+            v['total_minutes'] += self.nettoyer_valeur(match.stats.get('minutes', 0))
             
-            # On utilise notre fonction pour sécuriser l'addition
-            v['total_aces'] += nettoyer_valeur(match.stats.get('w_ace', 0))
-            v['total_df'] += nettoyer_valeur(match.stats.get('w_df', 0))
-            v['total_minutes'] += nettoyer_valeur(match.stats.get('minutes', 0))
+            # Balles de break sauvées par le vainqueur
+            v['bp_sauvees'] += self.nettoyer_valeur(match.stats.get('w_bpSaved', 0))
+            v['bp_concedees'] += self.nettoyer_valeur(match.stats.get('w_bpFaced', 0))
+            # Balles de break converties (Balles affrontées par le perdant - Balles sauvées par le perdant)
+            bp_faced_by_loser = self.nettoyer_valeur(match.stats.get('l_bpFaced', 0))
+            bp_saved_by_loser = self.nettoyer_valeur(match.stats.get('l_bpSaved', 0))
+            v['bp_obtenues'] += bp_faced_by_loser
+            v['bp_converties'] += (bp_faced_by_loser - bp_saved_by_loser)
 
-            # === STATS DU PERDANT (equipe2) ===
-            p = self.stats_joueurs[match.equipe2]
+            # --- STATS DU PERDANT ---
             p['matchs_joues'] += 1
             p['defaites'] += 1
+            p['total_aces'] += self.nettoyer_valeur(match.stats.get('l_ace', 0))
+            p['total_df'] += self.nettoyer_valeur(match.stats.get('l_df', 0))
+            p['total_minutes'] += self.nettoyer_valeur(match.stats.get('minutes', 0))
             
-            # Pareil pour le perdant
-            p['total_aces'] += nettoyer_valeur(match.stats.get('l_ace', 0))
-            p['total_df'] += nettoyer_valeur(match.stats.get('l_df', 0))
-            p['total_minutes'] += nettoyer_valeur(match.stats.get('minutes', 0))
+            # Balles de break sauvées par le perdant
+            p['bp_sauvees'] += bp_saved_by_loser
+            p['bp_concedees'] += bp_faced_by_loser
+            # Balles de break converties par le perdant
+            bp_faced_by_winner = self.nettoyer_valeur(match.stats.get('w_bpFaced', 0))
+            bp_saved_by_winner = self.nettoyer_valeur(match.stats.get('w_bpSaved', 0))
+            p['bp_obtenues'] += bp_faced_by_winner
+            p['bp_converties'] += (bp_faced_by_winner - bp_saved_by_winner)
 
     def obtenir_moyennes_joueur(self, joueur_id):
-        """Calcule et retourne les moyennes par match pour un joueur donné."""
-        s = self.stats_joueurs.get(joueur_id)
+        s = self.stats_joueurs.get(str(joueur_id))
         if not s or s['matchs_joues'] == 0:
             return None
             
@@ -295,5 +308,11 @@ class ServiceStatistiquesTennis(ServiceStatistiques):
             'defaites': s['defaites'],
             'aces_par_match': round(s['total_aces'] / m, 1),
             'df_par_match': round(s['total_df'] / m, 1),
-            'minutes_moyennes': round(s['total_minutes'] / m, 0)
+            'minutes_moyennes': round(s['total_minutes'] / m, 1),
+            # On passe les données brutes pour l'affichage (pas besoin de moyenne ici)
+            'bp_sauvees': int(s['bp_sauvees']),
+            'bp_concedees': int(s['bp_concedees']),
+            'bp_converties': int(s['bp_converties']),
+            'bp_obtenues': int(s['bp_obtenues']),
+            'palmares': s['palmares']
         }

@@ -80,12 +80,14 @@ class TennisMatchAdapter(BaseAdapter):
             'l_ace': row.get('l_ace', 0),
             'l_df': row.get('l_df', 0),
             'l_bpSaved': row.get('l_bpSaved', 0),
-            'l_bpFaced': row.get('l_bpFaced', 0)
+            'l_bpFaced': row.get('l_bpFaced', 0),
+            'tourney_name': row.get('tourney_name', 'Tournoi Inconnu'),
+            'round': row.get('round', '')
         }
         
         # 2. On ajoute l'ID ici au moment de créer l'objet Match !
         return Match(
-            id=row.get(self.col_id, "Inconnu"), # <-- La correction est ici
+            id=row.get(self.col_id, "Inconnu"),
             date=row[self.col_date],
             equipe1=row[self.col_vainqueur],
             equipe2=row[self.col_perdant],

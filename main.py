@@ -25,40 +25,6 @@ def charger_dictionnaire_noms(config_donnees):
 # ==========================================
 # 2. SCÉNARIOS D'ANALYSE
 # ==========================================
-"""
-def afficher_statistiques_basket():
-    print("\n" + "="*90)
-    print("🏀 CLASSEMENT ET STATISTIQUES AVANCÉES NBA 2022/2023")
-    print("="*90)
-    
-    noms_equipes = charger_dictionnaire_noms(basket_equipe_config)
-    
-    repo_matchs = DataRepository(
-        file=basket_match_config.dataset_path,
-        adapter=basket_match_config.adapter,
-        sep=basket_match_config.dataset_sep
-    )
-    
-    # Utilisation du service spécialisé
-    service = ServiceStatistiquesBasket()
-    service.charger_matchs(repo_matchs.load())
-    classement = service.obtenir_classement_global()
-    
-    # Entête du tableau
-    print(f"{'#':<3} | {'Équipe':<22} | {'Vic':<4} | {'Pts':<5} | {'Enc':<5} | {'Reb':<4} | {'Ast':<4} | {'Stl':<4} | {'Blk':<4} | {'2P%':<5} | {'3P%':<5} | {'LF%':<5}")
-    print("-" * 90)
-    
-    for i, (equipe_id, stats_base) in enumerate(classement[:15], start=1): # Top 15 (Une conférence)
-        nom = noms_equipes.get(str(equipe_id), f"ID:{equipe_id}")
-        victoires = stats_base['victoires']
-        moy = service.obtenir_moyennes(equipe_id)
-        
-        if moy:
-            print(f"{i:<3} | {nom:<22} | {victoires:<4} | {moy['pts_pour']:<5} | {moy['pts_contre']:<5} | {moy['rebonds']:<4} | {moy['passes']:<4} | {moy['interceptions']:<4} | {moy['contres']:<4} | {moy['pct_2pts']:<5} | {moy['pct_3pts']:<5} | {moy['pct_lf']:<5}")
-
-    input("\nAppuyez sur Entrée pour revenir à l'effectif...")
-"""
-
 def determiner_conference_nba(nom_equipe):
     """Détermine si une équipe est à l'Est ou à l'Ouest en fonction de son nom."""
     mots_cles_est = [
@@ -260,96 +226,142 @@ def explorer_annuaire_basket():
         except (ValueError, IndexError):
             print("⚠️ Numéro d'équipe invalide. Veuillez réessayer.")
 
-
 def explorer_annuaire_tennis(config_joueurs, config_matchs, nom_circuit):
-    """Menu interactif pour explorer les statistiques des joueurs de Tennis."""
+    """Menu interactif pour explorer les statistiques des joueurs de Tennis par pays."""
     
     print(f"\n⏳ Chargement de la base de données {nom_circuit}...")
     
-    # 1. Chargement des joueurs (L'Annuaire)
+    # 1. Chargement de l'annuaire (les joueurs)
     repo_joueurs = DataRepository(
-        file=config_joueurs.dataset_path,
-        adapter=config_joueurs.adapter,
-        sep=config_joueurs.dataset_sep)
+        file=config_joueurs.dataset_path, adapter=config_joueurs.adapter, sep=config_joueurs.dataset_sep)
     annuaire = ServiceAnnuaireJoueurs()
     annuaire.charger_joueurs(repo_joueurs.load())
     
-    # 2. Chargement des matchs (Le Service de Stats)
+    # 2. Chargement des matchs (pour les stats)
     repo_matchs = DataRepository(
-        file=config_matchs.dataset_path,
-        adapter=config_matchs.adapter,
-        sep=config_matchs.dataset_sep)
+        file=config_matchs.dataset_path, adapter=config_matchs.adapter, sep=config_matchs.dataset_sep)
     service_stats = ServiceStatistiquesTennis()
     service_stats.charger_matchs(repo_matchs.load())
 
-    # --- MENU DE RECHERCHE ---
+    # --- ÉTAPE 3 : RECHERCHE PAR PAYS ---
     while True:
-        print("\n" + "="*50)
-        print(f"🎾 EXPLORATEUR DE JOUEURS - {nom_circuit}")
-        print("="*50)
+        print("\n" + "="*60)
+        print(f"🌍 EXPLORATEUR INTERNATIONAL - CIRCUIT {nom_circuit}")
+        print("="*60)
         
-        # Pour simplifier, on affiche le top 20 des joueurs chargés pour que l'utilisateur puisse choisir
-        liste_joueurs = list(annuaire.annuaire.values()) 
+        liste_pays = annuaire.obtenir_pays_disponibles()
         
-        for idx, joueur in enumerate(liste_joueurs, start=1):
-            print(f"{idx:2}. {joueur.nom_complet}")
-            
-        print("-" * 50)
-        print(f"{len(liste_joueurs) + 1}. 🔙 Retour au menu principal")
+        print("📍 Codes pays disponibles :")
+        # --- NOUVEAU SYSTÈME D'AFFICHAGE DE LA LISTE ---
+        # On parcourt la liste de 0 jusqu'à la fin, en faisant des sauts de 5
+        for i in range(0, len(liste_pays), 7):
+            # On prend une tranche de 5 pays (ex: de l'index 0 à 5, puis 5 à 10, etc.)
+            tranche = liste_pays[i:i+7]
+            # On affiche cette tranche séparée par des virgules
+            print(", ".join(tranche))
+        # -----------------------------------------------
+        print("-" * 60)
         
-        choix = input("\n👉 Choisissez un joueur (numéro) pour voir ses stats : ")
+        choix_pays = input("\n👉 Tapez le code à 3 lettres d'un pays (ou 'Q' pour quitter) : ").upper().strip()
         
-        if choix == str(len(liste_joueurs) + 1):
-            break
+        if choix_pays == 'Q':
+            break # Retourne au menu précédent (Choix ATP/WTA)
             
-        try:
-            idx_choisi = int(choix) - 1
-            joueur = liste_joueurs[idx_choisi]
-            stats = service_stats.obtenir_moyennes_joueur(joueur.id)
+        if choix_pays not in liste_pays:
+            print(f"⚠️ Aucun joueur trouvé pour le code '{choix_pays}'. Vérifiez l'orthographe.")
+            continue
             
-            print("\n" + "★"*45)
-            print(f" 👤 PROFIL ET STATS : {joueur.nom_complet.upper()}")
-            print("★"*45)
-            print(f"  Taille       : {joueur.taille} cm")
-            print(f"  Main forte   : {getattr(joueur, 'main_forte', 'N/A')}")
-            print(f"  Pays         : {getattr(joueur, 'pays_ioc', 'N/A')}")
-            print("-" * 45)
+        # --- ÉTAPE 4 : SÉLECTION DU JOUEUR ---
+        while True:
+            joueurs_du_pays = annuaire.obtenir_joueurs_par_pays(choix_pays)
             
-            if stats:
-                print(f"  Victoires    : {stats['victoires']}")
-                print(f"  Défaites     : {stats['defaites']}")
-                print(f"  Aces / match : {stats['aces_par_match']}")
-                print(f"  DF / match   : {stats['df_par_match']}")
-                print(f"  Temps moyen  : {stats['minutes_moyennes']} minutes")
-            else:
-                print("  ⚠️ Aucune donnée de match trouvée pour ce joueur.")
-            print("★"*45)
+            print("\n" + "="*50)
+            print(f"🎾 JOUEURS REPRÉSENTANT : {choix_pays} ({len(joueurs_du_pays)} trouvés)")
+            print("="*50)
             
-            input("\nAppuyez sur Entrée pour continuer...")
+            for idx, joueur in enumerate(joueurs_du_pays, start=1):
+                print(f"{idx:2}. {joueur.nom_complet}")
+                
+            print("-" * 50)
+            print(f"{len(joueurs_du_pays) + 1}. 🔙 Chercher un autre pays")
             
-        except (ValueError, IndexError):
-            print("⚠️ Choix invalide.")
-    
+            choix_j = input("\n👉 Choisissez un joueur (numéro) pour voir ses stats : ")
+            
+            if choix_j == str(len(joueurs_du_pays) + 1):
+                break # Remonte au choix du pays
+                
+            try:
+                idx_choisi = int(choix_j) - 1
+                joueur = joueurs_du_pays[idx_choisi]
+                
+                # --- ÉTAPE 5 : AFFICHAGE DES STATISTIQUES ---
+                stats = service_stats.obtenir_moyennes_joueur(joueur.id)
+                
+                print("\n" + "★"*45)
+                print(f" 👤 PROFIL ET STATS : {joueur.nom_complet.upper()}")
+                print("★"*45)
+                print(f"  Taille       : {joueur.taille} cm")
+                print(f"  Main forte   : {getattr(joueur, 'main_forte', 'N/A')}")
+                print(f"  Pays         : {getattr(joueur, 'pays_ioc', getattr(joueur, 'ioc', 'N/A'))}")
+                print("-" * 45)
+                
+                if stats:
+                    print(f"  Victoires    : {stats['victoires']}")
+                    print(f"  Défaites     : {stats['defaites']}")
+                    print(f"  Aces / match : {stats['aces_par_match']}")
+                    print(f"  DF / match   : {stats['df_par_match']}")
+                    print(f"  Temps moyen  : {stats['minutes_moyennes']} minutes")
+                    print("-" * 45)
+                    print("  🔥 STATISTIQUES DE BREAK :")
+                    print(f"  Défense (Sauvées)    : {stats['bp_sauvees']} / {stats['bp_concedees']}")
+                    print(f"  Attaque (Converties) : {stats['bp_converties']} / {stats['bp_obtenues']}")
+                    print("-" * 45)
+                    
+                    # On affiche le palmarès s'il y a des titres, sinon on met "Aucun"
+                    titres = stats['palmares']
+                    print(f"  🏆 PALMARÈS ({len(titres)} titres) :")
+                    if titres:
+                        # On parcourt la liste de 0 à la fin, en faisant des sauts de 3
+                        for i in range(0, len(titres), 3):
+                            # On découpe une tranche de 3 titres maximum
+                            tranche_titres = titres[i:i+3]
+                            # On les affiche séparés par une virgule, avec un petit espace au début pour l'alignement
+                            print("    " + ", ".join(tranche_titres))
+                    else:
+                        print("  Aucun titre répertorié dans la base.")
+                else:
+                    print("  ⚠️ Aucune donnée de match trouvée pour ce joueur.")
+                print("★"*45)
+                
+                input("\nAppuyez sur Entrée pour revenir à la liste des joueurs...")
+                
+            except (ValueError, IndexError):
+                print("⚠️ Choix invalide. Veuillez entrer un numéro valide.")
+
 
 def menu_tennis():
+    """Le premier menu du Tennis qui gère l'étape 2 (Choix du circuit)"""
     while True:
         print("\n" + "*"*50)
-        print(" 🏆 TABLEAU DE BORD TENNIS ATP/WTA 🏆")
+        print(" 🏆 TABLEAU DE BORD TENNIS 🏆")
         print("*"*50)
-        print("1. 🎾 ATP : Statistiques des Joueurs")
-        print("2. 🎾 WTA : Statistiques des Joueuses")
+        print("1. 🎾 ATP : Circuit Masculin")
+        print("2. 🎾 WTA : Circuit Féminin")
         print("3. 🔙 Retour au menu principal")
         
         choix = input("\n👉 Entrez votre choix (1-3) : ")
         
         if choix == '1':
+            # On envoie l'utilisateur vers la recherche avec les données ATP
             explorer_annuaire_tennis(tennis_atp_joueur_config, tennis_atp_match_config, "ATP")
         elif choix == '2':
+            # On envoie l'utilisateur vers la recherche avec les données WTA
             explorer_annuaire_tennis(tennis_wta_joueur_config, tennis_wta_match_config, "WTA")
         elif choix == '3':
             break
         else:
             print("\n⚠️ Choix invalide, veuillez réessayer.")
+
 
 def menu_basket():
     while True:
