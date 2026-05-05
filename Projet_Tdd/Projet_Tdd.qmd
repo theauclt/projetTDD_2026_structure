@@ -54,9 +54,11 @@ Nous avons choisi d’utiliser seulement certains jeux de données parmi ceux pr
     * `wta_players_2024.csv` : Informations sur les joueuses du circuit WTA.
 
 
+Le choix du basket-ball et du tennis s’appuie sur la richesse et la précision des données statistiques qu’ils génèrent, offrant une analyse bien plus fine que le simple score final. Par exemple, au basket-ball, il est possible d'évaluer les pourcentages de réussite aux tirs, que ce soit à l’échelle collective ou individuelle. De la même manière, le tennis offre des indicateurs techniques cruciaux tels que le nombre d’aces, de doubles fautes ou d'erreurs directes. L’exploitation de ces statistiques avancées permet de dépasser le résultat brut pour comprendre le déroulement réel du match. Cette approche est particulièrement pertinente pour les analystes souhaitant s'appuyer sur des données détaillées afin de comprendre les tendances de jeu et d'anticiper les performances lors de rencontres futures.
+
 Avant de débuter l’analyse de nos différents jeux de données sportives, nous avons réalisé une phase d’exploration approfondie afin d'en garantir la fiabilité. Cette étape a consisté à identifier d'éventuels doublons et à recenser les valeurs manquantes qui auraient pu provoquer des erreurs lors de certaines demandes. Ces vérifications préliminaires nous permettent de confirmer que les bases de données sont exploitables.
 
-\newpage 
+ 
 # Conception de l’application
 
 ## Modélisation
@@ -71,6 +73,8 @@ Notre projet repose sur une structure orientée objet qui privilégie la modular
 une responsabilité bien définie :
 
 (faire l'architecture du code : cf page 4 rapport Lina)
+
+(bien expliquer la logique de cette architecture car bcp de points sur le rapport)
 
 ## Choix technologiques
 
