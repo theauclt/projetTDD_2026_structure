@@ -286,7 +286,7 @@ class ServiceApplication:
                     print(f"{idx:2}. {joueur.nom_complet}")
                     
                 print("-" * 50)
-                print(f"{len(joueurs_du_pays) + 1}. 🔙 Chercher un autre pays")
+                print(f"0. 🔙 Chercher un autre pays")
                 
                 choix_j = input("\n👉 Choisissez un joueur (numéro) pour voir ses stats : ")
                 
