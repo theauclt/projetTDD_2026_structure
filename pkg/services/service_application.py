@@ -224,7 +224,7 @@ class ServiceApplication:
             print("2. 🏀 NBA : Explorer les Effectifs")
             print("0. 🔙 Retour au menu principal")
             
-            choix = input("\n👉 Entrez votre choix (1-3) : ")
+            choix = input("\n👉 Entrez votre choix : ")
             
             if choix == '1':
                 self.afficher_statistiques_basket()
@@ -314,13 +314,12 @@ class ServiceApplication:
                         print(f"  DF / match   : {stats['df_par_match']}")
                         print(f"  Temps moyen  : {stats['minutes_moyennes']} minutes")
                         print("-" * 45)
-                        print("  🔥 STATISTIQUES DE BREAK :")
+                        print("  Statistiques Balle de Break :")
                         print(f"  Défense (Sauvées)    : {stats['bp_sauvees']} / {stats['bp_concedees']}")
                         print(f"  Attaque (Converties) : {stats['bp_converties']} / {stats['bp_obtenues']}")
                         print("-" * 45)
-                        
                         titres = stats['palmares']
-                        print(f"  🏆 PALMARÈS ({len(titres)} titres) :")
+                        print(f"  🏆 Palmarès en 2024 ({len(titres)} titres) 🏆 :")
                         if titres:
                             for i in range(0, len(titres), 3):
                                 tranche_titres = titres[i:i+3]
@@ -328,7 +327,7 @@ class ServiceApplication:
                         else:
                             print("  Aucun titre répertorié dans la base.")
                     else:
-                        print("  ⚠️ Aucune donnée de match trouvée pour ce joueur.")
+                        print("Aucune donnée de match trouvée pour ce joueur.")
                     print("★"*45)
                     
                     input("\nAppuyez sur Entrée pour revenir à la liste des joueurs...")
@@ -346,7 +345,7 @@ class ServiceApplication:
             print("2. 🎾 WTA : Circuit Féminin")
             print("0. 🔙 Retour au menu principal")
             
-            choix = input("\n👉 Entrez votre choix (1-3) : ")
+            choix = input("\n👉 Entrez votre choix : ")
             
             if choix == '1':
                 self.explorer_annuaire_tennis(tennis_atp_joueur_config, tennis_atp_match_config, "ATP")
@@ -372,7 +371,7 @@ class ServiceApplication:
             print("2. 🎾 TENNIS 🎾")
             print("0. ❌ Quitter")
             
-            choix = input("\n👉 Entrez votre choix (1-3) : ")
+            choix = input("\n👉 Entrez votre choix : ")
             
             if choix == '1':
                 self.menu_basket()
