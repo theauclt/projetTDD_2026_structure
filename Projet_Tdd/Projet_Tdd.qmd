@@ -35,7 +35,9 @@ format:
 
 ## Besoins fonctionnels
 
-\newpage 
+L'application a pour mission principale de centraliser et de transformer des données sportives brutes en informations exploitables pour l'utilisateur. Pour cela, elle doit répondre en premier lieu à un besoin d'importation et de normalisation, capable de lire différents flux de données tout en nettoyant les éventuelles erreurs ou informations manquantes pour garantir une base de travail fiable. Une fois ces données intégrées, le système assure le calcul automatique de statistiques personnalisées, allant des bilans classiques de victoires et de défaites aux indicateurs de performance plus techniques et spécifiques à la discipline concernée. L'accès à ces informations est ensuite facilité par une interface de consultation intuitive qui permet à l'utilisateur de naviguer dans les données, d'effectuer des recherches ciblées sur des joueurs ou des équipes, de filtrer les résultats selon divers critères et de consulter des historiques complets.
+
+ 
 ## Présentation des données 
 
 Nous avons choisi d’utiliser seulement certains jeux de données parmi ceux proposés afin de modéliser notre application. Notre sélection a été pensée pour diversifier au maximum notre approche : nous avons ainsi veillé à inclure à la fois un sport collectif et un sport individuel, tout en intégrant des données issues du sport féminin. Dans cette optique, nous avons travaillé à partir des fichiers suivants :
