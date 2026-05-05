@@ -8,6 +8,8 @@ from unittest.mock import MagicMock, patch, mock_open
 from collections import defaultdict
 import io
 
+from pkg.services.services_matchs import ServiceMatchs
+
 
 # ==============================================================================
 # TESTS — MODÈLES
