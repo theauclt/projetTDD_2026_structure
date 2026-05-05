@@ -102,11 +102,21 @@ L’une des principales difficultés de ce projet a résidé dans son démarrage
 
 ## Stratégie de test
 
+Pour garantir la fiabilité de notre application, nous avons mis en place une stratégie de tests unitaires et d'intégration basée sur le framework Pytest. L'objectif est double : assurer l'exactitude des calculs statistiques et garantir la robustesse des processus d'importation.
+
+La validation commence avec les modèles et les adaptateurs. Les tests sur les modèles garantissent que chaque objet métier, comme un match ou un joueur, est instancié avec des données saines et que ses propriétés calculées (par exemple, la concaténation du nom complet) se comportent de manière prévisible. Parallèlement, la couche des adaptateurs fait l'objet d'une attention critique. Nous y testons le mapping entre le format brut des dictionnaires issus du CSV et nos objets Python, en mettant à l'épreuve la gestion des valeurs manquantes et la précision des conversions techniques, telles que la transformation des poids de lbs en kg.
+
+Le cœur du programme, regroupé dans la partie services, est quant à lui vérifié par des tests précis sur les calculs et les règles de gestion. Ces tests permettent de contrôler que les classements des équipes, les moyennes de points ou encore l'historique des joueurs sont calculés sans aucune erreur. Pour que ces vérifications soient fiables et rapides, nous utilisons des simulations (appelées "Mocks") qui remplacent les fichiers réels par des données fictives mais contrôlées. Cela nous permet de tester le "cerveau" de l'application de façon isolée, en étant certains que si un résultat est faux, cela vient d'une erreur de calcul et non d'un problème technique lié au chargement des données.
+
+Enfin, la fiabilité de la persistance et de l'accès aux données est assurée par des tests aux frontières au niveau des repositories et des importeurs. Nous utilisons des environnements de fichiers temporaires via *tmp_path*. Cette méthode nous permet de vérifier, dans des conditions quasi réelles, que le système gère correctement les différents séparateurs et l'encodage des fichiers CSV. Cette stratégie globale assure ainsi une interface fluide et sécurisée entre le stockage physique et la logique métier de l'application.
+
 ## Quelques résultats
 
 ## Limites de l’application
 
-Le choix de nous concentrer exclusivement sur deux sports rend l'application particulièrement spécifique. L'interface utilisateur ayant été finement adaptée aux caractéristiques propres de ces disciplines, cette spécialisation crée une contrainte majeure en termes d'évolutivité : l'ajout d'un nouveau sport s'avère complexe. En effet, chaque nouvelle catégorie nécessiterait une adaptation de l'interface pour répondre à ses spécificités, ce qui limite pour sa capacité à s'ouvrir à d'autres domaines sportifs sans un travail de développement supplémentaire conséquent.
+Le choix de nous concentrer exclusivement sur deux sports rend l'application particulièrement spécifique. L'interface utilisateur ayant été finement adaptée aux caractéristiques propres de ces disciplines, cette spécialisation crée une contrainte majeure en termes d'évolutivité : l'ajout d'un nouveau sport s'avère complexe. En effet, chaque nouvelle catégorie nécessiterait une adaptation de l'interface pour répondre à ses spécificités, ce qui limite sa capacité à s'ouvrir à d'autres domaines sportifs sans un travail de développement supplémentaire conséquent.
+
+
 
 \newpage 
 # Conclusion {.unnumbered}
