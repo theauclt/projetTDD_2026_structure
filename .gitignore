@@ -17,3 +17,6 @@ venv/
 *.sublime-project
 *.sublime-workspace
 .Rproj.user
+
+# Bases de données et Datasets
+*.csv
