@@ -151,11 +151,11 @@ class ServiceApplication:
                 print(f"{idx:2}. {noms_equipes[equipe_id]}")
             
             print("\n" + "-" * 40)
-            print(f"{len(liste_ids_equipes) + 1}. 🔙 Retour au menu principal")
+            print(f"0. 🔙 Retour au menu principal")
             
             choix_eq = input("\n👉 Choisissez une équipe (numéro) : ")
         
-            if choix_eq == str(len(liste_ids_equipes) + 1):
+            if choix_eq == str(0):
                 break
                 
             try:
@@ -184,11 +184,11 @@ class ServiceApplication:
                         print(f"{idx:2}. #{joueur.numero:<2} - {joueur.nom_complet} ({joueur.position})")
                         
                     print("-" * 45)
-                    print(f"{len(effectif_trie) + 1}. 🔙 Choisir une autre équipe")
+                    print(f"0. 🔙 Choisir une autre équipe")
                     
                     choix_joueur = input("\n👉 Choisissez un joueur pour voir son profil : ")
                     
-                    if choix_joueur == str(len(effectif_trie) + 1):
+                    if choix_joueur == str(0):
                         break 
                         
                     try:
@@ -222,7 +222,7 @@ class ServiceApplication:
             print("*"*50)
             print("1. 🏀 NBA : Classement et Statistiques par équipes")
             print("2. 🏀 NBA : Explorer les Effectifs")
-            print("3. 🔙 Retour au menu principal")
+            print("0. 🔙 Retour au menu principal")
             
             choix = input("\n👉 Entrez votre choix (1-3) : ")
             
@@ -230,7 +230,7 @@ class ServiceApplication:
                 self.afficher_statistiques_basket()
             elif choix == '2':
                 self.explorer_annuaire_basket()
-            elif choix == '3':
+            elif choix == '0':
                 break
             else:
                 print("\n⚠️ Choix invalide, veuillez réessayer.")
@@ -266,9 +266,9 @@ class ServiceApplication:
                 print(", ".join(tranche))
             print("-" * 60)
             
-            choix_pays = input("\n👉 Tapez le code à 3 lettres d'un pays (ou 'Q' pour quitter) : ").upper().strip()
+            choix_pays = input("\n👉 Tapez le code à 3 lettres d'un pays (ou '0' pour quitter) : ").upper().strip()
             
-            if choix_pays == 'Q':
+            if choix_pays == str(0):
                 break 
                 
             if choix_pays not in liste_pays:
@@ -290,7 +290,7 @@ class ServiceApplication:
                 
                 choix_j = input("\n👉 Choisissez un joueur (numéro) pour voir ses stats : ")
                 
-                if choix_j == str(len(joueurs_du_pays) + 1):
+                if choix_j == str(0):
                     break 
                     
                 try:
@@ -344,7 +344,7 @@ class ServiceApplication:
             print("*"*50)
             print("1. 🎾 ATP : Circuit Masculin")
             print("2. 🎾 WTA : Circuit Féminin")
-            print("3. 🔙 Retour au menu principal")
+            print("0. 🔙 Retour au menu principal")
             
             choix = input("\n👉 Entrez votre choix (1-3) : ")
             
@@ -352,7 +352,7 @@ class ServiceApplication:
                 self.explorer_annuaire_tennis(tennis_atp_joueur_config, tennis_atp_match_config, "ATP")
             elif choix == '2':
                 self.explorer_annuaire_tennis(tennis_wta_joueur_config, tennis_wta_match_config, "WTA")
-            elif choix == '3':
+            elif choix == str(0):
                 break
             else:
                 print("\n⚠️ Choix invalide, veuillez réessayer.")
@@ -370,7 +370,7 @@ class ServiceApplication:
             print("CHOIX DU SPORT :")
             print("1. 🏀 NBA 🏀")
             print("2. 🎾 TENNIS 🎾")
-            print("3. ❌ Quitter")
+            print("0. ❌ Quitter")
             
             choix = input("\n👉 Entrez votre choix (1-3) : ")
             
@@ -378,7 +378,7 @@ class ServiceApplication:
                 self.menu_basket()
             elif choix == '2':
                 self.menu_tennis()
-            elif choix == '3':
+            elif choix == str(0):
                 print("\nFermeture du logiciel. À bientôt ! 👋\n")
                 break
             else:

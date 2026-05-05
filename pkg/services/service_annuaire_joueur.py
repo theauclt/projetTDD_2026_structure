@@ -37,9 +37,33 @@ class ServiceAnnuaireJoueurs:
         # On trie les joueurs trouvés par ordre alphabétique de leur nom complet
         return sorted(joueurs_filtres, key=lambda j: j.nom_complet)
     
+    def _convertir_poids_en_kg(self, poids_lbs):
+        """Outil interne : Convertit un poids de livres (lbs) en kilogrammes (kg)."""
+        try:
+            # On nettoie la chaîne au cas où il y aurait le mot "lbs" et on convertit en décimal (float)
+            poids_propre = str(poids_lbs).lower().replace('lbs', '').strip()
+            valeur_lbs = float(poids_propre)
+            
+            # Formule de conversion
+            valeur_kg = valeur_lbs * 0.453592
+            
+            # On arrondit à 1 chiffre après la virgule et on ajoute l'unité
+            return f"{round(valeur_kg, 1)} kg"
+        except (ValueError, TypeError):
+            # Si la donnée est vide ou illisible, on renvoie la valeur d'origine ou "N/A"
+            return poids_lbs if poids_lbs else "N/A"
+        
     def charger_joueurs(self, liste_joueurs):
         """Remplit l'annuaire avec la liste chargée par le DataRepository."""
         for joueur in liste_joueurs:
+            # --- NOUVEAU : CONVERSION DU POIDS ---
+            # On vérifie que le joueur possède bien un attribut poids (Basket)
+            if hasattr(joueur, 'poids') and joueur.poids:
+                # On évite de le convertir deux fois si le code passe par ici plusieurs fois
+                if "kg" not in str(joueur.poids):
+                    joueur.poids = self._convertir_poids_en_kg(joueur.poids)
+            # -------------------------------------
+            
             self.annuaire[str(joueur.id)] = joueur
 
     def obtenir_joueur(self, joueur_id):

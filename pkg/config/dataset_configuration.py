@@ -12,7 +12,7 @@ class DatasetConfiguration:
 
 # 1. TENNIS (ATP & WTA)
 tennis_atp_match_config = DatasetConfiguration(
-    dataset_path="Données/Tennis/atp_matches_2024.csv", # (Assure-toi que le chemin est bon)
+    dataset_path="data/Tennis/atp_matches_2024.csv", # (Assure-toi que le chemin est bon)
     dataset_sep=",",
     adapter=TennisMatchAdapter(
         col_id="match_num",
@@ -22,7 +22,7 @@ tennis_atp_match_config = DatasetConfiguration(
     )
 )
 tennis_wta_match_config = DatasetConfiguration(
-    dataset_path="Données/Tennis/wta_matches_2024.csv", 
+    dataset_path="data/Tennis/wta_matches_2024.csv", 
     dataset_sep=",",
     adapter=TennisMatchAdapter(
         col_id="match_num",
@@ -33,7 +33,7 @@ tennis_wta_match_config = DatasetConfiguration(
 )
 
 tennis_wta_joueur_config = DatasetConfiguration(
-    dataset_path="Données/Tennis/wta_players_2024.csv", 
+    dataset_path="data/Tennis/wta_players_2024.csv", 
     dataset_sep=",",
     adapter=TennisJoueurAdapter(
         col_id="player_id", 
@@ -46,7 +46,7 @@ tennis_wta_joueur_config = DatasetConfiguration(
 )
 
 tennis_atp_joueur_config = DatasetConfiguration(
-    dataset_path="Données/Tennis/atp_players_2024.csv", 
+    dataset_path="data/Tennis/atp_players_2024.csv", 
     dataset_sep=",",
     adapter=TennisJoueurAdapter(
         col_id="player_id", 
@@ -61,7 +61,7 @@ tennis_atp_joueur_config = DatasetConfiguration(
 
 # 2. BASKET
 basket_match_config = DatasetConfiguration(
-    dataset_path="Données/Basket/game.csv",
+    dataset_path="data/Basket/game.csv",
     dataset_sep=",",
     adapter=GenericMatchAdapter(
         col_date="game_date", 
@@ -73,7 +73,7 @@ basket_match_config = DatasetConfiguration(
 )
 
 basket_equipe_config = DatasetConfiguration(
-    dataset_path="Données/Basket/team.csv",
+    dataset_path="data/Basket/team.csv",
     dataset_sep=",",
     adapter=GenericEquipeAdapter(
         col_id="id",
@@ -85,7 +85,7 @@ basket_equipe_config = DatasetConfiguration(
 )
 
 basket_joueur_config = DatasetConfiguration(
-    dataset_path="Données/Basket/player.csv",
+    dataset_path="data/Basket/player.csv",
     dataset_sep=",",
     adapter=BasketJoueurAdapter(
         col_id="person_id",
