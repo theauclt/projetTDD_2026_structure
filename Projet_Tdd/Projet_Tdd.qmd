@@ -89,7 +89,7 @@ L’organisation de ce projet a débuté par une phase de réflexion collective 
 
 Une fois ce cadre méthodologique établi, nous avons réparti le développement technique de la façon suivante : Théau s’est occupé de la gestion du flux de données, développant les scripts d’insertion et les adaptateurs nécessaires à l’intégration, tandis que Milyan s’est concentré sur l’architecture logicielle en codant l’ensemble des classes structurantes du système. En parallèle, Gwenaël a pris en charge le contrôle qualité à travers la vérification de la propreté des données, tout en concevant l’interface utilisateur afin de permettre une accessibilité simple aux données.
 
-(faire le paragraphe sur les tests)
+Parallèlement au développement, nous avons mis en place une stratégie de tests modulaires pour garantir la fiabilité de chaque couche de notre application. Théau a pris en charge la validation des flux d'entrée via les tests d'adaptateurs (*test_adapters.py*), Milyan a assuré la conformité des entités métier à travers les tests de modèles (*test_models.py*), tandis que Gwenaël s'est occupé de valider la logique globale et les calculs statistiques dans les tests de services (*test_services.py*).
 
 Afin de fluidifier notre collaboration et d'assurer la cohérence de notre développement, nous avons utilisé Git. Cet outil a été indispensable pour travailler simultanément sur le même code source, gérer les fusions de nos travaux respectifs et conserver un historique rigoureux de chaque étape du projet.
 
