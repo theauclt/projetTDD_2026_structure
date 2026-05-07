@@ -129,7 +129,17 @@ Enfin, la fiabilité de la persistance et de l'accès aux données est assurée 
 
 ## Quelques résultats
 
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu.png){width=100%, height=10cm}
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/.png){width=100%, height=10cm}
+
+
 ![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/cover_tests.png){width=100%, height=10cm}
+
+
+
 
 ## Limites de l’application
 
@@ -142,6 +152,12 @@ Le choix de nous concentrer exclusivement sur deux sports rend l'application par
 \newpage
 
 # Annexes {.unnumbered}
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_NBA){width=100%, height=10cm}
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/Annuaire_des_equipes){width=100%, height=10cm}
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_d_un_joueurs){width=100%, height=10cm}
 
 ```{r}
 
