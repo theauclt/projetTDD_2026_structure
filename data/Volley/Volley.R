@@ -1,7 +1,0 @@
-coach_men <- read.csv("~/Projet_TDD/Volley/coach_men.csv")
-coach_women <- read.csv("~/Projet_TDD/Volley/coach_women.csv")
-match_men <- read.csv("~/Projet_TDD/Volley/match_men.csv")
-match_women <- read.csv("~/Projet_TDD/Volley/match_women.csv")
-player_men <- read.csv("~/Projet_TDD/Volley/player_men.csv")
-player_women <- read.csv("~/Projet_TDD/Volley/player_women.csv")
-country <- read.csv("~/Projet_TDD/Volley/country.csv")
