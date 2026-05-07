@@ -100,47 +100,34 @@ flowchart LR
 
 ## Commandes d'exécution
 
-### 1. Créer et activer un environnement virtuel
-
-```bash
-# Créer l'environnement virtuel
-python -m venv .venv
-
-# Activer (macOS / Linux)
-source .venv/bin/activate
-
-# Activer (Windows)
-.venv\Scripts\activate
-```
-
-### 2. Installer les dépendances
+### 1. Installer les dépendances
 
 ```bash
 pip install pandas pytest pytest-cov black ruff mypy pandas-stubs
 ```
 
-### 3. Lancer l'application
+### 2. Lancer l'application
 
 ```bash
 python -m main.py
 ```
 
-### 4. Lancer les tests
+### 3. Lancer les tests
 
 ```bash
 # Lancer tous les tests
-pytest -v
+python -m pytest -v
 
 # Lancer tous les tests avec affichage court
-pytest -ra -q
+python -m pytest -ra -q
 
 # Lancer un fichier de test spécifique
-pytest tests/test_models.py -v
-pytest tests/test_adapters.py -v
-pytest tests/test_services.py -v
+python -m pytest tests/test_models.py -v
+python -m pytest tests/test_adapters.py -v
+python -m pytest tests/test_services.py -v
 ```
 
-### 5. Mesurer la couverture de code
+### 4. Mesurer la couverture de code
 
 ```bash
 # Couverture complète avec rapport dans le terminal
