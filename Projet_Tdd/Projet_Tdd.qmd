@@ -73,7 +73,47 @@ Avant de débuter l’analyse de nos différents jeux de données sportives, nou
 
 Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant une responsabilité bien définie :
 
-(faire l'architecture du code : cf page 4 rapport Lina)
+```text
+
+projet/
+├── main.py
+├── pyproject.toml
+├── README.md
+└── pkg/
+    ├── __init__.py
+    ├── models/
+    │   ├── __init__.py
+    │   ├── joueur.py
+    │   ├── equipe.py
+    │   └── match.py
+    ├── adapter/
+    │   ├── __init__.py
+    │   ├── base_adapter.py
+    │   ├── generic_joueur_adapter.py
+    │   ├── generic_equipe_adapter.py
+    │   └── generic_match_adapter.py
+    ├── repository/
+    │   ├── __init__.py
+    │   └── data_repository.py
+    ├── config/
+    │   ├── __init__.py
+    │   └── dataset_configuration.py
+    ├── services/
+    │   ├── __init__.py
+    │   ├── service_application.py
+    │   ├── service_statistiques.py
+    │   ├── service_annuaire_joueur.py
+    │   └── services_matchs.py
+    └── tests/
+        ├── __init__.py
+        ├── test_models.py
+        ├── test_adapters.py
+        ├── test_services.py
+        └── test_repository.py
+
+```
+
+
 
 (bien expliquer la logique de cette architecture car bcp de points sur le rapport)
 
