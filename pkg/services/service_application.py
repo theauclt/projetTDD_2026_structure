@@ -1,18 +1,18 @@
-from pkg.repository.data_repository import DataRepository
 from pkg.config.dataset_configuration import (
-    basket_match_config,
     basket_equipe_config,
     basket_joueur_config,
-    tennis_atp_match_config,
+    basket_match_config,
     tennis_atp_joueur_config,
-    tennis_wta_match_config,
+    tennis_atp_match_config,
     tennis_wta_joueur_config,
+    tennis_wta_match_config,
 )
-from pkg.services.service_statistiques import (
-    ServiceStatistiquesTennis,
-    ServiceStatistiquesBasket,
-)
+from pkg.repository.data_repository import DataRepository
 from pkg.services.service_annuaire_joueur import ServiceAnnuaireJoueurs
+from pkg.services.service_statistiques import (
+    ServiceStatistiquesBasket,
+    ServiceStatistiquesTennis,
+)
 
 
 class ServiceApplication:
@@ -216,16 +216,12 @@ class ServiceApplication:
                         break
 
                     for idx, joueur in enumerate(effectif_trie, start=1):
-                        print(
-                            f"{idx:2}. #{joueur.numero:<2} - {joueur.nom_complet} ({joueur.position})"
-                        )
+                        print(f"{idx:2}. #{joueur.numero:<2} - {joueur.nom_complet} ({joueur.position})")
 
                     print("-" * 45)
                     print("0. 🔙 Choisir une autre équipe")
 
-                    choix_joueur = input(
-                        "\n👉 Choisissez un joueur pour voir son profil : "
-                    )
+                    choix_joueur = input("\n👉 Choisissez un joueur pour voir son profil : ")
 
                     if choix_joueur == str(0):
                         break
@@ -312,29 +308,21 @@ class ServiceApplication:
             print("-" * 60)
 
             choix_pays = (
-                input(
-                    "\n👉 Tapez le code à 3 lettres d'un pays (ou '0' pour quitter) : "
-                )
-                .upper()
-                .strip()
+                input("\n👉 Tapez le code à 3 lettres d'un pays (ou '0' pour quitter) : ").upper().strip()
             )
 
             if choix_pays == str(0):
                 break
 
             if choix_pays not in liste_pays:
-                print(
-                    f"⚠️ Aucun joueur trouvé pour le code '{choix_pays}'. Vérifiez l'orthographe."
-                )
+                print(f"⚠️ Aucun joueur trouvé pour le code '{choix_pays}'. Vérifiez l'orthographe.")
                 continue
 
             while True:
                 joueurs_du_pays = annuaire.obtenir_joueurs_par_pays(choix_pays)
 
                 print("\n" + "=" * 50)
-                print(
-                    f"🎾 JOUEURS REPRÉSENTANT : {choix_pays} ({len(joueurs_du_pays)} trouvés)"
-                )
+                print(f"🎾 JOUEURS REPRÉSENTANT : {choix_pays} ({len(joueurs_du_pays)} trouvés)")
                 print("=" * 50)
 
                 for idx, joueur in enumerate(joueurs_du_pays, start=1):
@@ -343,9 +331,7 @@ class ServiceApplication:
                 print("-" * 50)
                 print("0. 🔙 Chercher un autre pays")
 
-                choix_j = input(
-                    "\n👉 Choisissez un joueur (numéro) pour voir ses stats : "
-                )
+                choix_j = input("\n👉 Choisissez un joueur (numéro) pour voir ses stats : ")
 
                 if choix_j == str(0):
                     break
@@ -361,9 +347,7 @@ class ServiceApplication:
                     print("★" * 45)
                     print(f"  Taille       : {joueur.taille} cm")
                     print(f"  Main forte   : {getattr(joueur, 'main_forte', 'N/A')}")
-                    print(
-                        f"  Pays         : {getattr(joueur, 'pays_ioc', getattr(joueur, 'ioc', 'N/A'))}"
-                    )
+                    print(f"  Pays         : {getattr(joueur, 'pays_ioc', getattr(joueur, 'ioc', 'N/A'))}")
                     print("-" * 45)
 
                     if stats:
@@ -374,12 +358,8 @@ class ServiceApplication:
                         print(f"  Temps moyen  : {stats['minutes_moyennes']} minutes")
                         print("-" * 45)
                         print("  Statistiques Balle de Break :")
-                        print(
-                            f"  Défense (Sauvées)    : {stats['bp_sauvees']} / {stats['bp_concedees']}"
-                        )
-                        print(
-                            f"  Attaque (Converties) : {stats['bp_converties']} / {stats['bp_obtenues']}"
-                        )
+                        print(f"  Défense (Sauvées)    : {stats['bp_sauvees']} / {stats['bp_concedees']}")
+                        print(f"  Attaque (Converties) : {stats['bp_converties']} / {stats['bp_obtenues']}")
                         print("-" * 45)
                         titres = stats["palmares"]
                         print(f"  🏆 Palmarès en 2024 ({len(titres)} titres) 🏆 :")
@@ -411,13 +391,9 @@ class ServiceApplication:
             choix = input("\n👉 Entrez votre choix : ")
 
             if choix == "1":
-                self.explorer_annuaire_tennis(
-                    tennis_atp_joueur_config, tennis_atp_match_config, "ATP"
-                )
+                self.explorer_annuaire_tennis(tennis_atp_joueur_config, tennis_atp_match_config, "ATP")
             elif choix == "2":
-                self.explorer_annuaire_tennis(
-                    tennis_wta_joueur_config, tennis_wta_match_config, "WTA"
-                )
+                self.explorer_annuaire_tennis(tennis_wta_joueur_config, tennis_wta_match_config, "WTA")
             elif choix == str(0):
                 break
             else:

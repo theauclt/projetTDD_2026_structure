@@ -65,13 +65,12 @@ Avant de débuter l’analyse de nos différents jeux de données sportives, nou
 
 ## Modélisation
 
-Diagramme de classe : 
 
-![Légende de l'image](images/Diagramme_de_classe.png){width=100%}
 
-Diagramme de cas d'utilisation :
+![Diagramme de classe](images/Diagramme_de_classe.png){width=100%}
 
-![Légende de l'image](images/diagramme_cas_utilisation.png){width=100%}
+
+![Diagramme de cas d'utilisation](images/diagramme_cas_utilisation.png){width=100%}
 
 - (diagramme d'activité)
 

@@ -14,9 +14,7 @@ class ServiceAnnuaireJoueurs:
 
         for joueur in self.annuaire.values():
             # On utilise getattr pour éviter les erreurs si l'attribut a un nom légèrement différent
-            code_pays = getattr(joueur, "pays_ioc", None) or getattr(
-                joueur, "ioc", None
-            )
+            code_pays = getattr(joueur, "pays_ioc", None) or getattr(joueur, "ioc", None)
 
             # On ignore les pays vides ou les erreurs de lecture 'nan'
             if code_pays and str(code_pays).lower() != "nan":
@@ -32,9 +30,7 @@ class ServiceAnnuaireJoueurs:
         code_pays = code_pays.upper()  # On s'assure que la casse correspond
 
         for joueur in self.annuaire.values():
-            pays_joueur = getattr(joueur, "pays_ioc", None) or getattr(
-                joueur, "ioc", None
-            )
+            pays_joueur = getattr(joueur, "pays_ioc", None) or getattr(joueur, "ioc", None)
             if pays_joueur == code_pays:
                 joueurs_filtres.append(joueur)
 
@@ -78,8 +74,6 @@ class ServiceAnnuaireJoueurs:
         """Retourne la liste des joueurs appartenant à une équipe (Basket) ou un pays (Tennis)."""
         joueurs_trouves = []
         for joueur in self.annuaire.values():
-            if hasattr(joueur, "equipe_id") and str(joueur.equipe_id) == str(
-                affiliation_id
-            ):
+            if hasattr(joueur, "equipe_id") and str(joueur.equipe_id) == str(affiliation_id):
                 joueurs_trouves.append(joueur)
         return joueurs_trouves

@@ -1,6 +1,6 @@
 from typing import List
 
-from pandas import read_csv, DataFrame
+from pandas import DataFrame, read_csv
 
 from pkg.models.match import Match
 

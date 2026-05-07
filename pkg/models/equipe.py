@@ -56,9 +56,7 @@ class Equipe:
         Filtre et retourne la liste des joueurs ayant une nationalité spécifique.
         Utile pour vérifier les quotas de joueurs étrangers dans certaines ligues.
         """
-        return [
-            joueur for joueur in self.joueurs if joueur.code_pays == code_nationalite
-        ]
+        return [joueur for joueur in self.joueurs if joueur.code_pays == code_nationalite]
 
     def a_effectif_minimum(self, minimum_requis=5):
         """

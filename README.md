@@ -22,7 +22,7 @@ Application de traitement et de visualisation de données sportives, couvrant la
 | `pandas-stubs` | Fichiers de traduction de types pour la compatibilité Mypy x Pandas  |
 
 ### Style de docstrings
-Convention **NumPy** (`pydocstyle`) — chaque classe et méthode est documentée avec une description, la liste des paramètres (`Parameters`) et la valeur de retour (`Returns`).
+Convention **One-line Docstring**  — Chaque classe et méthode est documentée avec une description brève, elle doit expliquer ce que fait la fonction (son utilité/son effet), et non comment elle le fait.
 
 ### Qualité du code
 - **Linter (Ruff) :** Détection et correction automatique des erreurs de syntaxe, imports inutilisés, etc.
@@ -41,13 +41,13 @@ projet/
 │
 ├── pkg/                             # Package principal
 │   ├── __init__.py                  # Initialisation du module (requis par Mypy)
-│   ├── models/                      # Modèles métier (entités)
+│   ├── models/                      # Modèles (entités)
 │   │   ├── __init__.py
 │   │   ├── joueur.py                # Joueur, JoueurBasket, JoueurTennis
 │   │   ├── equipe.py                # Equipe
 │   │   └── match.py                 # Match
 │   │
-│   ├── adapter/                     # Transformation CSV → objets métier
+│   ├── adapter/                     # Transformation CSV → objets
 │   │   ├── __init__.py
 │   │   ├── base_adapter.py          # Classe abstraite BaseAdapter
 │   │   ├── generic_joueur_adapter.py # BasketJoueurAdapter, TennisJoueurAdapter
@@ -74,81 +74,48 @@ projet/
     ├── test_adapters.py             # Tests des adapters et du repository
     └── test_services.py             # Tests de la logique métier
 
---
-
-## Schéma de relations entre les modules
-
-```mermaid
-flowchart LR
-
-    U((🧑))
-    UI[ServiceApplication]
-    S[Services]
-    M[Models]
-    D[(CSV Data)]
-
-    U --> |interagit| UI
-    UI -->|appelle| S
-    S -->|utilise| M
-    S -->|lit via Repository| D
-
-    S -->|renvoie| UI
-    UI -->|affiche| U
-```
-
 ---
 
+```
 ## Commandes d'exécution
 
-### 1. Créer et activer un environnement virtuel
-
-```bash
-# Créer l'environnement virtuel
-python -m venv .venv
-
-# Activer (macOS / Linux)
-source .venv/bin/activate
-
-# Activer (Windows)
-.venv\Scripts\activate
-```
-
-### 2. Installer les dépendances
+### 1. Installer les dépendances
 
 ```bash
 pip install pandas pytest pytest-cov black ruff mypy pandas-stubs
 ```
 
-### 3. Lancer l'application
+### 2. Lancer l'application
 
 ```bash
 python -m main.py
 ```
 
-### 4. Lancer les tests
+### 3. Lancer les tests
 
 ```bash
 # Lancer tous les tests
-pytest -v
+python -m pytest -v
 
 # Lancer tous les tests avec affichage court
-pytest -ra -q
+python -m pytest -ra -q
 
 # Lancer un fichier de test spécifique
-pytest tests/test_models.py -v
-pytest tests/test_adapters.py -v
-pytest tests/test_services.py -v
-```
+python -m pytest tests/test_models.py -v
+python -m pytest tests/test_adapters.py -v
+python -m pytest tests/test_services.py -v
 
-### 5. Mesurer la couverture de code
-
-```bash
 # Couverture complète avec rapport dans le terminal
 python -m pytest --cov=pkg tests/ -W ignore
 
 # Générer un rapport HTML détaillé pour voir les lignes non testées
 python -m pytest --cov=pkg --cov-report=html -W ignore
 
+```
+
+### 4. Lancer les linters et formatage
+
+```bash
 # Formater le code automatiquement
 python -m black pkg/
 

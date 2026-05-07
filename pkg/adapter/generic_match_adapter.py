@@ -33,9 +33,7 @@ class GenericMatchAdapter(BaseAdapter):
 
     def adapt(self, row) -> Match:
         # On récupère toutes les autres colonnes automatiquement
-        extra_stats = {
-            key: value for key, value in row.items() if key not in self.main_cols
-        }
+        extra_stats = {key: value for key, value in row.items() if key not in self.main_cols}
 
         # Si on a défini une colonne pour le type de match, on la force dans les stats
         # Sinon, par défaut on dit que c'est un match de saison régulière
