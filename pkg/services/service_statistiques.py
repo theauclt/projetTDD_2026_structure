@@ -171,9 +171,7 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
             phase = match.stats.get("type_match", "Regular Season")
 
             # === STATS POUR L'ÉQUIPE À DOMICILE (Equipe 1) ===
-            d_home = self.stats_par_phase[phase][
-                match.equipe1
-            ]  # On ouvre le bon tiroir
+            d_home = self.stats_par_phase[phase][match.equipe1]  # On ouvre le bon tiroir
             d_home["matchs_joues"] += 1
             d_home["points_marques"] += match.score1
             d_home["points_encaisses"] += match.score2
@@ -202,9 +200,7 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
             d_home["fta"] += float(match.stats.get("fta_home", 0))
 
             # === STATS POUR L'ÉQUIPE À L'EXTÉRIEUR (Equipe 2) ===
-            d_away = self.stats_par_phase[phase][
-                match.equipe2
-            ]  # On ouvre le bon tiroir
+            d_away = self.stats_par_phase[phase][match.equipe2]  # On ouvre le bon tiroir
             d_away["matchs_joues"] += 1
             d_away["points_marques"] += match.score2
             d_away["points_encaisses"] += match.score1
@@ -237,9 +233,7 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
         """Retourne le classement trié par victoires pour une phase spécifique."""
         stats_phase = self.stats_par_phase.get(phase, {})
         # On trie selon la clé 'victoires' en ordre décroissant (reverse=True)
-        return sorted(
-            stats_phase.items(), key=lambda x: x[1]["victoires"], reverse=True
-        )
+        return sorted(stats_phase.items(), key=lambda x: x[1]["victoires"], reverse=True)
 
     # 4. MODIFIÉ : On ajoute le paramètre "phase"
     def obtenir_moyennes(self, equipe_id, phase="Regular Season"):

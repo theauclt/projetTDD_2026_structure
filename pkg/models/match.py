@@ -60,9 +60,7 @@ class Match:
         return abs(self.score1 - self.score2)
 
     def __str__(self):
-        return (
-            f"{self.date} | {self.equipe1} {self.score1} - {self.score2} {self.equipe2}"
-        )
+        return f"{self.date} | {self.equipe1} {self.score1} - {self.score2} {self.equipe2}"
 
     def __repr__(self):
         return (

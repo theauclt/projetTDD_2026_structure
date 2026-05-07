@@ -41,13 +41,13 @@ projet/
 │
 ├── pkg/                             # Package principal
 │   ├── __init__.py                  # Initialisation du module (requis par Mypy)
-│   ├── models/                      # Modèles métier (entités)
+│   ├── models/                      # Modèles (entités)
 │   │   ├── __init__.py
 │   │   ├── joueur.py                # Joueur, JoueurBasket, JoueurTennis
 │   │   ├── equipe.py                # Equipe
 │   │   └── match.py                 # Match
 │   │
-│   ├── adapter/                     # Transformation CSV → objets métier
+│   ├── adapter/                     # Transformation CSV → objets
 │   │   ├── __init__.py
 │   │   ├── base_adapter.py          # Classe abstraite BaseAdapter
 │   │   ├── generic_joueur_adapter.py # BasketJoueurAdapter, TennisJoueurAdapter
