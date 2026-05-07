@@ -74,11 +74,53 @@ Avant de débuter l’analyse de nos différents jeux de données sportives, nou
 
 - (diagramme d'activité)
 
+\newpage
+
 ## Architecture générale
 
 Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant une responsabilité bien définie :
 
-(faire l'architecture du code : cf page 4 rapport Lina)
+```text
+
+projet/
+├── main.py
+├── pyproject.toml
+├── README.md
+└── pkg/
+    ├── __init__.py
+    ├── models/
+    │   ├── __init__.py
+    │   ├── joueur.py
+    │   ├── equipe.py
+    │   └── match.py
+    ├── adapter/
+    │   ├── __init__.py
+    │   ├── base_adapter.py
+    │   ├── generic_joueur_adapter.py
+    │   ├── generic_equipe_adapter.py
+    │   └── generic_match_adapter.py
+    ├── repository/
+    │   ├── __init__.py
+    │   └── data_repository.py
+    ├── config/
+    │   ├── __init__.py
+    │   └── dataset_configuration.py
+    ├── services/
+    │   ├── __init__.py
+    │   ├── service_application.py
+    │   ├── service_statistiques.py
+    │   ├── service_annuaire_joueur.py
+    │   └── services_matchs.py
+    └── tests/
+        ├── __init__.py
+        ├── test_models.py
+        ├── test_adapters.py
+        ├── test_services.py
+        └── test_repository.py
+
+```
+
+
 
 (bien expliquer la logique de cette architecture car bcp de points sur le rapport)
 
@@ -134,7 +176,17 @@ Enfin, la fiabilité de la persistance et de l'accès aux données est assurée 
 
 ## Quelques résultats
 
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu.png){width=100%, height=10cm}
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
+
+
+![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/cover_tests.png){width=100%, height=10cm}
+
+
 ![Légende de l'image](images/cover_tests.png){width=100%}
+
 
 ## Limites de l’application
 
@@ -147,6 +199,14 @@ Le choix de nous concentrer exclusivement sur deux sports rend l'application par
 \newpage
 
 # Annexes {.unnumbered}
+
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_NBA.png){width=100%, height=10cm}
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/Annuaire_des_equipes.png){width=100%, height=10cm}
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_d_un_joueur.png){width=100%, height=10cm}
+
 
 ```{r}
 
