@@ -22,7 +22,7 @@ Application de traitement et de visualisation de données sportives, couvrant la
 | `pandas-stubs` | Fichiers de traduction de types pour la compatibilité Mypy x Pandas  |
 
 ### Style de docstrings
-Convention **NumPy** (`pydocstyle`) — chaque classe et méthode est documentée avec une description, la liste des paramètres (`Parameters`) et la valeur de retour (`Returns`).
+Convention **One-line Docstring**  — Chaque classe et méthode est documentée avec une description brève, elle doit expliquer ce que fait la fonction (son utilité/son effet), et non comment elle le fait.
 
 ### Qualité du code
 - **Linter (Ruff) :** Détection et correction automatique des erreurs de syntaxe, imports inutilisés, etc.
