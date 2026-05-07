@@ -108,6 +108,10 @@ La gestion de l’héritage et des classes abstraites a représenté un défi st
 
 Le traitement des données « sales » dans les fichiers CSV réels, comme les valeurs manquantes (NaN) ou les formats incohérents (poids exprimés en "lbs" au lieu de simples nombres), a nécessité une attention particulière. Nous avons résolu ce problème en intégrant des mécanismes de nettoyage et de conversion directement dans les classes *StatistiqueJoueur* et *ServiceAnnuaireJoueurs*, assurant la transformation systématique des données (conversion en float ou passage des lbs aux kg) et le filtrage des valeurs inexploitables.
 
+La séparation des responsabilités entre les différents services (Statistiques, Annuaire, Matchs) est devenue de plus en plus délicate à mesure que la taille du projet augmentait. Pour éviter que leurs fonctions ne se chevauchent, nous avons mené un exercice d'architecture logicielle rigoureux, redéfinissant précisément le rôle de chaque service pour garantir que chaque composant ne s'occupe que de sa mission spécifique.
+
+Enfin, le couplage entre les adaptateurs et les modèles de données présentait une fragilité : le moindre changement dans un nom de colonne CSV pouvait bloquer l'application. Nous avons stabilisé ce point en utilisant des valeurs par défaut lors de la récupération des données (via la méthode row.get(col, "N/A")), apportant ainsi la rigueur nécessaire pour que le programme reste fonctionnel et robuste même en cas de données manquantes ou de modifications imprévues des fichiers sources.
+
 \newpage
 
 # Tests et validation
