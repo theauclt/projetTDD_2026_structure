@@ -150,17 +150,17 @@ projet/
 
 L'architecture de code repose sur quatre piliers stratégiques qui justifient sa pertinence pour la modélisation :
 
-Le Modèle de Données Typé : Plutôt que de manipuler des structures de données brutes (comme des dictionnaires ou des simples lignes de CSV), l'architecture utilise des objets métiers (`Joueur`, `Equipe`, `Match`). Ce choix permet de valider les données dès leur instanciation et d'utiliser l'héritage pour gérer les spécificités par sport (ex: `JoueurBasket` vs `JoueurTennis`). Cela sécurise la modélisation en garantissant que chaque entité possède les attributs nécessaires avant d'atteindre la logique de calcul.
+Le Modèle de Données Typé : Plutôt que de manipuler des structures de données brutes (comme des dictionnaires ou des simples lignes de CSV), l'architecture utilise des objets métiers (**Joueur**, **Equipe**, **Match**). Ce choix permet de valider les données dès leur instanciation et d'utiliser l'héritage pour gérer les spécificités par sport (ex: **JoueurBasket** vs **JoueurTennis**). Cela sécurise la modélisation en garantissant que chaque entité possède les attributs nécessaires avant d'atteindre la logique de calcul.
 
-Le Pattern Adapter : C'est le cœur de la flexibilité du projet. La couche `adapter/` agit comme une passerelle de traduction entre le format brut des fichiers CSV et les objets Python. En utilisant une classe abstraite `BaseAdapter`, l'architecture permet d'ajouter de nouveaux datasets sans jamais modifier le code existant. Cette abstraction sépare la structure technique des données (comment elles sont stockées) de leur sens métier (ce qu'elles représentent).
+Le Pattern Adapter : c'est le cœur de la flexibilité du projet. La couche **adapter/** agit comme une passerelle de traduction entre le format brut des fichiers CSV et les objets Python. En utilisant une classe abstraite **BaseAdapter**, l'architecture permet d'ajouter de nouveaux datasets sans jamais modifier le code existant. Cette abstraction sépare la structure technique des données (comment elles sont stockées) de leur sens métier (ce qu'elles représentent).
 
 Le Découplage par le Repository et les Services : 
 
-Le `DataRepository` centralise l'accès aux fichiers via Pandas, isolant ainsi la complexité technique de la lecture/écriture.
+le**`DataRepository** centralise l'accès aux fichiers via Pandas, isolant ainsi la complexité technique de la lecture/écriture.
 
-Les `Services` (statistiques, annuaire, matchs) contiennent la logique métier pure. Ils sont totalement indépendants de la source de données : ils reçoivent des objets déjà formattés et se concentrent uniquement sur les calculs et les fonctionnalités utilisateurs. Ce découplage permet de modifier l'algorithme d'un classement sans risquer de casser la lecture d'un fichier.
+Les **Services** (statistiques, annuaire, matchs) contiennent la logique métier pure. Ils sont totalement indépendants de la source de données : ils reçoivent des objets déjà formattés et se concentrent uniquement sur les calculs et les fonctionnalités utilisateurs. Ce découplage permet de modifier l'algorithme d'un classement sans risquer de casser la lecture d'un fichier.
 
-La Configurabilité et Maintenabilité : La présence d'un module `config/` dédié montre une volonté d'industrialisation du code. En centralisant les chemins de fichiers et les séparateurs, on permet au programme d'être multi-sport de manière dynamique. Enfin, la structure incluant un répertoire `tests/` et un fichier `pyproject.toml` assure que le projet suit les standards modernes de développement (tests unitaires, gestion propre des dépendances et typage avec Mypy), garantissant la fiabilité des résultats produits par le modèle.
+La Configurabilité et Maintenabilité : La présence d'un module **config/** dédié montre une volonté d'industrialisation du code. En centralisant les chemins de fichiers et les séparateurs, on permet au programme d'être multi-sport de manière dynamique. Enfin, la structure incluant un répertoire **tests/** et un fichier **pyproject.toml** assure que le projet suit les standards modernes de développement (tests unitaires, gestion propre des dépendances et typage avec Mypy), garantissant la fiabilité des résultats produits par le modèle.
 
 ## Choix technologiques
 
@@ -250,6 +250,10 @@ Afin de garantir la fiabilité et la robustesse de l'application, une attention 
 ## Limites de l’application
 
 Le choix de nous concentrer exclusivement sur deux sports rend l'application particulièrement spécifique. L'interface utilisateur ayant été finement adaptée aux caractéristiques propres de ces disciplines, cette spécialisation crée une contrainte majeure en termes d'évolutivité : l'ajout d'un nouveau sport s'avère complexe. En effet, chaque nouvelle catégorie nécessiterait une adaptation de l'interface pour répondre à ses spécificités, ce qui limite sa capacité à s'ouvrir à d'autres domaines sportifs sans un travail de développement supplémentaire conséquent.
+
+Par ailleurs, l'ergonomie de l'application constitue une limite importante. Le choix d'une interface en ligne de commande (CLI), bien que parfaitement fonctionnelle et efficace pour le traitement des données, manque d'attrait visuel et de convivialité. L'absence d'interface graphique (GUI) peut rendre la navigation moins intuitive pour un utilisateur non habitué au terminal. Bien que cet environnement épuré permette de se concentrer sur la logique métier, une évolution vers une solution plus moderne et esthétique améliorerait significativement l'expérience utilisateur. 
+
+Enfin, le périmètre fonctionnel actuel restreint les possibilités d'analyse globale. Certaines statistiques avancées manquent encore à l'appel et les critères de recherche demeurent limités. Pour le tennis, par exemple, l'application permet de consulter les résultats uniquement par joueur, sans offrir la possibilité d'effectuer une recherche par tournoi ou par type de surface. L'ajout de filtres multicritères et de statistiques technico-tactiques plus poussées (comme le taux de réussite au premier service ou les fautes directes) constituerait une amélioration majeure pour transformer cet outil de consultation en un véritable instrument d'analyse sportive. 
 
 \newpage
 
