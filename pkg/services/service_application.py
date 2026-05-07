@@ -96,7 +96,7 @@ class ServiceApplication:
             if choix_phase == str(0):
                 break
             elif choix_phase == "2" :
-                nom_phase = "Playoffs" 
+                nom_phase = "Playoffs"
             else:
                 nom_phase = "Regular Season"
 
@@ -108,10 +108,10 @@ class ServiceApplication:
                 print("3. 🌍 Les deux (Classement Global)")
                 print("0. 🔙 Choisir une autre phase")
                 choix_conf = input("\n👉 Votre choix : ")
-                
+
                 if choix_conf == str(0):
                     break
-                
+
                 noms_equipes = self.charger_dictionnaire_noms(basket_equipe_config)
 
                 repo_matchs = DataRepository(
@@ -161,7 +161,7 @@ class ServiceApplication:
                 retour = input("\n👉 Appuyez sur Entrée pour revenir au menu précédent...")
                 if retour:
                     break
-            
+
 
 
     def explorer_annuaire_basket(self):

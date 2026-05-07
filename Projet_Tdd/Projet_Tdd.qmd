@@ -69,9 +69,23 @@ Avant de débuter l’analyse de nos différents jeux de données sportives, nou
 
 ![Diagramme de classe](images/Diagramme_de_classe.png){width=100%}
 
+Le projet est structuré autour de plusieurs classes regroupées dans le package pkg.
+La couche models constitue le noyau de notre projet : la classe Joueur et ses spécialisations JoueurBasket et JoueurTennis, la classe Match avec son dictionnaire stats générique, et la classe Equipe qui agrège un effectif de joueurs toutes représentées dans le diagramme ci-dessus.
+La couche adapter assure la conversion des données brutes CSV en objets Python directement manipulables. La classe abstraite BaseAdapter impose le fonctionnement via les méthodes adapt() et to_row(), dont héritent BasketJoueurAdapter et TennisJoueurAdapter pour les joueurs, ainsi que leurs équivalents pour les matchs. Ce découpage permet d'absorber les différences de format entre les datasets NBA et Tennis sans impacter le reste du code.
+La couche repository s'appuie sur DataRepository, qui orchestre le chargement et la sauvegarde des fichiers CSV en déléguant la conversion à l'adaptateur correspondant.
+La couche services porte l’intelligence de l’application. ServiceAnnuaireJoueurs gère les profils et expose des filtres par équipe ou par pays. ServiceStatistiques, ServiceStatistiquesBasket et ServiceStatistiquesTennis représentées dans le diagramme prennent en charge les classements et moyennes. Enfin, ServiceApplication orchestre la navigation de l'interface console en s'appuyant sur l'ensemble de ces services.
+
 
 ![Diagramme de cas d'utilisation](images/diagramme_cas_utilisation.png){width=100%}
 
+<<<<<<< HEAD
+=======
+Le diagramme de cas d'utilisation de notre application fait apparaître un unique acteur l'Utilisateur qui interagit avec l'ensemble du système via un menu console.
+Au lancement, l'utilisateur choisit un sport. 
+S'il sélectionne le module NBA, un sous-menu lui propose deux options. La première lui permet de consulter le classement et les statistiques avancées des équipes : il choisit d'abord une phase (Saison Régulière ou Playoffs), puis une conférence (Est, Ouest ou Global). L'application charge alors les matchs via DataRepository, calcule les victoires et les moyennes par équipe (points marqués et encaissés, rebonds, passes, interceptions, contres, pourcentages de tir) et affiche le classement filtré. La seconde option lui permet d'explorer les effectifs : il sélectionne une équipe parmi la liste organisée par conférence, consulte son effectif trié par numéro de maillot, puis choisit un joueur pour accéder à sa carte détaillée (position, taille, poids, date de naissance).
+S'il sélectionne le module Tennis, un sous-menu lui propose de choisir entre le circuit ATP et le circuit WTA. Dans les deux cas, le déroulé est identique : l'application affiche les codes pays disponibles, ce qui nécessite de connaître le pays du joueur que l’on recherche, ce qui peut être contraignant. Toutefois c’est la méthode qui nous paraissait être la plus pertinente pour avoir accès à un maximum de joueurs. L’utilisateur saisit donc un pays, puis choisit un joueur parmi ceux représentant le pays choisi. Il accède alors à la fiche complète du joueur, comprenant ses statistiques agrégées sur la saison (victoires, défaites, aces par match, double-fautes, temps de jeu moyen, balles de break sauvées et converties) ainsi que son palmarès des tournois remportés en 2024.
+Enfin Quitter l’application est accessible à tout moment depuis le menu principal
+>>>>>>> 0505c114a50a863538044fc1eaa963b28c2b3093
 
 
 \newpage
