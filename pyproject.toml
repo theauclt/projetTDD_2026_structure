@@ -22,12 +22,12 @@ dependencies = [
 
 # Formatage automatique avec Black
 [tool.black]
-line-length = 88
+line-length = 112
 target-version = ["py312"]
 
 # Configuration de Ruff (Le linter qui remplace Flake8, isort et pydocstyle)
 [tool.ruff]
-line-length = 88
+line-length = 112
 target-version = "py312"
 
 [tool.ruff.lint]

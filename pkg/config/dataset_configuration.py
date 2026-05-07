@@ -1,6 +1,6 @@
 from pkg.adapter.generic_equipe_adapter import GenericEquipeAdapter
+from pkg.adapter.generic_joueur_adapter import BasketJoueurAdapter, TennisJoueurAdapter
 from pkg.adapter.generic_match_adapter import GenericMatchAdapter, TennisMatchAdapter
-from pkg.adapter.generic_joueur_adapter import TennisJoueurAdapter, BasketJoueurAdapter
 
 
 class DatasetConfiguration:
