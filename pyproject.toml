@@ -1,43 +1,50 @@
 [project]
-name = "Exemple"
-version = "0.1.0"
-description = "Mini projet Python exemple pour PTD 2026"
+name = "TGM Statistiques"
+version = "1.0.0"
+description = "Application de traitement et visualisation de données sportives (NBA & Tennis ATP/WTA)"
 authors = [
-    { name="Manon Evain" }
+    { name = "Théau Nguyen--Callot" },
+    { name = "Milyan Vukomanovic" },
+    { name = "Gwenaël Lassalle" }
 ]
-package = [
-    {include = "project", from = "src"}
+requires-python = ">=3.12"
+
+# Liste des dépendances classiques (pour pip)
+dependencies = [
+    "pandas>=2.2.0",
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black",
+    "ruff",
+    "mypy",
+    "pandas-stubs"
 ]
-
-requires-python = ">=3.10"
-
-# Dépendances du projet
-[tool.poetry.dependencies]
-python = "^3.10"
-pytest = "^7.0"
-pytest-cov  = "^7.0"
-python-dotenv = "^1.0.0"
 
 # Formatage automatique avec Black
 [tool.black]
 line-length = 88
-target-version = ["py310"]
+target-version = ["py312"]
 
-# Tri des imports avec isort
-[tool.isort]
-profile = "black"
+# Configuration de Ruff (Le linter qui remplace Flake8, isort et pydocstyle)
+[tool.ruff]
+line-length = 88
+target-version = "py312"
 
-# Linter Flake8
-[tool.flake8]
-max-line-length = 88
-ignore = ["E203", "W503"] 
-exclude = [".git", "__pycache__", "venv", ".venv", "build", "dist"]
+[tool.ruff.lint]
+# On active les règles Pyflakes (F), pycodestyle (E, W), isort (I), et pydocstyle (D)
+select = ["E", "F", "W", "I", "D"]
+ignore = ["E203", "D100", "D104"] # On ignore quelques règles trop strictes sur la documentation
 
-# Docstring style avec pydocstyle
-[tool.pydocstyle]
-convention = "numpy"
+[tool.ruff.lint.pydocstyle]
+# Convention globale pour tes grosses fonctions
+convention = "numpy" 
 
-# Pytest options
+# Configuration Mypy (Typage statique)
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+
+# Configuration pytest
 [tool.pytest.ini_options]
 minversion = "7.0"
 addopts = "-ra -q --tb=short"

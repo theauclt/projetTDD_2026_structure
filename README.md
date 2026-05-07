@@ -116,7 +116,6 @@ python -m pytest --cov=pkg --cov-report=html -W ignore
 ### 4. Lancer les linters et formatage
 
 ```bash
-
 # Formater le code automatiquement
 python -m black pkg/
 
