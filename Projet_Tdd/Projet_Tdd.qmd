@@ -11,7 +11,6 @@ format:
     linkcolor: black
 ---
 
-
 \maketitle
 \thispagestyle{empty}
 \newpage
@@ -22,39 +21,46 @@ format:
 
 \tableofcontents
 
-
 \newpage
+
 # Introduction {.unnumbered}
 
-\newpage
-# Présentation du projet
+Le domaine du sport de haut niveau a connu, au cours de la dernière décennie, une révolution majeure. Qu’il s’agisse de l’optimisation des performances des athlètes, de l’analyse tactique ou de l’engagement des passionnés, la donnée est devenue un pilier central de l’écosystème sportif mondial. Cependant, la variété de disciplines allant des sports de ballon collectifs aux sports de raquette individuels pose un défi informatique de taille : comment concevoir un système capable d'unifier et de traiter des données aux structures hétérogènes ?
 
+Dans le cadre de ce projet de traitement de données, nous avons développé « TGM Statistiques », une plateforme logicielle conçue pour centraliser et analyser les statistiques de deux disciplines majeures : le basketball et le tennis. Se concentrer sur seulement deux sports est un choix fort : cela nous permet de privilégier la profondeur d'analyse à la quantité. En proposant des indicateurs très détaillés sur le déroulé précis des rencontres, à l'instar d'applications de référence comme Flashscore, notre outil offre une exploitation fine des données, utile tant pour les analystes techniques que pour les passionnés de sport. L’objectif de ce projet n’est pas seulement de fournir des indicateurs de performance, mais de proposer une architecture logicielle robuste et générique, fondée sur les principes de la programmation orientée objet.
+
+Notre démarche s'articule autour de trois axes principaux présentés dans ce rapport. Dans un premier temps, nous décrivons les jeux de données utilisés et les méthodes d'ingestion flexibles que nous avons mises en place pour pallier la diversité des formats CSV. Ensuite, nous exposons la modélisation logicielle à travers nos diagrammes de classes UML, justifiant nos choix de conception pour garantir l'extensibilité du programme. Enfin, nous présentons les fonctionnalités de notre interface de consultation, permettant d'explorer les historiques de matchs et les classements de manière interactive.
+
+\newpage
+
+# Présentation du projet
 
 ## Contexte
 
+Le présent projet s’inscrit dans le cadre du Projet de Traitement de Données. Le cahier des charges initial nous imposait de concevoir une application Python respectant les principes fondamentaux de la Programmation Orientée Objet, avec une contrainte de généralisabilité absolue. Le code devait être capable de traiter des jeux de données variés, permettant ainsi une grande adaptabilité. Le but de notre application est donc de proposer un système faisant abstraction des règles spécifiques à chaque sport pour offrir un outil d'analyse statistique universel. À travers ce projet, nous avons voulu démontrer qu'une modélisation logicielle rigoureuse permet de transformer des fichiers CSV diverses en une source d'information cohérente, permettant de consulter des classements et des historiques de performances sur quelques disciplines.
 
 ## Besoins fonctionnels
 
-\newpage 
-## Présentation des données 
+L'application a pour mission principale de centraliser et de transformer des données sportives brutes en informations exploitables pour l'utilisateur. Pour cela, elle doit répondre en premier lieu à un besoin d'importation et de normalisation, capable de lire différents flux de données tout en nettoyant les éventuelles erreurs ou informations manquantes pour garantir une base de travail fiable. Une fois ces données intégrées, le système assure le calcul automatique de statistiques personnalisées, allant des bilans classiques de victoires et de défaites aux indicateurs de performance plus techniques et spécifiques à la discipline concernée. L'accès à ces informations est ensuite facilité par une interface de consultation intuitive qui permet à l'utilisateur de naviguer dans les données, d'effectuer des recherches ciblées sur des joueurs ou des équipes, de filtrer les résultats selon divers critères et de consulter des historiques complets.
 
-Nous avons choisi d’utiliser seulement certains jeux de données parmi ceux proposés afin de modéliser notre application. Notre sélection a été pensée pour diversifier au maximum notre approche : nous avons ainsi veillé à inclure à la fois un sport collectif et un sport individuel, tout en intégrant des données issues du sport féminin. Dans cette optique, nous avons travaillé à partir des fichiers suivants :
+## Présentation des données
 
-* **Basket-ball** :
-    * `game.csv` : Données sur les matchs NBA.
-    * `player.csv` : Informations sur les joueurs NBA.
-    * `team.csv` : Informations sur les équipes NBA.
+Nous avons choisi d’utiliser seulement certains jeux de données parmi ceux proposés afin de modéliser notre application. Notre sélection a été pensée pour diversifier au maximum notre approche : nous avons ainsi veillé à inclure à la fois un sport collectif et un sport individuel, tout en intégrant des données issues à la fois du sport masculin et du sport féminin. Dans cette optique, nous avons travaillé à partir des fichiers suivants :
 
-* **Tennis** :
-    * `atp_matches_2024.csv` : Résultats détaillés des matchs du circuit ATP.
-    * `atp_players_2024.csv` : Informations sur les joueurs du circuit ATP.
-    * `wta_matches_2024.csv` : Résultats détaillés des matchs du circuit WTA.
-    * `wta_players_2024.csv` : Informations sur les joueuses du circuit WTA.
+- **Basket-ball** :
+  - `game.csv` : Données sur les matchs NBA.
+  - `player.csv` : Informations sur les joueurs NBA.
+  - `team.csv` : Informations sur les équipes NBA.
+- **Tennis** :
+  - `atp_matches_2024.csv` : Résultats détaillés des matchs du circuit ATP.
+  - `atp_players_2024.csv` : Informations sur les joueurs du circuit ATP.
+  - `wta_matches_2024.csv` : Résultats détaillés des matchs du circuit WTA.
+  - `wta_players_2024.csv` : Informations sur les joueuses du circuit WTA.
 
+Le choix du basket-ball et du tennis s’appuie sur la richesse et la précision des données statistiques qu’ils génèrent, offrant une analyse bien plus fine que le simple score final. Par exemple, au basket-ball, il est possible d'évaluer les pourcentages de réussite aux tirs, que ce soit à l’échelle collective ou individuelle. De la même manière, le tennis offre des indicateurs techniques cruciaux tels que le nombre d’aces, de doubles fautes ou d'erreurs directes. L’exploitation de ces statistiques avancées permet de dépasser le résultat brut pour comprendre le déroulement réel du match. Cette approche est particulièrement pertinente pour les analystes souhaitant s'appuyer sur des données détaillées afin de comprendre les tendances de jeu et d'anticiper les performances lors de rencontres futures.
 
 Avant de débuter l’analyse de nos différents jeux de données sportives, nous avons réalisé une phase d’exploration approfondie afin d'en garantir la fiabilité. Cette étape a consisté à identifier d'éventuels doublons et à recenser les valeurs manquantes qui auraient pu provoquer des erreurs lors de certaines demandes. Ces vérifications préliminaires nous permettent de confirmer que les bases de données sont exploitables.
 
-\newpage 
 # Conception de l’application
 
 ## Modélisation
@@ -63,60 +69,77 @@ Avant de débuter l’analyse de nos différents jeux de données sportives, nou
 - diagramme de cas d'utilisation
 - (diagramme d'activité)
 
-## Architecture générale 
+## Architecture générale
 
-Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant
-une responsabilité bien définie :
+Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant une responsabilité bien définie :
 
 (faire l'architecture du code : cf page 4 rapport Lina)
 
+(bien expliquer la logique de cette architecture car bcp de points sur le rapport)
+
 ## Choix technologiques
 
+Le choix de Python 3.12 associé à une architecture Repository/Adapter/Service et à la Programmation Orientée Objet permet de construire une application modulaire, où les classes abstraites facilitent l'intégration de nouvelles sources de données sportives sans fragiliser le système. La bibliothèque *Pandas* est ici indispensable pour manipuler les fichiers CSV : elle transforme les données brutes en DataFrames pour permettre un filtrage, un tri et une organisation ultra-rapide des performances. Pour la partie analytique, le module math assure la précision des calculs techniques complexes tandis que l'outil *defaultdict* du module collections simplifie la création de dictionnaires de statistiques en gérant automatiquement l'initialisation des scores pour chaque nouveau joueur ou équipe. 
+Enfin, la fiabilité du code est garantie par *pytest* et *unittest.mock* : les MagicMock agissent comme des "doublures" qui imitent des fichiers, tandis que les patches détournent les appels du programme vers ces faux composants plutôt que vers le disque dur. Concrètement, cela permet de faire croire au programme qu'il lit un fichier réel pour vérifier instantanément s'il calcule bien les classements, même dans des cas compliqués ou face à des erreurs (comme un fichier corrompu), sans avoir besoin de créer ou de manipuler de vrais documents sur l'ordinateur.
+
 \newpage
+
 # Réalisation
 
 ## Organisation du travail
 
-L’organisation de ce projet a débuté par une phase de réflexion collective afin de structurer les axes majeurs de développement de l'application. Cette première étape de modélisation nous a permis d'accorder nos visions techniques avant que l'arrivée concrète des jeux de données ne nous permette d'affiner la structure des classes et la logique des méthodes de traitement. 
+L’organisation de ce projet a débuté par une phase de réflexion collective afin de structurer les axes majeurs de développement de l'application. Cette première étape de modélisation nous a permis d'accorder nos visions techniques avant que l'arrivée concrète des jeux de données ne nous permette d'affiner la structure des classes et la logique des méthodes de traitement.
 
-Une fois ce cadre méthodologique établi, nous avons réparti le développement technique de la façon suivante : Théau s’est occupé de la gestion du flux de données, développant les scripts d’insertion et les adaptateurs nécessaires à l’intégration, tandis que Milyan s’est concentré sur l’architecture logicielle en codant l’ensemble des classes structurantes du système. En parallèle, Gwenaël a pris en charge le contrôle qualité à travers la vérification de la propreté des données, tout en concevant l’interface utilisateur afin de permettre une accessibilité simple aux données. 
+Une fois ce cadre méthodologique établi, nous avons réparti le développement technique de la façon suivante : Théau s’est occupé de la gestion du flux de données, développant les scripts d’insertion et les adaptateurs nécessaires à l’intégration, tandis que Milyan s’est concentré sur l’architecture logicielle en codant l’ensemble des classes structurantes du système. En parallèle, Gwenaël a pris en charge le contrôle qualité à travers la vérification de la propreté des données, tout en concevant l’interface utilisateur afin de permettre une accessibilité simple aux données.
 
-(faire le paragraphe sur les tests)
+Parallèlement au développement, nous avons mis en place une stratégie de tests modulaires pour garantir la fiabilité de chaque couche de notre application. Théau a pris en charge la validation des flux d'entrée via les tests d'adaptateurs (*test_adapters.py*), Milyan a assuré la conformité des entités métier à travers les tests de modèles (*test_models.py*), tandis que Gwenaël s'est occupé de valider la logique globale et les calculs statistiques dans les tests de services (*test_services.py*).
 
-Afin de fluidifier notre collaboration et d'assurer la cohérence de notre développement, nous avons utilisé Git. Cet outil a été indispensable pour travailler simultanément sur le même code source, gérer les fusions de nos travaux respectifs et conserver un historique rigoureux de chaque étape du projet. 
+Afin de fluidifier notre collaboration et d'assurer la cohérence de notre développement, nous avons utilisé Git. Cet outil a été indispensable pour travailler simultanément sur le même code source, gérer les fusions de nos travaux respectifs et conserver un historique rigoureux de chaque étape du projet.
 
 Nous avons ensuite rédigé le rapport tous les trois, en choisissant d'utiliser l'outil Quarto.
-
 
 ## Développement
 
 ## Difficultés rencontrées
 
-L’une des principales difficultés de ce projet a résidé dans son démarrage : en l'absence de sujet imposé et n'ayant pas encore les jeux de données à notre disposition, il a été particulièrement complexe de lancer une dynamique de travail concrète. Cette phase d'incertitude a rendu difficile la définition du concept même de notre future application, car il est délicat de structurer une architecture logicielle ou d'imaginer des fonctionnalités pertinentes sans connaître la nature exacte, le volume et les contraintes des données à traiter. 
+L’une des principales difficultés de ce projet a résidé dans son démarrage : en l'absence de sujet imposé et n'ayant pas encore les jeux de données à notre disposition, il a été particulièrement complexe de lancer une dynamique de travail concrète. Cette phase d'incertitude a rendu difficile la définition du concept même de notre future application, car il est délicat de structurer une architecture logicielle ou d'imaginer des fonctionnalités pertinentes sans connaître la nature exacte, le volume et les contraintes des données à traiter.
 
+La gestion de l’héritage et des classes abstraites a représenté un défi structurel majeur, notamment pour concevoir une hiérarchie cohérente entre les joueurs et les adaptateurs spécifiques au basketball et au tennis. Pour résoudre cette difficulté, nous avons mené une réflexion approfondie afin de bien identifier les attributs communs et les besoins spécifiques à chaque sport, ce qui a permis d'implémenter une structure solide évitant toute duplication de code.
 
-(faire difficultés sur le code)
+Le traitement des données « sales » dans les fichiers CSV réels, comme les valeurs manquantes ou les formats incohérents, a nécessité une attention particulière. Nous avons résolu ce problème en intégrant des mécanismes de nettoyage et de conversion directement dans les classes *StatistiqueJoueur* et *ServiceAnnuaireJoueurs*, assurant la transformation systématique des données (conversion en float ou passage des lbs aux kg) et le filtrage des valeurs inexploitables.
+
+La séparation des responsabilités entre les différents services (Statistiques, Annuaire, Matchs) est devenue de plus en plus délicate à mesure que la taille du projet augmentait. Pour éviter que leurs fonctions ne se chevauchent, nous avons mené un exercice d'architecture logicielle rigoureux, redéfinissant précisément le rôle de chaque service pour garantir que chaque composant ne s'occupe que de sa mission spécifique.
+
+Enfin, le couplage entre les adaptateurs et les modèles de données présentait une fragilité : le moindre changement dans un nom de colonne CSV pouvait bloquer l'application. Nous avons stabilisé ce point en utilisant des valeurs par défaut lors de la récupération des données (via la méthode row.get(col, "N/A")), apportant ainsi la rigueur nécessaire pour que le programme reste fonctionnel et robuste même en cas de données manquantes ou de modifications imprévues des fichiers sources.
 
 \newpage
+
 # Tests et validation
 
 ## Stratégie de test
+
+Pour garantir la fiabilité de notre application, nous avons mis en place une stratégie de tests unitaires et d'intégration basée sur le framework Pytest. L'objectif est double : assurer l'exactitude des calculs statistiques et garantir la robustesse des processus d'importation.
+
+La validation commence avec les modèles et les adaptateurs. Les tests sur les modèles garantissent que chaque objet métier, comme un match ou un joueur, est instancié avec des données saines et que ses propriétés calculées (par exemple, la concaténation du nom complet) se comportent de manière prévisible. Parallèlement, la couche des adaptateurs fait l'objet d'une attention critique. Nous y testons le mapping entre le format brut des dictionnaires issus du CSV et nos objets Python, en mettant à l'épreuve la gestion des valeurs manquantes et la précision des conversions techniques, telles que la transformation des poids de lbs en kg.
+
+Le cœur du programme, regroupé dans la partie services, est quant à lui vérifié par des tests précis sur les calculs et les règles de gestion. Ces tests permettent de contrôler que les classements des équipes, les moyennes de points ou encore l'historique des joueurs sont calculés sans aucune erreur. Pour que ces vérifications soient fiables et rapides, nous utilisons des simulations (appelées "Mocks") qui remplacent les fichiers réels par des données fictives mais contrôlées. Cela nous permet de tester le "cerveau" de l'application de façon isolée, en étant certains que si un résultat est faux, cela vient d'une erreur de calcul et non d'un problème technique lié au chargement des données.
+
+Enfin, la fiabilité de la persistance et de l'accès aux données est assurée par des tests aux frontières au niveau des repositories et des importeurs. Nous utilisons des environnements de fichiers temporaires via *tmp_path*. Cette méthode nous permet de vérifier, dans des conditions quasi réelles, que le système gère correctement les différents séparateurs et l'encodage des fichiers CSV. Cette stratégie globale assure ainsi une interface fluide et sécurisée entre le stockage physique et la logique métier de l'application.
 
 ## Quelques résultats
 
 ## Limites de l’application
 
-Le choix de nous concentrer exclusivement sur deux sports rend l'application particulièrement spécifique. L'interface utilisateur ayant été finement adaptée aux caractéristiques propres de ces disciplines, cette spécialisation crée une contrainte majeure en termes d'évolutivité : l'ajout d'un nouveau sport s'avère complexe. En effet, chaque nouvelle catégorie nécessiterait une adaptation de l'interface pour répondre à ses spécificités, ce qui limite pour sa capacité à s'ouvrir à d'autres domaines sportifs sans un travail de développement supplémentaire conséquent.
+Le choix de nous concentrer exclusivement sur deux sports rend l'application particulièrement spécifique. L'interface utilisateur ayant été finement adaptée aux caractéristiques propres de ces disciplines, cette spécialisation crée une contrainte majeure en termes d'évolutivité : l'ajout d'un nouveau sport s'avère complexe. En effet, chaque nouvelle catégorie nécessiterait une adaptation de l'interface pour répondre à ses spécificités, ce qui limite sa capacité à s'ouvrir à d'autres domaines sportifs sans un travail de développement supplémentaire conséquent.
 
-\newpage 
+\newpage
+
 # Conclusion {.unnumbered}
 
-\newpage 
+\newpage
 
 # Annexes {.unnumbered}
-
 
 ```{r}
 
 ```
-

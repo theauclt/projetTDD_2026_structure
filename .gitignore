@@ -20,3 +20,4 @@ venv/
 
 # Bases de données et Datasets
 *.csv
+.positai
