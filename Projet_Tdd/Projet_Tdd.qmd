@@ -72,7 +72,7 @@ Avant de débuter l’analyse de nos différents jeux de données sportives, nou
 
 ![Diagramme de cas d'utilisation](images/diagramme_cas_utilisation.png){width=100%}
 
-- (diagramme d'activité)
+
 
 \newpage
 
@@ -186,12 +186,19 @@ Enfin, la fiabilité de la persistance et de l'accès aux données est assurée 
 
 ## Quelques résultats
 
+L'expérience utilisateur débute par une interface d'accueil intuitive permettant de sélectionner le sport à analyser, orientant ainsi immédiatement le flux de données vers le domaine de compétences souhaité. Ce point d'entrée unique assure une navigation fluide vers les fonctionnalités de statistiques et de recherche spécifiques au basketball ou au tennis.
 
 !![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu.png){width=100%, height=10cm}
 
+Prenons l'exemple du tennis, l'utilisateur a maintenant le choix entre le circuit ATP et WTA
+
 !![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
 
+L'utilisateur a ensuite le choix entre les pays représentés sur le circuit, suite à cela, la liste des joueurs de nationalité du pays choisi apparait. Choisissons l'Italie comme pays puis le joueur Jannik Sinner. 
+
 ![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_joueur.png){width=100%, height=10cm}
+
+
 
 ![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/cover_tests.png){width=100%, height=10cm}
 
