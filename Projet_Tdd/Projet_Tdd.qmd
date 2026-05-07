@@ -155,6 +155,10 @@ Le choix de nous concentrer exclusivement sur deux sports rend l'application par
 
 !![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_NBA){width=100%, height=10cm}
 
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/Annuaire_des_equipes){width=100%, height=10cm}
+
+!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_d_un_joueurs){width=100%, height=10cm}
+
 ```{r}
 
 ```
