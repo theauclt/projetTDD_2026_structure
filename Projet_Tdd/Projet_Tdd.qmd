@@ -188,12 +188,12 @@ Enfin, la fiabilité de la persistance et de l'accès aux données est assurée 
 ## Quelques résultats
 
 
-!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu.png){width=100%, height=10cm}
+![Légende de l'image](images/1er_menu.png){width=100%}
 
-!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
+![Légende de l'image](images/1er_menu_tennis.png){width=100%}
 
 
-![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/cover_tests.png){width=100%, height=10cm}
+![Légende de l'image](images/cover_tests.png){width=100%}
 
 
 ![Légende de l'image](images/cover_tests.png){width=100%}
@@ -212,11 +212,11 @@ Le choix de nous concentrer exclusivement sur deux sports rend l'application par
 # Annexes {.unnumbered}
 
 
-!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_NBA.png){width=100%, height=10cm}
+![Légende de l'image](images/1er_menu_NBA.png){width=100%}
 
-!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/Annuaire_des_equipes.png){width=100%, height=10cm}
+![Légende de l'image](images/Annuaire_des_equipes.png){width=100%}
 
-!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_d_un_joueur.png){width=100%, height=10cm}
+![Légende de l'image](images/carte_d_un_joueur.png){width=100%}
 
 
 ```{r}
