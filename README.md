@@ -74,28 +74,6 @@ projet/
     ├── test_adapters.py             # Tests des adapters et du repository
     └── test_services.py             # Tests de la logique métier
 
---
-
-## Schéma de relations entre les modules
-
-```mermaid
-flowchart LR
-
-    U((🧑))
-    UI[ServiceApplication]
-    S[Services]
-    M[Models]
-    D[(CSV Data)]
-
-    U --> |interagit| UI
-    UI -->|appelle| S
-    S -->|utilise| M
-    S -->|lit via Repository| D
-
-    S -->|renvoie| UI
-    UI -->|affiche| U
-```
-
 ---
 
 ## Commandes d'exécution
