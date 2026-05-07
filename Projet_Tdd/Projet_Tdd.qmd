@@ -156,7 +156,7 @@ Le Pattern Adapter : c'est le cœur de la flexibilité du projet. La couche **ad
 
 Le Découplage par le Repository et les Services : 
 
-le**`DataRepository** centralise l'accès aux fichiers via Pandas, isolant ainsi la complexité technique de la lecture/écriture.
+le **DataRepository** centralise l'accès aux fichiers via Pandas, isolant ainsi la complexité technique de la lecture/écriture.
 
 Les **Services** (statistiques, annuaire, matchs) contiennent la logique métier pure. Ils sont totalement indépendants de la source de données : ils reçoivent des objets déjà formattés et se concentrent uniquement sur les calculs et les fonctionnalités utilisateurs. Ce découplage permet de modifier l'algorithme d'un classement sans risquer de casser la lecture d'un fichier.
 
@@ -219,23 +219,21 @@ L'expérience utilisateur débute par une interface d'accueil intuitive permetta
 
 Prenons l'exemple du tennis, l'utilisateur a maintenant le choix entre le circuit ATP et WTA
 
-<<<<<<< HEAD
+
 ![Menu permettant le choix du circuit](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
-=======
+
 !![Légende de l'image](images/1er_menu_tennis.png){width=100%}
-=======
+
 ![Légende de l'image](images/1er_menu_tennis.png){width=100%}
->>>>>>> 43132b0f95ed0f2ccb1d9474975928ebe8a585d5
->>>>>>> b1088b3eed88d521f7355c14211b71eec9108a70
+
 
 L'utilisateur a ensuite le choix entre les pays représentés sur le circuit, suite à cela, la liste des joueurs de nationalité du pays choisi apparait. Choisissons l'Italie comme pays puis le joueur Jannik Sinner. 
 
 
-<<<<<<< HEAD
 ![Carte de Jannik Sinner](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_joueur.png){width=100%, height=10cm}
-=======
+
 ![Légende de l'image](images/carte_joueur.png){width=100%}
->>>>>>> b1088b3eed88d521f7355c14211b71eec9108a70
+
 
 La fiche complète du joueur s'affiche de manière structurée. Cette vue permet de centraliser toutes les informations extraites des fichiers de données :
 
@@ -249,7 +247,7 @@ Palmarès : La fiche liste automatiquement les titres remportés sur l'année en
 
 \newpage
 
-![Légende de l'image](images/cover_tests.png){width=100%}
+![Couverture des tests](images/cover_tests.png){width=100%}
 
 Afin de garantir la fiabilité et la robustesse de l'application, une attention particulière a été portée à la couverture de tests unitaires et d'intégration. En cohérence avec une approche de développement dirigé par les tests, l'intégralité des modules constituant l'architecture du projet a été soumise à une vérification rigoureuse. Les résultats obtenus, illustrés par le rapport de couverture, affichent un score global de 97 %. Ce niveau de couverture élevé témoigne d'une validation quasi exhaustive des différents chemins d'exécution du code et des cas limites. Le succès de l'ensemble des tests exécutés confirme la stabilité des services implémentés, assurant ainsi une base solide pour la maintenance et les évolutions futures du logiciel. 
 
@@ -285,12 +283,13 @@ Enfin, si l'application présente aujourd'hui des limites en termes d'évolutivi
 
 # Annexes {.unnumbered}
 
+Voici quelques annexes sur les résultats du basket.
 
-![Légende de l'image](images/1er_menu_NBA.png){width=100%}
+![Menu NBA](images/1er_menu_NBA.png){width=100%}
 
-![Légende de l'image](images/Annuaire_des_equipes.png){width=100%}
+![Classement NBA global](images/Classement_global.png){width=100%}
 
-![Légende de l'image](images/carte_d_un_joueur.png){width=100%}
+![Carte de Jeremy Sochan](images/carte_d_un_joueur.png){width=100%}
 
 
 ```{r}
