@@ -208,13 +208,27 @@ Prenons l'exemple du tennis, l'utilisateur a maintenant le choix entre le circui
 
 L'utilisateur a ensuite le choix entre les pays représentés sur le circuit, suite à cela, la liste des joueurs de nationalité du pays choisi apparait. Choisissons l'Italie comme pays puis le joueur Jannik Sinner. 
 
+\newpage
+
 ![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_joueur.png){width=100%, height=10cm}
 
+La fiche complète du joueur s'affiche de manière structurée. Cette vue permet de centraliser toutes les informations extraites des fichiers de données :
 
+Identité et caractéristiques : Rappel du nom, de la taille, de la main forte et de la nationalité.
+
+Statistiques de performance : Un bloc dédié présente le bilan de la saison (victoires/défaites) ainsi que des indicateurs techniques comme la moyenne d'aces ou de doubles fautes par match.
+
+Analyse des moments clés : Une section spécifique détaille l'efficacité du joueur sur les balles de break, aussi bien en défense qu'en attaque.
+
+Palmarès : La fiche liste automatiquement les titres remportés sur l'année en cours (ici, la saison 2024).
+
+\newpage
 
 ![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/cover_tests.png){width=100%, height=10cm}
 
+Afin de garantir la fiabilité et la robustesse de l'application, une attention particulière a été portée à la couverture de tests unitaires et d'intégration. En cohérence avec une approche de développement dirigé par les tests, l'intégralité des modules constituant l'architecture du projet a été soumise à une vérification rigoureuse. Les résultats obtenus, illustrés par le rapport de couverture, affichent un score global de 97 %. Ce niveau de couverture élevé témoigne d'une validation quasi exhaustive des différents chemins d'exécution du code et des cas limites. Le succès de l'ensemble des tests exécutés confirme la stabilité des services implémentés, assurant ainsi une base solide pour la maintenance et les évolutions futures du logiciel. 
 
+(faire résultats des linters)
 
 
 \newpage
