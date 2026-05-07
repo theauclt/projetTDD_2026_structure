@@ -95,7 +95,7 @@ class ServiceApplication:
             choix_phase = input("\n👉 Votre choix : ")
             if choix_phase == str(0):
                 break
-            elif choix_phase == "2" :
+            elif choix_phase == "2":
                 nom_phase = "Playoffs"
             else:
                 nom_phase = "Regular Season"
@@ -143,7 +143,9 @@ class ServiceApplication:
 
                 print(f"\n--- RÉSULTATS POUR : {nom_phase.upper()} | {nom_affichage_conf} ---")
                 print(
-                    f"{'#':<3} | {'Équipe':<22} | {'Vic':<4} | {'Pts':<5} | {'Enc':<5} | {'Reb':<4} | {'Ast':<4} | {'Stl':<4} | {'Blk':<4} | {'2P%':<5} | {'3P%':<5} | {'LF%':<5}"
+                    f"{'#':<3} | {'Équipe':<22} | {'Vic':<4} | {'Pts':<5} | {'Enc':<5} | "
+                    f"{'Reb':<4} | {'Ast':<4} | {'Stl':<4} | {'Blk':<4} | {'2P%':<5} | "
+                    f"{'3P%':<5} | {'LF%':<5}"
                 )
                 print("-" * 105)
 
@@ -156,13 +158,15 @@ class ServiceApplication:
 
                     if moy:
                         print(
-                            f"{i:<3} | {nom:<22} | {victoires:<4} | {moy.get('pts_pour','N/A'):<5} | {moy.get('pts_contre','N/A'):<5} | {moy.get('rebonds','N/A'):<4} | {moy.get('passes','N/A'):<4} | {moy.get('interceptions','N/A'):<4} | {moy.get('contres','N/A'):<4} | {moy.get('pct_2pts','N/A'):<5} | {moy.get('pct_3pts','N/A'):<5} | {moy.get('pct_lf','N/A'):<5}"
+                            f"{i:<3} | {nom:<22} | {victoires:<4} | {moy.get('pts_pour','N/A'):<5} | "
+                            f"{moy.get('pts_contre','N/A'):<5} | {moy.get('rebonds','N/A'):<4} | "
+                            f"{moy.get('passes','N/A'):<4} | {moy.get('interceptions','N/A'):<4} | "
+                            f"{moy.get('contres','N/A'):<4} | {moy.get('pct_2pts','N/A'):<5} | "
+                            f"{moy.get('pct_3pts','N/A'):<5} | {moy.get('pct_lf','N/A'):<5}"
                         )
                 retour = input("\n👉 Appuyez sur Entrée pour revenir au menu précédent...")
                 if retour:
                     break
-
-
 
     def explorer_annuaire_basket(self):
         """Menu interactif pour naviguer des équipes vers les joueurs spécifiques."""

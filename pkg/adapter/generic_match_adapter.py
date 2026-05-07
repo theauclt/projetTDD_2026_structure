@@ -5,7 +5,8 @@ from pkg.models.match import Match
 class GenericMatchAdapter(BaseAdapter):
     """
     Adaptateur universel capable de lire n'importe quel CSV de matchs.
-    Gère désormais une colonne optionnelle pour le type de match (Playoffs/Saison).
+
+    Gère désormais une colonne optionnelle pour le type de match.
     """
 
     # On ajoute col_type_match=None pour qu'il soit facultatif
@@ -25,18 +26,14 @@ class GenericMatchAdapter(BaseAdapter):
         self.col_score1 = col_score1
         self.col_score2 = col_score2
         self.col_type_match = col_type_match
-
-        # On garde la trace des colonnes principales
         self.main_cols = [col_date, col_equipe1, col_equipe2, col_score1, col_score2]
         if col_type_match:
             self.main_cols.append(col_type_match)
 
     def adapt(self, row) -> Match:
-        # On récupère toutes les autres colonnes automatiquement
+        """Extraire une ligne de CSV pour créer un objet Match."""
         extra_stats = {key: value for key, value in row.items() if key not in self.main_cols}
 
-        # Si on a défini une colonne pour le type de match, on la force dans les stats
-        # Sinon, par défaut on dit que c'est un match de saison régulière
         if self.col_type_match and self.col_type_match in row:
             extra_stats["type_match"] = str(row[self.col_type_match])
         else:
@@ -53,6 +50,7 @@ class GenericMatchAdapter(BaseAdapter):
         )
 
     def to_row(self, match: Match):
+        """Générer un dictionnaire à partir d'un objet Match."""
         row = {
             self.col_date: match.date,
             self.col_equipe1: match.equipe1,
@@ -77,6 +75,7 @@ class TennisMatchAdapter(BaseAdapter):
         self.col_perdant = col_perdant
 
     def adapt(self, row):
+        """Extraire une ligne de CSV pour créer un objet Match de Tennis."""
         stats_tennis = {
             "minutes": row.get("minutes", 0),
             "w_ace": row.get("w_ace", 0),
@@ -91,7 +90,6 @@ class TennisMatchAdapter(BaseAdapter):
             "round": row.get("round", ""),
         }
 
-        # 2. On ajoute l'ID ici au moment de créer l'objet Match !
         return Match(
             id=row.get(self.col_id, "Inconnu"),
             date=row[self.col_date],
@@ -103,7 +101,7 @@ class TennisMatchAdapter(BaseAdapter):
         )
 
     def to_row(self, match):
-        """Transforme un objet Match en ligne (dictionnaire) pour l'écriture."""
+        """Convertir un objet Match en ligne pour l'écriture."""
         row = {
             self.col_id: match.id,  # On n'oublie pas l'ID pour l'écriture non plus
             self.col_date: match.date,

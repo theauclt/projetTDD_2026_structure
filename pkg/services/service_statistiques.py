@@ -4,6 +4,7 @@ from collections import defaultdict
 class ServiceStatistiques:
     """
     Service responsable de l'analyse et de la manipulation des données.
+
     Fonctionne indépendamment du sport grâce aux modèles génériques.
     """
 
@@ -52,6 +53,7 @@ class ServiceStatistiques:
     def obtenir_classement_global(self):
         """
         Génère un classement global trié.
+
         Critère 1 : Nombre de victoires
         Critère 2 : Nombre de points marqués
         """
@@ -77,6 +79,7 @@ class ServiceStatistiques:
     def calculer_classement_championnat(self, pts_victoire=3, pts_nul=1, pts_defaite=0):
         """
         Calcule le classement générique d'un tournoi (type championnat).
+
         Retourne un dictionnaire complexe avec toutes les stats agrégées.
         """
         # pm = points marqués, pe = points encaissés, diff = différence
@@ -164,10 +167,10 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
         )
 
     def charger_matchs(self, matchs):
+        """Charger les matchs et mettre à jour les statistiques par phase."""
         super().charger_matchs(matchs)
 
         for match in matchs:
-            # 2. NOUVEAU : On récupère la phase depuis le "sac à dos"
             phase = match.stats.get("type_match", "Regular Season")
 
             # === STATS POUR L'ÉQUIPE À DOMICILE (Equipe 1) ===
@@ -200,7 +203,7 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
             d_home["fta"] += float(match.stats.get("fta_home", 0))
 
             # === STATS POUR L'ÉQUIPE À L'EXTÉRIEUR (Equipe 2) ===
-            d_away = self.stats_par_phase[phase][match.equipe2]  # On ouvre le bon tiroir
+            d_away = self.stats_par_phase[phase][match.equipe2]
             d_away["matchs_joues"] += 1
             d_away["points_marques"] += match.score2
             d_away["points_encaisses"] += match.score1
@@ -228,16 +231,13 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
             d_away["ftm"] += float(match.stats.get("ftm_away", 0))
             d_away["fta"] += float(match.stats.get("fta_away", 0))
 
-    # 3. NOUVEAU : On redéfinit obtenir_classement_global pour inclure le paramètre "phase"
     def obtenir_classement_global(self, phase="Regular Season"):
         """Retourne le classement trié par victoires pour une phase spécifique."""
         stats_phase = self.stats_par_phase.get(phase, {})
-        # On trie selon la clé 'victoires' en ordre décroissant (reverse=True)
         return sorted(stats_phase.items(), key=lambda x: x[1]["victoires"], reverse=True)
 
-    # 4. MODIFIÉ : On ajoute le paramètre "phase"
     def obtenir_moyennes(self, equipe_id, phase="Regular Season"):
-        """Calcule et retourne les moyennes par match pour une équipe selon la phase."""
+        """Calculer et retourner les moyennes par match pour une équipe selon la phase."""
         stats_phase = self.stats_par_phase.get(phase, {})
         s = stats_phase.get(equipe_id)
 
@@ -263,6 +263,7 @@ class ServiceStatistiquesBasket(ServiceStatistiques):
 
 
 class ServiceStatistiquesTennis(ServiceStatistiques):
+    """Service spécialisé pour traiter les statistiques du tennis."""
 
     def __init__(self):
         super().__init__()
@@ -279,17 +280,19 @@ class ServiceStatistiquesTennis(ServiceStatistiques):
                 "bp_concedees": 0,  # Défense (sur son service)
                 "bp_converties": 0,
                 "bp_obtenues": 0,  # Attaque (sur le service adverse)
-                "palmares": [],  # Liste des tournois gagnés
+                "palmares": [],
             }
         )
 
     def nettoyer_valeur(self, valeur):
+        """Convertir une valeur en flottant ou retourner zéro si invalide."""
         try:
             return float(valeur) if valeur and str(valeur).lower() != "nan" else 0.0
         except ValueError:
             return 0.0
 
     def charger_matchs(self, matchs):
+        """Charger les matchs de tennis et calculer les statistiques."""
         for match in matchs:
             id_vainqueur = str(match.equipe1).replace(".0", "")
             id_perdant = str(match.equipe2).replace(".0", "")
@@ -335,6 +338,7 @@ class ServiceStatistiquesTennis(ServiceStatistiques):
             p["bp_converties"] += bp_faced_by_winner - bp_saved_by_winner
 
     def obtenir_moyennes_joueur(self, joueur_id):
+        """Retourner les moyennes et statistiques détaillées d'un joueur."""
         s = self.stats_joueurs.get(str(joueur_id))
         if not s or s["matchs_joues"] == 0:
             return None

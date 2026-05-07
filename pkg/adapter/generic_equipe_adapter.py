@@ -3,6 +3,8 @@ from pkg.models.equipe import Equipe
 
 
 class GenericEquipeAdapter(BaseAdapter):
+    """Adaptateur générique pour transformer les données en équipes."""
+
     def __init__(self, col_id, col_nom, col_abbr=None, col_loc=None, col_reg=None):
         super().__init__()
         self.col_id = col_id
@@ -12,6 +14,7 @@ class GenericEquipeAdapter(BaseAdapter):
         self.col_reg = col_reg
 
     def adapt(self, row) -> Equipe:
+        """Extraire une ligne de CSV pour créer un objet Equipe."""
         return Equipe(
             id=row[self.col_id],
             nom=row[self.col_nom],
@@ -21,4 +24,5 @@ class GenericEquipeAdapter(BaseAdapter):
         )
 
     def to_row(self, equipe):
-        pass  # Optionnel pour la sauvegarde
+        """Convertir un objet Equipe en ligne de dictionnaire."""
+        pass

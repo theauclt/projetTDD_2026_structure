@@ -13,7 +13,8 @@ class BaseJoueurAdapter(BaseAdapter):
         self.col_date_naissance = col_date_naissance
 
     def to_row(self, joueur):
-        pass  # À implémenter si tu as besoin d'exporter/sauvegarder les joueurs modifiés
+        """Générer un dictionnaire à partir d'un objet Joueur."""
+        pass
 
 
 class BasketJoueurAdapter(BaseJoueurAdapter):
@@ -31,15 +32,14 @@ class BasketJoueurAdapter(BaseJoueurAdapter):
         col_position,
         col_poids,
     ):
-        # Initialise les colonnes de base
         super().__init__(col_id, col_prenom, col_nom, col_taille, col_date_naissance)
-        # Initialise les colonnes spécifiques
         self.col_equipe = col_equipe
         self.col_numero = col_numero
         self.col_position = col_position
         self.col_poids = col_poids
 
     def adapt(self, row) -> JoueurBasket:
+        """Extraire une ligne de CSV pour créer un objet JoueurBasket."""
         return JoueurBasket(
             id=row[self.col_id],
             prenom=row.get(self.col_prenom, ""),
@@ -72,6 +72,7 @@ class TennisJoueurAdapter(BaseJoueurAdapter):
         self.col_main = col_main
 
     def adapt(self, row) -> JoueurTennis:
+        """Extraire une ligne de CSV pour créer un objet JoueurTennis."""
         return JoueurTennis(
             id=row[self.col_id],
             prenom=row.get(self.col_prenom, ""),

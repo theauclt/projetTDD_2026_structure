@@ -4,6 +4,8 @@ from pkg.adapter.generic_match_adapter import GenericMatchAdapter, TennisMatchAd
 
 
 class DatasetConfiguration:
+    """Configuration d'un jeu de données (chemin, séparateur, adaptateur)."""
+
     def __init__(self, dataset_path, dataset_sep, adapter):
         self.dataset_path = dataset_path
         self.dataset_sep = dataset_sep

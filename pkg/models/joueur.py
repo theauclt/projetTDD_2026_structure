@@ -25,9 +25,7 @@ class JoueurBasket(Joueur):
         position,
         poids,
     ):
-        # On appelle le constructeur de la classe mère pour remplir les bases
         super().__init__(id, prenom, nom, taille, date_naissance)
-        # On ajoute les spécificités du basket
         self.equipe_id = equipe_id
         self.numero = numero
         self.position = position

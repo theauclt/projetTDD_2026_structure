@@ -33,7 +33,7 @@ target-version = "py312"
 [tool.ruff.lint]
 # On active les règles Pyflakes (F), pycodestyle (E, W), isort (I), et pydocstyle (D)
 select = ["E", "F", "W", "I", "D"]
-ignore = ["E203", "D100", "D104"] # On ignore quelques règles trop strictes sur la documentation
+ignore = ["E203", "D100", "D104", "D401"] 
 
 [tool.ruff.lint.pydocstyle]
 # Convention globale pour tes grosses fonctions
