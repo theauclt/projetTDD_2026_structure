@@ -27,7 +27,7 @@ format:
 
 Le domaine du sport de haut niveau a connu, au cours de la dernière décennie, une révolution majeure. Qu’il s’agisse de l’optimisation des performances des athlètes, de l’analyse tactique ou de l’engagement des passionnés, la donnée est devenue un pilier central de l’écosystème sportif mondial. Cependant, la variété de disciplines allant des sports de ballon collectifs aux sports de raquette individuels pose un défi informatique de taille : comment concevoir un système capable d'unifier et de traiter des données aux structures hétérogènes ?
 
-Dans le cadre de ce projet de traitement de données, nous avons développé « TGM Statistiques », une plateforme logicielle conçue pour centraliser et analyser les statistiques de deux disciplines majeures : le basketball et le tennis. Se concentrer sur seulement deux sports est un choix fort : cela nous permet de privilégier la profondeur d'analyse à la quantité. En proposant des indicateurs très détaillés sur le déroulé précis des rencontres, à l'instar d'applications de référence comme Flashscore, notre outil offre une exploitation fine des données, utile tant pour les analystes techniques que pour les passionnés de sport. L’objectif de ce projet n’est pas seulement de fournir des indicateurs de performance, mais de proposer une architecture logicielle robuste et générique, fondée sur les principes de la programmation orientée objet.
+Dans le cadre de ce Projet de Traitement de Données, nous avons développé « **TGM Statistiques** », une plateforme logicielle conçue pour centraliser et analyser les statistiques de deux disciplines majeures : le basketball et le tennis. Se concentrer sur seulement deux sports est un choix fort : cela nous permet de privilégier la profondeur d'analyse à la quantité. En proposant des indicateurs très détaillés sur le déroulé précis des rencontres, à l'instar d'applications de référence comme *Flashscore*, notre outil offre une exploitation fine des données, utile tant pour les analystes techniques que pour les passionnés de sport. L’objectif de ce projet n’est pas seulement de fournir des indicateurs de performance, mais de proposer une architecture logicielle robuste et générique, fondée sur les principes de la programmation orientée objet.
 
 Notre démarche s'articule autour de trois axes principaux présentés dans ce rapport. Dans un premier temps, nous décrivons les jeux de données utilisés et les méthodes d'ingestion flexibles que nous avons mises en place pour pallier la diversité des formats CSV. Ensuite, nous exposons la modélisation logicielle à travers nos diagrammes de classes UML, justifiant nos choix de conception pour garantir l'extensibilité du programme. Enfin, nous présentons les fonctionnalités de notre interface de consultation, permettant d'explorer les historiques de matchs et les classements de manière interactive.
 
@@ -220,7 +220,7 @@ L'expérience utilisateur débute par une interface d'accueil intuitive permetta
 <<<<<<< HEAD
 Prenons l'exemple du tennis, l'utilisateur a maintenant le choix entre le circuit ATP et WTA
 
-!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
+!![Légende de l'image](images/1er_menu_tennis.png){width=100%}
 =======
 ![Légende de l'image](images/1er_menu_tennis.png){width=100%}
 >>>>>>> 43132b0f95ed0f2ccb1d9474975928ebe8a585d5
@@ -229,7 +229,7 @@ L'utilisateur a ensuite le choix entre les pays représentés sur le circuit, su
 
 \newpage
 
-![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_joueur.png){width=100%, height=10cm}
+![Légende de l'image](images/carte_joueur.png){width=100%}
 
 La fiche complète du joueur s'affiche de manière structurée. Cette vue permet de centraliser toutes les informations extraites des fichiers de données :
 
@@ -259,6 +259,17 @@ Le choix de nous concentrer exclusivement sur deux sports rend l'application par
 \newpage
 
 # Conclusion {.unnumbered}
+
+Ce projet nous a permis de concevoir et de développer « **TGM Statistiques** », une plateforme d'analyse statistique sportive couvrant deux disciplines complémentaires : le basketball (sport collectif) et le tennis (individuel). En combinant une modélisation orientée objet rigoureuse et une architecture modulaire fondée sur les patterns Adapter, Repository et Service, nous avons réussi à transformer des fichiers CSV aux formats hétérogènes en une source d'information cohérente et exploitable par l'utilisateur.
+
+Sur le plan technique, la mise en place d'une hiérarchie de classes abstraites a constitué le cœur de notre démarche de conception. Ce choix architectural a permis de garantir l'extensibilité du système tout en maintenant une séparation claire des responsabilités entre les différentes couches de l'application. La stratégie de tests unitaires adoptée, avec 133 tests validés pour une couverture globale de 97 %, témoigne de la robustesse du code produit et de notre volonté de livrer une application fiable et maintenable.
+
+Sur le plan analytique, l'exploitation approfondie des données NBA et tennis nous a permis de proposer des indicateurs de performance dépassant le simple résultat brut : classements par phase et par conférence, moyennes avancées par équipe, statistiques individuelles détaillées et palmarès des joueurs. Cette profondeur d'analyse, inspirée d'outils de référence comme Flashscore, représente selon nous la principale valeur ajoutée de notre application.
+
+Ce projet nous a également permis de consolider des compétences transversales essentielles, allant de la gestion de versions avec *Git* à la rédaction collaborative sous *Quarto*, en passant par la conception *UML* et le développement piloté par les tests. Les difficultés rencontrées, notamment la gestion des données manquantes et la séparation des responsabilités entre services, ont été autant d'occasions d'approfondir notre réflexion architecturale et de produire un code plus robuste.
+
+Enfin, si l'application présente aujourd'hui des limites en termes d'évolutivité vers de nouveaux sports, les fondations posées constituent une base solide et réutilisable sur laquelle il serait possible de s'appuyer pour étendre le système à d'autres disciplines, en implémentant de nouveaux adaptateurs et services sans remettre en cause l'architecture existante.
+
 
 \newpage
 
