@@ -104,16 +104,18 @@ python -m pytest -ra -q
 python -m pytest tests/test_models.py -v
 python -m pytest tests/test_adapters.py -v
 python -m pytest tests/test_services.py -v
-```
 
-### 4. Mesurer la couverture de code
-
-```bash
 # Couverture complète avec rapport dans le terminal
 python -m pytest --cov=pkg tests/ -W ignore
 
 # Générer un rapport HTML détaillé pour voir les lignes non testées
 python -m pytest --cov=pkg --cov-report=html -W ignore
+
+```
+
+### 4. Lancer les linters et formatage
+
+```bash
 
 # Formater le code automatiquement
 python -m black pkg/
