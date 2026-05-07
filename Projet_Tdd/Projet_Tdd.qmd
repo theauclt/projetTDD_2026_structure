@@ -202,21 +202,16 @@ Enfin, la fiabilité de la persistance et de l'accès aux données est assurée 
 
 L'expérience utilisateur débute par une interface d'accueil intuitive permettant de sélectionner le sport à analyser, orientant ainsi immédiatement le flux de données vers le domaine de compétences souhaité. Ce point d'entrée unique assure une navigation fluide vers les fonctionnalités de statistiques et de recherche spécifiques au basketball ou au tennis.
 
-![Légende de l'image](images/1er_menu.png){width=100%}
+![Menu permettant le choix du sport](images/1er_menu.png){width=100%}
 
-<<<<<<< HEAD
 Prenons l'exemple du tennis, l'utilisateur a maintenant le choix entre le circuit ATP et WTA
 
-!![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
-=======
-![Légende de l'image](images/1er_menu_tennis.png){width=100%}
->>>>>>> 43132b0f95ed0f2ccb1d9474975928ebe8a585d5
+![Menu permettant le choix du circuit](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
 
 L'utilisateur a ensuite le choix entre les pays représentés sur le circuit, suite à cela, la liste des joueurs de nationalité du pays choisi apparait. Choisissons l'Italie comme pays puis le joueur Jannik Sinner. 
 
-\newpage
 
-![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_joueur.png){width=100%, height=10cm}
+![Carte de Jannik Sinner](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_joueur.png){width=100%, height=10cm}
 
 La fiche complète du joueur s'affiche de manière structurée. Cette vue permet de centraliser toutes les informations extraites des fichiers de données :
 
