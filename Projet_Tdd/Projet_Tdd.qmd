@@ -222,17 +222,10 @@ Prenons l'exemple du tennis, l'utilisateur a maintenant le choix entre le circui
 
 ![Menu permettant le choix du circuit](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
 
-!![Légende de l'image](images/1er_menu_tennis.png){width=100%}
-
-![Légende de l'image](images/1er_menu_tennis.png){width=100%}
-
-
 L'utilisateur a ensuite le choix entre les pays représentés sur le circuit, suite à cela, la liste des joueurs de nationalité du pays choisi apparait. Choisissons l'Italie comme pays puis le joueur Jannik Sinner. 
 
 
 ![Carte de Jannik Sinner](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_joueur.png){width=100%, height=10cm}
-
-![Légende de l'image](images/carte_joueur.png){width=100%}
 
 
 La fiche complète du joueur s'affiche de manière structurée. Cette vue permet de centraliser toutes les informations extraites des fichiers de données :
