@@ -121,8 +121,19 @@ projet/
 ```
 
 
+L'architecture de code repose sur quatre piliers stratégiques qui justifient sa pertinence pour la modélisation :
 
-(bien expliquer la logique de cette architecture car bcp de points sur le rapport)
+Le Modèle de Données Typé : Plutôt que de manipuler des structures de données brutes (comme des dictionnaires ou des simples lignes de CSV), l'architecture utilise des objets métiers (`Joueur`, `Equipe`, `Match`). Ce choix permet de valider les données dès leur instanciation et d'utiliser l'héritage pour gérer les spécificités par sport (ex: `JoueurBasket` vs `JoueurTennis`). Cela sécurise la modélisation en garantissant que chaque entité possède les attributs nécessaires avant d'atteindre la logique de calcul.
+
+Le Pattern Adapter : C'est le cœur de la flexibilité du projet. La couche `adapter/` agit comme une passerelle de traduction entre le format brut des fichiers CSV et les objets Python. En utilisant une classe abstraite `BaseAdapter`, l'architecture permet d'ajouter de nouveaux datasets sans jamais modifier le code existant. Cette abstraction sépare la structure technique des données (comment elles sont stockées) de leur sens métier (ce qu'elles représentent).
+
+Le Découplage par le Repository et les Services : 
+
+Le `DataRepository` centralise l'accès aux fichiers via Pandas, isolant ainsi la complexité technique de la lecture/écriture.
+
+Les `Services` (statistiques, annuaire, matchs) contiennent la logique métier pure. Ils sont totalement indépendants de la source de données : ils reçoivent des objets déjà formattés et se concentrent uniquement sur les calculs et les fonctionnalités utilisateurs. Ce découplage permet de modifier l'algorithme d'un classement sans risquer de casser la lecture d'un fichier.
+
+La Configurabilité et Maintenabilité : La présence d'un module `config/` dédié montre une volonté d'industrialisation du code. En centralisant les chemins de fichiers et les séparateurs, on permet au programme d'être multi-sport de manière dynamique. Enfin, la structure incluant un répertoire `tests/` et un fichier `pyproject.toml` assure que le projet suit les standards modernes de développement (tests unitaires, gestion propre des dépendances et typage avec Mypy), garantissant la fiabilité des résultats produits par le modèle.
 
 ## Choix technologiques
 
@@ -158,7 +169,6 @@ La séparation des responsabilités entre les différents services (Statistiques
 
 Enfin, le couplage entre les adaptateurs et les modèles de données présentait une fragilité : le moindre changement dans un nom de colonne CSV pouvait bloquer l'application. Nous avons stabilisé ce point en utilisant des valeurs par défaut lors de la récupération des données (via la méthode row.get(col, "N/A")), apportant ainsi la rigueur nécessaire pour que le programme reste fonctionnel et robuste même en cas de données manquantes ou de modifications imprévues des fichiers sources.
 
-\newpage
 
 # Tests et validation
 
@@ -181,12 +191,14 @@ Enfin, la fiabilité de la persistance et de l'accès aux données est assurée 
 
 !![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
 
+![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_joueur.png){width=100%, height=10cm}
 
 ![Légende de l'image](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/cover_tests.png){width=100%, height=10cm}
 
 
-![Légende de l'image](images/cover_tests.png){width=100%}
 
+
+\newpage
 
 ## Limites de l’application
 
