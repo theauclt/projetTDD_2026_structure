@@ -86,66 +86,83 @@ class ServiceApplication:
         print("🏀 CLASSEMENT ET STATISTIQUES AVANCÉES NBA 2022/2023")
         print("=" * 90)
 
-        print("Quelle phase souhaitez-vous analyser ?")
-        print("1. Saison Régulière")
-        print("2. Playoffs")
-        choix_phase = input("\n👉 Votre choix (1-2) : ")
-        nom_phase = "Playoffs" if choix_phase == "2" else "Regular Season"
+        while True:
 
-        print("\nQuelle conférence souhaitez-vous afficher ?")
-        print("1. 🔵 Conférence Est")
-        print("2. 🔴 Conférence Ouest")
-        print("3. 🌍 Les deux (Classement Global)")
-        choix_conf = input("\n👉 Votre choix (1-3) : ")
+            print("Quelle phase souhaitez-vous analyser ?")
+            print("1. Saison Régulière")
+            print("2. Playoffs")
+            print("0. 🔙 Retour au menu précédent")
+            choix_phase = input("\n👉 Votre choix : ")
+            if choix_phase == str(0):
+                break
+            elif choix_phase == "2" :
+                nom_phase = "Playoffs" 
+            else:
+                nom_phase = "Regular Season"
 
-        noms_equipes = self.charger_dictionnaire_noms(basket_equipe_config)
+            while True:
 
-        repo_matchs = DataRepository(
-            file=basket_match_config.dataset_path,
-            adapter=basket_match_config.adapter,
-            sep=basket_match_config.dataset_sep,
-        )
+                print("\nQuelle conférence souhaitez-vous afficher ?")
+                print("1. 🔵 Conférence Est")
+                print("2. 🔴 Conférence Ouest")
+                print("3. 🌍 Les deux (Classement Global)")
+                print("0. 🔙 Choisir une autre phase")
+                choix_conf = input("\n👉 Votre choix : ")
+                
+                if choix_conf == str(0):
+                    break
+                
+                noms_equipes = self.charger_dictionnaire_noms(basket_equipe_config)
 
-        service = ServiceStatistiquesBasket()
-        service.charger_matchs(repo_matchs.load())
-        classement_complet = service.obtenir_classement_global(phase=nom_phase)
-
-        classement_filtre = []
-        nom_affichage_conf = "GLOBALE"
-
-        for equipe_id, stats_base in classement_complet:
-            nom_eq = noms_equipes.get(str(equipe_id), f"ID:{equipe_id}")
-            conference_eq = self.determiner_conference_nba(nom_eq)
-
-            if choix_conf == "1" and conference_eq == "Est":
-                classement_filtre.append((equipe_id, stats_base, nom_eq))
-                nom_affichage_conf = "CONFÉRENCE EST"
-            elif choix_conf == "2" and conference_eq == "Ouest":
-                classement_filtre.append((equipe_id, stats_base, nom_eq))
-                nom_affichage_conf = "CONFÉRENCE OUEST"
-            elif choix_conf == "3" or choix_conf not in ["1", "2"]:
-                classement_filtre.append((equipe_id, stats_base, nom_eq))
-                nom_affichage_conf = "GLOBALE"
-
-        print(f"\n--- RÉSULTATS POUR : {nom_phase.upper()} | {nom_affichage_conf} ---")
-        print(
-            f"{'#':<3} | {'Équipe':<22} | {'Vic':<4} | {'Pts':<5} | {'Enc':<5} | {'Reb':<4} | {'Ast':<4} | {'Stl':<4} | {'Blk':<4} | {'2P%':<5} | {'3P%':<5} | {'LF%':<5}"
-        )
-        print("-" * 105)
-
-        if not classement_filtre:
-            print("⚠️ Aucune donnée trouvée pour cette sélection.")
-
-        for i, (equipe_id, stats_base, nom) in enumerate(classement_filtre, start=1):
-            victoires = stats_base["victoires"]
-            moy = service.obtenir_moyennes(equipe_id, phase=nom_phase)
-
-            if moy:
-                print(
-                    f"{i:<3} | {nom:<22} | {victoires:<4} | {moy.get('pts_pour','N/A'):<5} | {moy.get('pts_contre','N/A'):<5} | {moy.get('rebonds','N/A'):<4} | {moy.get('passes','N/A'):<4} | {moy.get('interceptions','N/A'):<4} | {moy.get('contres','N/A'):<4} | {moy.get('pct_2pts','N/A'):<5} | {moy.get('pct_3pts','N/A'):<5} | {moy.get('pct_lf','N/A'):<5}"
+                repo_matchs = DataRepository(
+                    file=basket_match_config.dataset_path,
+                    adapter=basket_match_config.adapter,
+                    sep=basket_match_config.dataset_sep,
                 )
 
-        input("\nAppuyez sur Entrée pour revenir au menu...")
+                service = ServiceStatistiquesBasket()
+                service.charger_matchs(repo_matchs.load())
+                classement_complet = service.obtenir_classement_global(phase=nom_phase)
+
+                classement_filtre = []
+                nom_affichage_conf = "GLOBALE"
+
+                for equipe_id, stats_base in classement_complet:
+                    nom_eq = noms_equipes.get(str(equipe_id), f"ID:{equipe_id}")
+                    conference_eq = self.determiner_conference_nba(nom_eq)
+
+                    if choix_conf == "1" and conference_eq == "Est":
+                        classement_filtre.append((equipe_id, stats_base, nom_eq))
+                        nom_affichage_conf = "CONFÉRENCE EST"
+                    elif choix_conf == "2" and conference_eq == "Ouest":
+                        classement_filtre.append((equipe_id, stats_base, nom_eq))
+                        nom_affichage_conf = "CONFÉRENCE OUEST"
+                    elif choix_conf == "3" or choix_conf not in ["1", "2"]:
+                        classement_filtre.append((equipe_id, stats_base, nom_eq))
+                        nom_affichage_conf = "GLOBALE"
+
+                print(f"\n--- RÉSULTATS POUR : {nom_phase.upper()} | {nom_affichage_conf} ---")
+                print(
+                    f"{'#':<3} | {'Équipe':<22} | {'Vic':<4} | {'Pts':<5} | {'Enc':<5} | {'Reb':<4} | {'Ast':<4} | {'Stl':<4} | {'Blk':<4} | {'2P%':<5} | {'3P%':<5} | {'LF%':<5}"
+                )
+                print("-" * 105)
+
+                if not classement_filtre:
+                    print("⚠️ Aucune donnée trouvée pour cette sélection.")
+
+                for i, (equipe_id, stats_base, nom) in enumerate(classement_filtre, start=1):
+                    victoires = stats_base["victoires"]
+                    moy = service.obtenir_moyennes(equipe_id, phase=nom_phase)
+
+                    if moy:
+                        print(
+                            f"{i:<3} | {nom:<22} | {victoires:<4} | {moy.get('pts_pour','N/A'):<5} | {moy.get('pts_contre','N/A'):<5} | {moy.get('rebonds','N/A'):<4} | {moy.get('passes','N/A'):<4} | {moy.get('interceptions','N/A'):<4} | {moy.get('contres','N/A'):<4} | {moy.get('pct_2pts','N/A'):<5} | {moy.get('pct_3pts','N/A'):<5} | {moy.get('pct_lf','N/A'):<5}"
+                        )
+                retour = input("\n👉 Appuyez sur Entrée pour revenir au menu précédent...")
+                if retour:
+                    break
+            
+
 
     def explorer_annuaire_basket(self):
         """Menu interactif pour naviguer des équipes vers les joueurs spécifiques."""
