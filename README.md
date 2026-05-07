@@ -1,191 +1,127 @@
-# Projet traitement de données
+# Tableau de Bord Multisports 🏆
 
-Votre fichier README.md doit contenir les informations suivantes :  
-- Informations sur votre code :  
-    - Version de python utilisée    
-    - Packages python, dépendances et versions
-    - Choix du style docstrings  
-    - Choix du linter  
-    - Choix du formatter (optionnel)  
+Application de traitement et de visualisation de données sportives, couvrant la **NBA** (basket) et le **Tennis** (circuits ATP et WTA).
 
-- Structure rapide de votre code 
+---
 
-- Commande d'éxécution de votre code  
-    - Création d'un environnement virtuel   
-    - Lancement de votre application
-    - Commandes correspondantes aux tests  
+## Informations techniques
 
-## Schéma de relations entre les modules
+### Version de Python
+- **Python 3.12**
 
-```mermaid
-flowchart LR
+### Dépendances et outils
 
-    U((🧑))
-    UI[Interface]
-    S[Services]
-    M[Models]
-    D[(Data)]
+| Package        | Rôle                                                                 |
+|----------------|----------------------------------------------------------------------|
+| `pandas`       | Lecture et manipulation des fichiers CSV                             |
+| `pytest`       | Framework de tests unitaires                                         |
+| `pytest-cov`   | Mesure de la couverture de code des tests                            |
+| `black`        | Formateur de code automatique (PEP 8 strict)                         |
+| `ruff`         | Linter ultra-rapide écrit en Rust (remplace Flake8 et isort)         |
+| `mypy`         | Vérificateur de typage statique                                      |
+| `pandas-stubs` | Fichiers de traduction de types pour la compatibilité Mypy x Pandas  |
 
-    U --> |interagit| UI
-    UI -->|appelle| S
-    S -->|utilise| M
-    S -->|stocke| D
+### Style de docstrings
+Convention **One-line Docstring**  — Chaque classe et méthode est documentée avec une description brève, elle doit expliquer ce que fait la fonction (son utilité/son effet), et non comment elle le fait.
 
-    S -->|renvois| UI
-    UI -->|transmets| U
-``` 
+### Qualité du code
+- **Linter (Ruff) :** Détection et correction automatique des erreurs de syntaxe, imports inutilisés, etc.
+- **Formatter (Black) :** Formatage automatique du code (longueur de ligne : 88 caractères).  
+- **Typage statique (Mypy) :** Vérification stricte des *Type Hints* pour assurer la robustesse des fonctions.
 
-## Rappel sur les tests  
+---
 
-### Les différents type de tests  
+## Structure du projet
 
-#### Les test unitaires 
+```text
+projet/
+├── main.py                          # Point d'entrée de l'application
+├── pyproject.toml                   # Configuration des dépendances et outils
+├── README.md
+│
+├── pkg/                             # Package principal
+│   ├── __init__.py                  # Initialisation du module (requis par Mypy)
+│   ├── models/                      # Modèles métier (entités)
+│   │   ├── __init__.py
+│   │   ├── joueur.py                # Joueur, JoueurBasket, JoueurTennis
+│   │   ├── equipe.py                # Equipe
+│   │   └── match.py                 # Match
+│   │
+│   ├── adapter/                     # Transformation CSV → objets métier
+│   │   ├── __init__.py
+│   │   ├── base_adapter.py          # Classe abstraite BaseAdapter
+│   │   ├── generic_joueur_adapter.py # BasketJoueurAdapter, TennisJoueurAdapter
+│   │   ├── generic_equipe_adapter.py # GenericEquipeAdapter
+│   │   └── generic_match_adapter.py  # GenericMatchAdapter, TennisMatchAdapter
+│   │
+│   ├── repository/                  # Accès aux données (lecture/écriture CSV)
+│   │   ├── __init__.py
+│   │   └── data_repository.py       # DataRepository (via pandas)
+│   │
+│   ├── config/                      # Configurations des datasets
+│   │   ├── __init__.py
+│   │   └── dataset_configuration.py # Configs NBA et Tennis (chemins, séparateurs, adapters)
+│   │
+│   └── services/                    # Logique métier
+│       ├── __init__.py
+│       ├── service_application.py   # Interface utilisateur (menus, navigation)
+│       ├── service_statistiques.py  # Calcul des classements et statistiques
+│       ├── service_annuaire_joueur.py # Annuaire et recherche de joueurs
+│       └── services_matchs.py       # Gestion et affichage des matchs
+│
+└── tests/                           # Tests unitaires
+    ├── test_models.py               # Tests des modèles métier
+    ├── test_adapters.py             # Tests des adapters et du repository
+    └── test_services.py             # Tests de la logique métier
 
-Les tests unitaires permettent de vérifier une partie du code (en général une fonction ou une méthode). Les objectifs du test unitaires :  
-- Tester une fonction de manière indépendante  
-- Vérifier les différents cas (normal, gestion des erreurs)  
-
-#### Les tests d'intégration  
-Les tests d'intégration vérifient que plusieurs composants fonctionnent ensemble. L'objectif du test est de s'assurer que les différents module communique entre eux. Très utile dans le cas ou l'on appelle une API, on se connecte à une BDD, etc. 
-
-#### Les tests fonctionnels 
-Les tests fonctionnels testent une fonctionnalité complète du point de vue utilisateur. Les objectifs des tests fonctionnels sont :  
-- Tester le point de vue de l'utilisateur  
-- Valider les exigences d'un projet  
-- Valider le comportement d'un point de vue "métier"  
-
-### Contruction d'un test unitaire 
-
-
-#### Organisation du projet 
-
-Pour une organisation optimal de votre projet, voici une structure possible de votre projet :  
-```
-mon_projet/
-│ ├── src/ 
-│ |    ├── model 
-| |    |   ├── cat.py 
-| |    |   └── dog.py
-│ |    └── service 
-| |    |   ├── gestion_ferme.py 
-| |    |   └── creation_ferme.py
-│ ├── tests/ 
-│ |    ├── test_model.py 
-│ |    ├── test_services
-| |    |   ├── test_gestion.py
-| |    |   └── test_creation.py
-│ └── README.md
-```
-
-Si certaines fonctions proviennent du même module et sont simple, vous pouvez créer un fichier de test pour vos deux fichiers (comme pour *dog.py* et *cat.py*). Sinon, votre module **tests** peut avoir exactement la même structure que votre module **src** si vous souhaitez que ce soit plus cohérent. Cette structure est reconnue par pytest qui va lire l'ensemble des fichiers `test_`.
-
-#### Comment construire un test unitaire 
-Pour construire un test unitaire, il faut tester l'ensemble des cas possible. Exemple simple de la gestion d'un compte bancaire : 
-
-#####  Classe CompteBancaire()
+---
 
 ```
-class CompteBancaire:
-    def __init__(self, solde=0):
-        self.solde = solde
+## Commandes d'exécution
 
-    def deposer(self, montant):
-        if montant <= 0:
-            raise ValueError("Montant invalide")
-        self.solde += montant
+### 1. Installer les dépendances
 
-    def retirer(self, montant):
-        if montant > self.solde:
-            raise ValueError("Solde insuffisant")
-        self.solde -= montant
-
-    def get_solde(self):
-        return self.solde
+```bash
+pip install pandas pytest pytest-cov black ruff mypy pandas-stubs
 ```
 
-##### Test de la classe (sans utiliser de classe de test)
+### 2. Lancer l'application
 
-```
-import pytest
-from compte import CompteBancaire
-
-
-def test_creation_compte():
-    compte = CompteBancaire(100)
-    assert compte.get_solde() == 100
-
-
-def test_depot():
-    compte = CompteBancaire(50)
-    compte.deposer(20)
-    assert compte.get_solde() == 70
-
-
-def test_retrait():
-    compte = CompteBancaire(100)
-    compte.retirer(40)
-    assert compte.get_solde() == 60
-
-def test_depot_invalide():
-    compte = CompteBancaire(50)
-    with pytest.raises(ValueError):
-        compte.deposer(-10)
-
-
-def test_retrait_trop_grand():
-    compte = CompteBancaire(30)
-    with pytest.raises(ValueError):
-        compte.retirer(50)
+```bash
+python -m main.py
 ```
 
-##### Test de la classe (avec une classe de test)
-L'avantage d'utiliser une classe de test est d'utiliser une `setup_method(self)` qui initialise un objet pour tous les tests d'une même classe. Cette méthode est donc  
-- Plus lisible  
-- Evite la répétition  
-- Est plus simple à maintenir 
+### 3. Lancer les tests
+
+```bash
+# Lancer tous les tests
+python -m pytest -v
+
+# Lancer tous les tests avec affichage court
+python -m pytest -ra -q
+
+# Lancer un fichier de test spécifique
+python -m pytest tests/test_models.py -v
+python -m pytest tests/test_adapters.py -v
+python -m pytest tests/test_services.py -v
+
+# Couverture complète avec rapport dans le terminal
+python -m pytest --cov=pkg tests/ -W ignore
+
+# Générer un rapport HTML détaillé pour voir les lignes non testées
+python -m pytest --cov=pkg --cov-report=html -W ignore
 
 ```
-import pytest
-from compte import CompteBancaire
 
+### 4. Lancer les linters et formatage
 
-class TestCompteBancaire:
+```bash
+# Formater le code automatiquement
+python -m black pkg/
 
-    def setup_method(self):
-        """Appelé avant chaque test"""
-        self.compte = CompteBancaire(100)
+# Corriger automatiquement les erreurs de syntaxe et imports inutiles
+python -m ruff check --fix pkg/
 
-    def test_solde_initial(self):
-        assert self.compte.get_solde() == 100
-
-    def test_depot(self):
-        self.compte.deposer(50)
-        assert self.compte.get_solde() == 150
-
-    def test_retrait(self):
-        self.compte.retirer(30)
-        assert self.compte.get_solde() == 70
-
-    def test_depot_invalide(self):
-        with pytest.raises(ValueError):
-            self.compte.deposer(-10)
-
-    def test_retrait_trop_grand(self):
-        with pytest.raises(ValueError):
-            self.compte.retirer(200)
-```
-
-
-#### Lancer les tests avec pytest
-
-Pour tester votre code avec Pytest, vous allez devoir installer deux packages, `pytest` et `pytest-cov`.  
-
-Pour lancer les tests sur votre application :   
-```
-pytest -v
-```
-
-Pour connaitre la couverture de vos tests :  
-```
-pytest --cov=src/ tests/ 
+# Vérifier la stricte conformité du typage statique
+python -m mypy pkg/
 ```
