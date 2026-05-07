@@ -13,7 +13,7 @@ class Equipe:
     region : str, optional
         Région ou continent de l'équipe. Par défaut None.
     """
-    
+
     def __init__(self, id, nom, abreviation=None, lieu=None, region=None):
         self.id = id
         self.nom = nom
@@ -36,13 +36,13 @@ class Equipe:
         """Calcule la taille moyenne des joueurs de l'équipe."""
         if not self.joueurs:
             return 0
-        
+
         # On filtre les joueurs qui ont une taille > 0 (pour éviter de fausser la moyenne)
         tailles_valides = [j.taille for j in self.joueurs if j.taille > 0]
-        
+
         if not tailles_valides:
             return 0
-            
+
         return sum(tailles_valides) / len(tailles_valides)
 
     # --- MÉTHODES FONCTIONNELLES DE TRAITEMENT ---
@@ -56,7 +56,9 @@ class Equipe:
         Filtre et retourne la liste des joueurs ayant une nationalité spécifique.
         Utile pour vérifier les quotas de joueurs étrangers dans certaines ligues.
         """
-        return [joueur for joueur in self.joueurs if joueur.code_pays == code_nationalite]
+        return [
+            joueur for joueur in self.joueurs if joueur.code_pays == code_nationalite
+        ]
 
     def a_effectif_minimum(self, minimum_requis=5):
         """

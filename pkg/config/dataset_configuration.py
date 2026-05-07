@@ -12,51 +12,52 @@ class DatasetConfiguration:
 
 # 1. TENNIS (ATP & WTA)
 tennis_atp_match_config = DatasetConfiguration(
-    dataset_path="data/Tennis/atp_matches_2024.csv", # (Assure-toi que le chemin est bon)
+    dataset_path="data/Tennis/atp_matches_2024.csv",  # (Assure-toi que le chemin est bon)
     dataset_sep=",",
     adapter=TennisMatchAdapter(
         col_id="match_num",
         col_date="tourney_date",
-        col_vainqueur="vainqueur_id", # Parfait, ça correspond à ton CSV !
-        col_perdant="loser_id"
-    )
+        col_vainqueur="vainqueur_id",  # Parfait, ça correspond à ton CSV !
+        col_perdant="loser_id",
+    ),
 )
 tennis_wta_match_config = DatasetConfiguration(
-    dataset_path="data/Tennis/wta_matches_2024.csv", 
+    dataset_path="data/Tennis/wta_matches_2024.csv",
     dataset_sep=",",
     adapter=TennisMatchAdapter(
         col_id="match_num",
         col_date="tourney_date",
-        col_vainqueur="vainqueur_id", # Parfait, ça correspond à ton CSV !
-        col_perdant="loser_id"
-    )
+        col_vainqueur="vainqueur_id",  # Parfait, ça correspond à ton CSV !
+        col_perdant="loser_id",
+    ),
 )
 
 tennis_wta_joueur_config = DatasetConfiguration(
-    dataset_path="data/Tennis/wta_players_2024.csv", 
+    dataset_path="data/Tennis/wta_players_2024.csv",
     dataset_sep=",",
     adapter=TennisJoueurAdapter(
-        col_id="player_id", 
-        col_prenom="name_first", 
-        col_nom="name_last", 
-        col_taille="height", 
+        col_id="player_id",
+        col_prenom="name_first",
+        col_nom="name_last",
+        col_taille="height",
         col_date_naissance="dob",
-        col_pays="ioc", 
-        col_main="hand")
+        col_pays="ioc",
+        col_main="hand",
+    ),
 )
 
 tennis_atp_joueur_config = DatasetConfiguration(
-    dataset_path="data/Tennis/atp_players_2024.csv", 
+    dataset_path="data/Tennis/atp_players_2024.csv",
     dataset_sep=",",
     adapter=TennisJoueurAdapter(
-        col_id="player_id", 
-        col_prenom="name_first", 
-        col_nom="name_last", 
-        col_taille="height", 
+        col_id="player_id",
+        col_prenom="name_first",
+        col_nom="name_last",
+        col_taille="height",
         col_date_naissance="dob",
-        col_pays="ioc", 
-        col_main="hand"
-    )
+        col_pays="ioc",
+        col_main="hand",
+    ),
 )
 
 # 2. BASKET
@@ -64,12 +65,13 @@ basket_match_config = DatasetConfiguration(
     dataset_path="data/Basket/game.csv",
     dataset_sep=",",
     adapter=GenericMatchAdapter(
-        col_date="game_date", 
+        col_date="game_date",
         col_equipe1="team_id_home",
-        col_equipe2="team_id_away", 
-        col_score1="pts_home", 
+        col_equipe2="team_id_away",
+        col_score1="pts_home",
         col_score2="pts_away",
-        col_type_match="season_type")
+        col_type_match="season_type",
+    ),
 )
 
 basket_equipe_config = DatasetConfiguration(
@@ -78,10 +80,10 @@ basket_equipe_config = DatasetConfiguration(
     adapter=GenericEquipeAdapter(
         col_id="id",
         col_nom="full_name",
-        col_abbr="abbreviation", 
-        col_loc="city", 
-        col_reg="state"
-    )
+        col_abbr="abbreviation",
+        col_loc="city",
+        col_reg="state",
+    ),
 )
 
 basket_joueur_config = DatasetConfiguration(
@@ -96,6 +98,6 @@ basket_joueur_config = DatasetConfiguration(
         col_equipe="team_id",
         col_numero="jersey",
         col_position="position",
-        col_poids="weight"
-    )
+        col_poids="weight",
+    ),
 )

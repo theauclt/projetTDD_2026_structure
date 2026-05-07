@@ -1,6 +1,6 @@
 class Match:
     def __init__(self, id, date, equipe1, equipe2, score1, score2, stats=None):
-        
+
         self.id = id
         self.date = date
         self.equipe1 = equipe1
@@ -9,7 +9,7 @@ class Match:
         self.score2 = score2
         # Le sac à dos pour toutes les autres variables !
         self.stats = stats if stats is not None else {}
-        
+
     def vainqueur(self):
         if self.score1 > self.score2:
             return self.equipe1
@@ -60,7 +60,9 @@ class Match:
         return abs(self.score1 - self.score2)
 
     def __str__(self):
-        return f"{self.date} | {self.equipe1} {self.score1} - {self.score2} {self.equipe2}"
+        return (
+            f"{self.date} | {self.equipe1} {self.score1} - {self.score2} {self.equipe2}"
+        )
 
     def __repr__(self):
         return (
