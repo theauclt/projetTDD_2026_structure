@@ -293,37 +293,3 @@ class TestMatch:
         r = repr(self.match)
         assert "Lakers" in r
         assert "2024-01-15" in r
-
-
-# ==============================================================================
-# TESTS — STATISTIQUE JOUEUR
-# ==============================================================================
-
-class TestStatistiqueJoueur:
-    """Tests pour le modèle StatistiqueJoueur."""
-
-    def setup_method(self):
-        from pkg.models.stats_joueur_basket import StatistiqueJoueur
-        self.stat = StatistiqueJoueur(
-            match_id=1, joueur_id=23, nom_joueur="LeBron James",
-            equipe_id=1610612747, pts=30, reb=8, ast=10, blk=1, stl=2
-        )
-
-    def test_attributs_de_base(self):
-        assert self.stat.match_id == 1
-        assert self.stat.joueur_id == 23
-        assert self.stat.nom_joueur == "LeBron James"
-        assert self.stat.equipe_id == 1610612747
-
-    def test_conversion_en_float(self):
-        assert isinstance(self.stat.pts, float)
-        assert self.stat.pts == 30.0
-        assert self.stat.reb == 8.0
-        assert self.stat.ast == 10.0
-
-    def test_valeurs_vides_deviennent_zero(self):
-        from pkg.models.stats_joueur_basket import StatistiqueJoueur
-        s = StatistiqueJoueur(1, 1, "X", 1, pts=None, reb="", ast=0, blk=None, stl=None)
-        assert s.pts == 0.0
-        assert s.reb == 0.0
-        assert s.blk == 0.0

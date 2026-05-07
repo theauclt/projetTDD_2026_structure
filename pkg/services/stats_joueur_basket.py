@@ -1,5 +1,7 @@
 class StatistiqueJoueur:
-    """Représente la performance d'un joueur lors d'un match spécifique."""
+    """Représente la performance d'un joueur lors d'un match spécifique.
+    Inutile dans notre cas car la base de données ne contient pas de stats individuelles,
+    mais conceptuellement c'est une bonne idée de les modéliser pour une future extension."""
     
     def __init__(self, match_id, joueur_id, nom_joueur, equipe_id, pts, reb, ast, blk, stl):
         self.match_id = match_id
