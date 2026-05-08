@@ -107,8 +107,7 @@ Enfin Quitter l’application est accessible à tout moment depuis le menu princ
 
 Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant une responsabilité bien définie :
 
-```text
-
+```{.text}
 projet/
 ├── main.py
 ├── pyproject.toml
@@ -144,7 +143,6 @@ projet/
         ├── test_adapters.py
         ├── test_services.py
         └── test_repository.py
-
 ```
 
 
@@ -220,12 +218,12 @@ L'expérience utilisateur débute par une interface d'accueil intuitive permetta
 Prenons l'exemple du tennis, l'utilisateur a maintenant le choix entre le circuit ATP et WTA
 
 
-![Menu permettant le choix du circuit](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/1er_menu_tennis.png){width=100%, height=10cm}
+![Menu permettant le choix du circuit](images/1er_menu_tennis.png){width=100%}
 
 L'utilisateur a ensuite le choix entre les pays représentés sur le circuit, suite à cela, la liste des joueurs de nationalité du pays choisi apparait. Choisissons l'Italie comme pays puis le joueur Jannik Sinner. 
 
 
-![Carte de Jannik Sinner](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/carte_joueur.png){width=100%, height=10cm}
+![Carte de Jannik Sinner](images/carte_joueur.png){width=100%}
 
 
 La fiche complète du joueur s'affiche de manière structurée. Cette vue permet de centraliser toutes les informations extraites des fichiers de données :
