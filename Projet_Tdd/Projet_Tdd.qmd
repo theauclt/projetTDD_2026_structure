@@ -37,7 +37,7 @@ Notre démarche s'articule autour de trois axes principaux présentés dans ce r
 
 ## Contexte
 
-Le présent projet s’inscrit dans le cadre du Projet de traitement de données. Le cahier des charges initial nous imposait de concevoir une application Python respectant les principes fondamentaux de la programmation orientée objet, avec une contrainte de généralisabilité absolue. Le code devait être capable de traiter des jeux de données variés, permettant ainsi une grande adaptabilité. Le but de notre application est donc de proposer un système faisant abstraction des règles spécifiques à chaque sport pour offrir un outil d'analyse statistique universel. À travers ce projet, nous avons voulu démontrer qu'une modélisation logicielle rigoureuse permet de transformer des fichiers CSV diverses en une source d'information cohérente, permettant de consulter des classements et des historiques de performances sur quelques disciplines.
+Le présent projet s’inscrit dans le cadre du Projet de traitement de données. Le cahier des charges initial nous imposait de concevoir une application Python respectant les principes fondamentaux de la programmation orientée objet, avec une contrainte de généralisabilité absolue. Le code devait être capable de traiter des jeux de données variés, permettant ainsi une grande adaptabilité. Le but de notre application est donc de proposer un système faisant abstraction des règles spécifiques à chaque sport pour offrir un outil d'analyse statistique universel. À travers ce projet, nous avons voulu démontrer qu'une modélisation logicielle rigoureuse permet de transformer des fichiers *CSV* diverses en une source d'information cohérente, permettant de consulter des classements et des historiques de performances sur quelques disciplines.
 
 ## Besoins fonctionnels
 
@@ -47,6 +47,7 @@ L'application a pour mission principale de centraliser et de transformer des don
 
 Nous avons choisi d’utiliser seulement certains jeux de données parmi ceux proposés afin de modéliser notre application. Notre sélection a été pensée pour diversifier au maximum notre approche : nous avons ainsi veillé à inclure à la fois un sport collectif et un sport individuel, tout en intégrant des données issues à la fois du sport masculin et du sport féminin. Dans cette optique, nous avons travaillé à partir des fichiers suivants :
 
+\newpage
 
 - **Basket-ball** :
   - `game.csv` : Données sur les matchs NBA.
@@ -79,7 +80,7 @@ Tout d'abord la classe **Joueur** et ses spécialisations **JoueurBasket** et **
 La classe abstraite **BaseAdapter** impose le fonctionnement via les méthodes *adapt()* et *to_row()*, dont héritent **BasketJoueurAdapter** et **TennisJoueurAdapter** pour les joueurs, ainsi que leurs équivalents pour les matchs. Ce découpage permet d'absorber les différences de format entre les datasets NBA et Tennis sans impacter le reste du code.
 
 
-**DataRepository**, qui orchestre le chargement et la sauvegarde des fichiers CSV en déléguant la conversion à l'adaptateur correspondant.
+**DataRepository**, orchestrant le chargement et la sauvegarde des fichiers *CSV* en déléguant la conversion à l'adaptateur correspondant.
 
 
 En finalement les services avec **ServiceAnnuaireJoueurs** qui gère les profils et expose des filtres par équipe ou par pays. **ServiceStatistiques**, **ServiceStatistiquesBasket** et **ServiceStatistiquesTennis** représentées dans le diagramme prennent en charge les classements et moyennes. Enfin, **ServiceApplication** orchestre la navigation de l'interface console en s'appuyant sur l'ensemble de ces services.
@@ -106,7 +107,7 @@ Enfin Quitter l’application est accessible à tout moment depuis le menu princ
 Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant une responsabilité bien définie :
 
 
-![Architecture du code](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/architecture.png){width=90%}
+![Architecture du code](images/architecture.png){width=90%}
 
 
 L'architecture de code repose sur quatre piliers stratégiques qui justifient sa pertinence pour la modélisation :
@@ -227,7 +228,7 @@ Palmarès : La fiche liste automatiquement les titres remportés sur l'année en
 
 Afin de garantir la fiabilité et la robustesse de l'application, une attention particulière a été portée à la couverture de tests unitaires et d'intégration. En cohérence avec une approche de développement dirigé par les tests, l'intégralité des modules constituant l'architecture du projet a été soumise à une vérification rigoureuse. Les résultats obtenus, illustrés par le rapport de couverture, affichent un score global de 97 %. Ce niveau de couverture élevé témoigne d'une validation quasi exhaustive des différents chemins d'exécution du code et des cas limites. Le succès de l'ensemble des tests exécutés confirme la stabilité des services implémentés, assurant ainsi une base solide pour la maintenance et les évolutions futures du logiciel. 
 
-![Résultats des linters](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/linters.png){width=100%}
+![Résultats des linters](images/linters.png){width=100%}
 
 L'analyse de la qualité du code du projet démontre une conformité rigoureuse aux standards de développement Python actuels. L'utilisation de mypy confirme l'absence d'erreurs de typage statique au sein des 17 fichiers sources, garantissant ainsi une base de code robuste et une cohérence structurelle élevée. Parallèlement, l'outil ruff valide le respect intégral des règles de linting, assurant la propreté et la performance du code. Enfin, le formateur black n'a apporté aucune modification lors de son exécution, ce qui atteste d'une mise en forme déjà parfaitement alignée sur les conventions de style professionnelles. Ces résultats conjoints témoignent d'une attention particulière portée à la maintenabilité et à la fiabilité de l'architecture logicielle produite.
 
