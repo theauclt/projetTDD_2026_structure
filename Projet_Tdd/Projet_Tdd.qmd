@@ -112,13 +112,13 @@ Notre projet repose sur une structure orientée objet qui privilégie la modular
 
 L'architecture de code repose sur quatre piliers stratégiques qui justifient sa pertinence pour la modélisation :
 
-Le Modèle de Données Typé : Plutôt que de manipuler des structures de données brutes (comme des dictionnaires ou des simples lignes de CSV), l'architecture utilise des objets métiers (**Joueur**, **Equipe**, **Match**). Ce choix permet de valider les données dès leur instanciation et d'utiliser l'héritage pour gérer les spécificités par sport (ex: **JoueurBasket** vs **JoueurTennis**). Cela sécurise la modélisation en garantissant que chaque entité possède les attributs nécessaires avant d'atteindre la logique de calcul.
+Le Modèle de Données Typé : Plutôt que de manipuler des structures de données brutes (comme des dictionnaires ou des simples lignes de *CSV*), l'architecture utilise des objets métiers (**Joueur**, **Equipe**, **Match**). Ce choix permet de valider les données dès leur instanciation et d'utiliser l'héritage pour gérer les spécificités par sport (ex: **JoueurBasket** vs **JoueurTennis**). Cela sécurise la modélisation en garantissant que chaque entité possède les attributs nécessaires avant d'atteindre la logique de calcul.
 
-Le Pattern Adapter : c'est le cœur de la flexibilité du projet. La couche **adapter/** agit comme une passerelle de traduction entre le format brut des fichiers CSV et les objets Python. En utilisant une classe abstraite **BaseAdapter**, l'architecture permet d'ajouter de nouveaux datasets sans jamais modifier le code existant. Cette abstraction sépare la structure technique des données (comment elles sont stockées) de leur sens métier (ce qu'elles représentent).
+Le Pattern Adapter : c'est le cœur de la flexibilité du projet. La couche **adapter/** agit comme une passerelle de traduction entre le format brut des fichiers *CSV* et les objets Python. En utilisant une classe abstraite **BaseAdapter**, l'architecture permet d'ajouter de nouveaux datasets sans jamais modifier le code existant. Cette abstraction sépare la structure technique des données (comment elles sont stockées) de leur sens métier (ce qu'elles représentent).
 
 Le Découplage par le Repository et les Services : 
 
-le **DataRepository** centralise l'accès aux fichiers via Pandas, isolant ainsi la complexité technique de la lecture/écriture.
+Le **DataRepository** centralise l'accès aux fichiers via Pandas, isolant ainsi la complexité technique de la lecture/écriture.
 
 Les **Services** (statistiques, annuaire, matchs) contiennent la logique métier pure. Ils sont totalement indépendants de la source de données : ils reçoivent des objets déjà formattés et se concentrent uniquement sur les calculs et les fonctionnalités utilisateurs. Ce découplage permet de modifier l'algorithme d'un classement sans risquer de casser la lecture d'un fichier.
 
@@ -128,7 +128,7 @@ La Configurabilité et Maintenabilité : La présence d'un module **config/** d�
 
 ## Choix technologiques
 
-Le choix de Python 3.12 associé à une architecture Repository/Adapter/Service et à la Programmation Orientée Objet permet de construire une application modulaire, où les classes abstraites facilitent l'intégration de nouvelles sources de données sportives sans fragiliser le système. La bibliothèque *Pandas* est ici indispensable pour manipuler les fichiers CSV : elle transforme les données brutes en DataFrames pour permettre un filtrage, un tri et une organisation ultra-rapide des performances. Pour la partie analytique, le module math assure la précision des calculs techniques complexes tandis que l'outil *defaultdict* du module collections simplifie la création de dictionnaires de statistiques en gérant automatiquement l'initialisation des scores pour chaque nouveau joueur ou équipe. 
+Le choix de Python 3.12 associé à une architecture Repository/Adapter/Service et à la Programmation Orientée Objet permet de construire une application modulaire, où les classes abstraites facilitent l'intégration de nouvelles sources de données sportives sans fragiliser le système. La bibliothèque *Pandas* est ici indispensable pour manipuler les fichiers *CSV* : elle transforme les données brutes en DataFrames pour permettre un filtrage, un tri et une organisation rapide des performances. Pour la partie analytique, le module math assure la précision des calculs techniques complexes tandis que l'outil *defaultdict* du module collections simplifie la création de dictionnaires de statistiques en gérant automatiquement l'initialisation des scores pour chaque nouveau joueur ou équipe. 
 Enfin, la fiabilité du code est garantie par *pytest* et *unittest.mock* : les MagicMock agissent comme des "doublures" qui imitent des fichiers, tandis que les patches détournent les appels du programme vers ces faux composants plutôt que vers le disque dur. Concrètement, cela permet de faire croire au programme qu'il lit un fichier réel pour vérifier instantanément s'il calcule bien les classements, même dans des cas compliqués ou face à des erreurs (comme un fichier corrompu), sans avoir besoin de créer ou de manipuler de vrais documents sur l'ordinateur.
 
 
@@ -148,14 +148,14 @@ Nous avons ensuite rédigé le rapport tous les trois, en choisissant d'utiliser
 
 ## Développement
 
-Nous avons structuré l'ensemble du projet autour d'un pattern architectural en couches distinctes : les modèles, les adaptateurs, le dépôt de données et les services. Ce choix nous permet de séparer clairement les responsabilités de chaque composant : la couche modèle ne connaît pas les fichiers CSV, la couche adapter ne connaît pas la logique métier, et les services n'ont pas à se soucier du format des données brutes. Chaque couche est ainsi indépendante et remplaçable, ce qui facilite la maintenabilité du code et sa réutilisabilité pour d'autres jeux de données ou d'autres sports.
+Nous avons structuré l'ensemble du projet autour d'un pattern architectural en couches distinctes : les modèles, les adaptateurs, le dépôt de données et les services. Ce choix nous permet de séparer clairement les responsabilités de chaque composant : la couche modèle ne connaît pas les fichiers *CSV*, la couche adapter ne connaît pas la logique métier, et les services n'ont pas à se soucier du format des données brutes. Chaque couche est ainsi indépendante et remplaçable, ce qui facilite la maintenabilité du code et sa réutilisabilité pour d'autres jeux de données ou d'autres sports.
 
 Nous avons conçu les modèles en exploitant l'héritage. La classe Joueur regroupe les attributs communs à tous les athlètes, et deux classes filles JoueurBasket et JoueurTennis la spécialisent avec leurs attributs propres via super().__init__(). Ce mécanisme évite toute duplication de code et garantit que les attributs communs ne sont définis qu'à un seul endroit.
 
 Pour les matchs, nous avons délibérément choisi de ne pas créer une classe par sport. La classe Match est générique et contient un attribut stats de type dictionnaire pour stocker les informations spécifiques à chaque discipline. Cette flexibilité nous permet de manipuler tous les matchs avec une seule classe commune, tout en conservant la richesse des données de chaque sport.
 
 
-Nous avons défini une classe abstraite BaseAdapter, en utilisant le module abc de la bibliothèque standard Python, qui impose à toutes les implémentations de fournir deux méthodes : adapt() pour transformer une ligne de CSV en objet métier et to_row() pour effectuer l'opération inverse. Ce contrat garantit que tout nouvel adaptateur sera compatible avec le DataRepository, quelle que soit la source de données traitée.
+Nous avons défini une classe abstraite BaseAdapter, en utilisant le module abc de la bibliothèque standard Python, qui impose à toutes les implémentations de fournir deux méthodes : adapt() pour transformer une ligne de *CSV* en objet métier et to_row() pour effectuer l'opération inverse. Ce contrat garantit que tout nouvel adaptateur sera compatible avec le DataRepository, quelle que soit la source de données traitée.
 
 Concernant les matchs, nous avons fait un choix différent selon le sport. Pour le basket, GenericMatchAdapter est universel et collecte automatiquement toutes les colonnes non déclarées dans le dictionnaire stats de l'objet Match. Pour le tennis en revanche, nous avons opté pour un adaptateur spécialisé TennisMatchAdapter, car la structure des données tennis où les statistiques du vainqueur et du perdant sont différenciées par des préfixes w_ et l_ rend un traitement générique inadapté.
 
@@ -169,7 +169,7 @@ ServiceStatistiquesTennis hérite également de ServiceStatistiques mais adopte 
 
 Dans le ServiceApplication, nous avons conçu la méthode explorer_annuaire_tennis() de façon générique : elle reçoit en paramètre les configurations de joueurs et de matchs ainsi que le nom du circuit, ce qui lui permet de fonctionner de manière identique pour l'ATP et la WTA sans aucune duplication de code.
 
-De la même façon, la méthode determiner_conference_nba() illustre notre approche pragmatique face à une information absente des données : en l'absence d'un champ "conférence" dans le fichier CSV, nous avons résolu ce problème par une liste de mots-clés permettant de rattacher chaque équipe à sa conférence Est ou Ouest.
+De la même façon, la méthode determiner_conference_nba() illustre notre approche pragmatique face à une information absente des données : en l'absence d'un champ "conférence" dans le fichier *CSV*, nous avons résolu ce problème par une liste de mots-clés permettant de rattacher chaque équipe à sa conférence Est ou Ouest.
 
 ## Difficultés rencontrées
 
@@ -177,11 +177,11 @@ L’une des principales difficultés de ce projet a résidé dans son démarrage
 
 La gestion de l’héritage et des classes abstraites a représenté un défi structurel majeur, notamment pour concevoir une hiérarchie cohérente entre les joueurs et les adaptateurs spécifiques au basketball et au tennis. Pour résoudre cette difficulté, nous avons mené une réflexion approfondie afin de bien identifier les attributs communs et les besoins spécifiques à chaque sport, ce qui a permis d'implémenter une structure solide évitant toute duplication de code.
 
-Le traitement des données « sales » dans les fichiers CSV réels, comme les valeurs manquantes ou les formats incohérents, a nécessité une attention particulière. Nous avons résolu ce problème en intégrant des mécanismes de nettoyage et de conversion directement dans les classes *StatistiqueJoueur* et *ServiceAnnuaireJoueurs*, assurant la transformation systématique des données (conversion en float ou passage des lbs aux kg) et le filtrage des valeurs inexploitables.
+Le traitement des données « sales » dans les fichiers *CSV* réels, comme les valeurs manquantes ou les formats incohérents, a nécessité une attention particulière. Nous avons résolu ce problème en intégrant des mécanismes de nettoyage et de conversion directement dans les classes *StatistiqueJoueur* et *ServiceAnnuaireJoueurs*, assurant la transformation systématique des données (conversion en float ou passage des lbs aux kg) et le filtrage des valeurs inexploitables.
 
 La séparation des responsabilités entre les différents services (Statistiques, Annuaire, Matchs) est devenue de plus en plus délicate à mesure que la taille du projet augmentait. Pour éviter que leurs fonctions ne se chevauchent, nous avons mené un exercice d'architecture logicielle rigoureux, redéfinissant précisément le rôle de chaque service pour garantir que chaque composant ne s'occupe que de sa mission spécifique.
 
-Enfin, le couplage entre les adaptateurs et les modèles de données présentait une fragilité : le moindre changement dans un nom de colonne CSV pouvait bloquer l'application. Nous avons stabilisé ce point en utilisant des valeurs par défaut lors de la récupération des données (via la méthode row.get(col, "N/A")), apportant ainsi la rigueur nécessaire pour que le programme reste fonctionnel et robuste même en cas de données manquantes ou de modifications imprévues des fichiers sources.
+Enfin, le couplage entre les adaptateurs et les modèles de données présentait une fragilité : le moindre changement dans un nom de colonne *CSV* pouvait bloquer l'application. Nous avons stabilisé ce point en utilisant des valeurs par défaut lors de la récupération des données (via la méthode row.get(col, "N/A")), apportant ainsi la rigueur nécessaire pour que le programme reste fonctionnel et robuste même en cas de données manquantes ou de modifications imprévues des fichiers sources.
 
 
 # Tests et validation
@@ -194,7 +194,7 @@ La validation commence avec les modèles et les adaptateurs. Les tests sur les m
 
 Le cœur du programme, regroupé dans la partie services, est quant à lui vérifié par des tests précis sur les calculs et les règles de gestion. Ces tests permettent de contrôler que les classements des équipes, les moyennes de points ou encore l'historique des joueurs sont calculés sans aucune erreur. Pour que ces vérifications soient fiables et rapides, nous utilisons des simulations (appelées "Mocks") qui remplacent les fichiers réels par des données fictives mais contrôlées. Cela nous permet de tester le "cerveau" de l'application de façon isolée, en étant certains que si un résultat est faux, cela vient d'une erreur de calcul et non d'un problème technique lié au chargement des données.
 
-Enfin, la fiabilité de la persistance et de l'accès aux données est assurée par des tests aux frontières au niveau des repositories et des importeurs. Nous utilisons des environnements de fichiers temporaires via *tmp_path*. Cette méthode nous permet de vérifier, dans des conditions quasi réelles, que le système gère correctement les différents séparateurs et l'encodage des fichiers CSV. Cette stratégie globale assure ainsi une interface fluide et sécurisée entre le stockage physique et la logique métier de l'application.
+Enfin, la fiabilité de la persistance et de l'accès aux données est assurée par des tests aux frontières au niveau des repositories et des importeurs. Nous utilisons des environnements de fichiers temporaires via *tmp_path*. Cette méthode nous permet de vérifier, dans des conditions quasi réelles, que le système gère correctement les différents séparateurs et l'encodage des fichiers *CSV*. Cette stratégie globale assure ainsi une interface fluide et sécurisée entre le stockage physique et la logique métier de l'application.
 
 ## Quelques résultats
 
@@ -245,7 +245,7 @@ Enfin, le périmètre fonctionnel actuel restreint les possibilités d'analyse g
 
 # Conclusion {.unnumbered}
 
-Ce projet nous a permis de concevoir et de développer « **TGM Statistiques** », une plateforme d'analyse statistique sportive couvrant deux disciplines complémentaires : le basketball (sport collectif) et le tennis (individuel). En combinant une modélisation orientée objet rigoureuse et une architecture modulaire fondée sur les patterns Adapter, Repository et Service, nous avons réussi à transformer des fichiers CSV aux formats hétérogènes en une source d'information cohérente et exploitable par l'utilisateur.
+Ce projet nous a permis de concevoir et de développer « **TGM Statistiques** », une plateforme d'analyse statistique sportive couvrant deux disciplines complémentaires : le basketball (sport collectif) et le tennis (individuel). En combinant une modélisation orientée objet rigoureuse et une architecture modulaire fondée sur les patterns Adapter, Repository et Service, nous avons réussi à transformer des fichiers *CSV* aux formats hétérogènes en une source d'information cohérente et exploitable par l'utilisateur.
 
 Sur le plan technique, la mise en place d'une hiérarchie de classes abstraites a constitué le cœur de notre démarche de conception. Ce choix architectural a permis de garantir l'extensibilité du système tout en maintenant une séparation claire des responsabilités entre les différentes couches de l'application. La stratégie de tests unitaires adoptée, avec 133 tests validés pour une couverture globale de 97 %, témoigne de la robustesse du code produit et de notre volonté de livrer une application fiable et maintenable.
 
