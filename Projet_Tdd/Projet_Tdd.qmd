@@ -47,7 +47,6 @@ L'application a pour mission principale de centraliser et de transformer des don
 
 Nous avons choisi d’utiliser seulement certains jeux de données parmi ceux proposés afin de modéliser notre application. Notre sélection a été pensée pour diversifier au maximum notre approche : nous avons ainsi veillé à inclure à la fois un sport collectif et un sport individuel, tout en intégrant des données issues à la fois du sport masculin et du sport féminin. Dans cette optique, nous avons travaillé à partir des fichiers suivants :
 
-{{< pagebreak >}}
 
 - **Basket-ball** :
   - `game.csv` : Données sur les matchs NBA.
@@ -100,20 +99,15 @@ S'il sélectionne le module *Tennis*, un sous-menu lui propose de choisir entre 
 Enfin Quitter l’application est accessible à tout moment depuis le menu principal
 
 
-
 \newpage
 
 ## Architecture générale
 
 Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant une responsabilité bien définie :
 
-<<<<<<< HEAD
 
 ![Architecture du code](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/architecture.png){width=90%}
-=======
-![Architecture du code](images/Architecture.PNG){width=90%}
->>>>>>> 1a9987467b1c9bbb1d545d305dd83d9974d46ee2
-\newpage
+
 
 L'architecture de code repose sur quatre piliers stratégiques qui justifient sa pertinence pour la modélisation :
 
