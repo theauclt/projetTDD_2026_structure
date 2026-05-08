@@ -267,7 +267,8 @@ Palmarès : La fiche liste automatiquement les titres remportés sur l'année en
 
 Afin de garantir la fiabilité et la robustesse de l'application, une attention particulière a été portée à la couverture de tests unitaires et d'intégration. En cohérence avec une approche de développement dirigé par les tests, l'intégralité des modules constituant l'architecture du projet a été soumise à une vérification rigoureuse. Les résultats obtenus, illustrés par le rapport de couverture, affichent un score global de 97 %. Ce niveau de couverture élevé témoigne d'une validation quasi exhaustive des différents chemins d'exécution du code et des cas limites. Le succès de l'ensemble des tests exécutés confirme la stabilité des services implémentés, assurant ainsi une base solide pour la maintenance et les évolutions futures du logiciel. 
 
-(faire résultats des linters)
+
+L'analyse de la qualité du code du projet démontre une conformité rigoureuse aux standards de développement Python actuels. L'utilisation de mypy confirme l'absence d'erreurs de typage statique au sein des 17 fichiers sources, garantissant ainsi une base de code robuste et une cohérence structurelle élevée. Parallèlement, l'outil ruff valide le respect intégral des règles de linting, assurant la propreté et la performance du code. Enfin, le formateur black n'a apporté aucune modification lors de son exécution, ce qui atteste d'une mise en forme déjà parfaitement alignée sur les conventions de style professionnelles. Ces résultats conjoints témoignent d'une attention particulière portée à la maintenabilité et à la fiabilité de l'architecture logicielle produite.
 
 
 \newpage
