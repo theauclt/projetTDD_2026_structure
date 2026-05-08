@@ -107,8 +107,12 @@ Enfin Quitter l’application est accessible à tout moment depuis le menu princ
 
 Notre projet repose sur une structure orientée objet qui privilégie la modularité et l'organisation. L’architecture repose sur plusieurs modules, chacun ayant une responsabilité bien définie :
 
+<<<<<<< HEAD
 
 ![Architecture du code](~/Projet_TDD/projetTDD_2026_structure/Projet_Tdd/images/architecture.png){width=90%}
+=======
+![Architecture du code](images/Architecture.PNG){width=90%}
+>>>>>>> 1a9987467b1c9bbb1d545d305dd83d9974d46ee2
 \newpage
 
 L'architecture de code repose sur quatre piliers stratégiques qui justifient sa pertinence pour la modélisation :
