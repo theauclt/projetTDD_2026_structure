@@ -184,6 +184,29 @@ Nous avons ensuite rédigé le rapport tous les trois, en choisissant d'utiliser
 
 ## Développement
 
+Nous avons structuré l'ensemble du projet autour d'un pattern architectural en couches distinctes : les modèles, les adaptateurs, le dépôt de données et les services. Ce choix nous permet de séparer clairement les responsabilités de chaque composant : la couche modèle ne connaît pas les fichiers CSV, la couche adapter ne connaît pas la logique métier, et les services n'ont pas à se soucier du format des données brutes. Chaque couche est ainsi indépendante et remplaçable, ce qui facilite la maintenabilité du code et sa réutilisabilité pour d'autres jeux de données ou d'autres sports.
+
+Nous avons conçu les modèles en exploitant l'héritage. La classe Joueur regroupe les attributs communs à tous les athlètes, et deux classes filles JoueurBasket et JoueurTennis la spécialisent avec leurs attributs propres via super().__init__(). Ce mécanisme évite toute duplication de code et garantit que les attributs communs ne sont définis qu'à un seul endroit.
+
+Pour les matchs, nous avons délibérément choisi de ne pas créer une classe par sport. La classe Match est générique et contient un attribut stats de type dictionnaire pour stocker les informations spécifiques à chaque discipline. Cette flexibilité nous permet de manipuler tous les matchs avec une seule classe commune, tout en conservant la richesse des données de chaque sport.
+
+
+Nous avons défini une classe abstraite BaseAdapter, en utilisant le module abc de la bibliothèque standard Python, qui impose à toutes les implémentations de fournir deux méthodes : adapt() pour transformer une ligne de CSV en objet métier et to_row() pour effectuer l'opération inverse. Ce contrat garantit que tout nouvel adaptateur sera compatible avec le DataRepository, quelle que soit la source de données traitée.
+
+Concernant les matchs, nous avons fait un choix différent selon le sport. Pour le basket, GenericMatchAdapter est universel et collecte automatiquement toutes les colonnes non déclarées dans le dictionnaire stats de l'objet Match. Pour le tennis en revanche, nous avons opté pour un adaptateur spécialisé TennisMatchAdapter, car la structure des données tennis où les statistiques du vainqueur et du perdant sont différenciées par des préfixes w_ et l_ rend un traitement générique inadapté.
+
+Nous avons appliqué le même principe d'héritage au niveau des services. La classe mère ServiceStatistiques expose une logique générique applicable à tout sport : calcul des victoires, défaites, classements et historiques. Elle utilise un defaultdict pour initialiser automatiquement les compteurs à zéro dès qu'une nouvelle entité est rencontrée, sans avoir à tester son existence au préalable.
+
+ServiceStatistiquesBasket hérite de cette base et y ajoute le suivi des
+statistiques avancées par phase de compétition (saison régulière, playoffs), avec
+les rebonds, passes, pourcentages de tirs et lancers francs.
+
+ServiceStatistiquesTennis hérite également de ServiceStatistiques mais adopte une logique adaptée au tennis individuel : les statistiques sont suivies par joueur et non par équipe, et le palmarès d'un joueur est enrichi uniquement lorsque le match est une finale, ce qui correspond à la logique d'attribution d'un titre.
+
+Dans le ServiceApplication, nous avons conçu la méthode explorer_annuaire_tennis() de façon générique : elle reçoit en paramètre les configurations de joueurs et de matchs ainsi que le nom du circuit, ce qui lui permet de fonctionner de manière identique pour l'ATP et la WTA sans aucune duplication de code.
+
+De la même façon, la méthode determiner_conference_nba() illustre notre approche pragmatique face à une information absente des données : en l'absence d'un champ "conférence" dans le fichier CSV, nous avons résolu ce problème par une liste de mots-clés permettant de rattacher chaque équipe à sa conférence Est ou Ouest.
+
 ## Difficultés rencontrées
 
 L’une des principales difficultés de ce projet a résidé dans son démarrage : en l'absence de sujet imposé et n'ayant pas encore les jeux de données à notre disposition, il a été particulièrement complexe de lancer une dynamique de travail concrète. Cette phase d'incertitude a rendu difficile la définition du concept même de notre future application, car il est délicat de structurer une architecture logicielle ou d'imaginer des fonctionnalités pertinentes sans connaître la nature exacte, le volume et les contraintes des données à traiter.
